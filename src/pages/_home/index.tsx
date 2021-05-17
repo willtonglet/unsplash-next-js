@@ -34,7 +34,7 @@ const HomePage = ({ topics, cover }: PageProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: topicsData } = await api.get('/topics?per_page=20');
+  const { data: topicsData } = await api.get('/topics?perPage=30');
   const { data: coverData } = await api.get(
     '/photos/random?orientation=landscape',
   );
