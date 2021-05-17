@@ -8,8 +8,10 @@ import MainCover from '../../components/MainCover';
 import MasonrySection from '../../templates/MasonrySection';
 
 export interface ImageProps {
+  id: string;
   alt_description: string;
   urls: {
+    regular: string;
     full: string;
   };
   width: number;
@@ -26,7 +28,9 @@ const HomePage = ({ topics, cover }: PageProps) => {
       <Head>
         <title>Home | Next.js + TypeScript Example</title>
       </Head>
-      <TopicsNav topics={topics} />
+      <header className="sticky z-50 bg-white top-0 w-screen shadow-md">
+        <TopicsNav topics={topics} />
+      </header>
       <MainCover image={cover} />
       <MasonrySection />
     </PageWrapper>
