@@ -42,7 +42,7 @@ const MasonrySection = () => {
           </div>
         ))}
       </Masonry>
-      {photos.length > 0 && count < 5 && (
+      {count < 5 && (
         <div className="flex w-full justify-center my-2" ref={spinnerRef}>
           {onScreen && <Spinner />}
         </div>
