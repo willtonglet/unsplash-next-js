@@ -9,10 +9,10 @@ const MasonrySection = () => {
   const [count, setCount] = useState(1);
   const [photos, setPhotos] = useState<ImageProps[]>([]);
   const spinnerRef = useRef<HTMLDivElement>(null);
-  const onScreen = useOnScreen(spinnerRef, '0px', true);
+  const onScreen = useOnScreen(spinnerRef, '0px', true, 1);
 
   const getPhotos = async (c: number) => {
-    const { data } = await api.get(`/photos?page=${c}&per_page=24`);
+    const { data } = await api.get(`/photos?page=${c}&per_page=30`);
     setPhotos([...photos, ...data]);
   };
 
@@ -29,7 +29,7 @@ const MasonrySection = () => {
   }, [count, photos, onScreen]);
 
   return (
-    <>
+    <section className="flex flex-column">
       <Masonry gutter="1.5rem">
         {photos?.map((photo: any) => (
           <div key={photo.id}>
@@ -43,11 +43,11 @@ const MasonrySection = () => {
         ))}
       </Masonry>
       {count < 5 && (
-        <div className="flex w-full justify-center my-2" ref={spinnerRef}>
+        <div className="flex w-full justify-center mt-3 mb-5" ref={spinnerRef}>
           <Spinner />
         </div>
       )}
-    </>
+    </section>
   );
 };
 
