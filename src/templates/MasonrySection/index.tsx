@@ -1,5 +1,5 @@
 import Image, { ImageProps } from 'next/image';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Masonry from '../../components/Masonry';
 import Spinner from '../../components/Spinner';
 import api from '../../core/api';
