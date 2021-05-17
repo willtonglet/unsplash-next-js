@@ -3,13 +3,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import Masonry from '../../components/Masonry';
 import Spinner from '../../components/Spinner';
 import api from '../../core/api';
-import useOnScreen from '../../hooks/useOnScreen';
+import { useScrollBottom } from '../../hooks/useScrollBottom';
 
 const MasonrySection = () => {
   const [count, setCount] = useState(1);
   const [photos, setPhotos] = useState<ImageProps[]>([]);
   const spinnerRef = useRef<HTMLDivElement>(null);
-  const onScreen = useOnScreen(spinnerRef, '0px', true, 1);
+  const [scrollEl, atBottom] = useScrollBottom();
 
   const getPhotos = async (c: number) => {
     const { data } = await api.get(`/photos?page=${c}&per_page=30`);
@@ -22,14 +22,14 @@ const MasonrySection = () => {
 
   useEffect(() => {
     const timerToLoad = setTimeout(() => {
-      if (onScreen) setCount(count + 1);
-    }, 1000);
+      if (atBottom) setCount(count + 1);
+    }, 250);
 
     return () => clearTimeout(timerToLoad);
-  }, [count, photos, onScreen]);
+  }, [count, photos, atBottom]);
 
   return (
-    <section className="flex flex-column">
+    <section className="flex flex-col w-full" ref={scrollEl}>
       <Masonry gutter="1.5rem">
         {photos?.map((photo: any) => (
           <div key={photo.id}>
