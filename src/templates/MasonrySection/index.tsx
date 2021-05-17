@@ -44,7 +44,7 @@ const MasonrySection = () => {
       </Masonry>
       {count < 5 && (
         <div className="flex w-full justify-center my-2" ref={spinnerRef}>
-          {onScreen && <Spinner />}
+          <Spinner />
         </div>
       )}
     </>
