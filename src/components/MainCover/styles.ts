@@ -1,14 +1,8 @@
 import styled from 'styled-components';
 
-export const StyledMainCover = styled.section`
+export const StyledMainCover = styled.section<{ image?: string }>`
+  ${({ image }) => image && `background-image: url(${image});`}
   height: 660px;
   overflow: hidden;
   position: relative;
-
-  .bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translateY(-25%);
-  }
 `;
