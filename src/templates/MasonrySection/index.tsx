@@ -1,12 +1,19 @@
 import Image from 'next/image';
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import Masonry from '../../components/Masonry';
 import Spinner from '../../components/Spinner';
 import api from '../../core/api';
 import useOnScreen from '../../hooks/useOnScreen';
 import { ImageProps } from '../../pages/_home';
+import ImageContent from '../../components/ImageContent';
 
-const MasonrySection = () => {
+interface MasonrySectionProps {
+  getUrl: string;
+}
+
+const MasonrySection = (props: MasonrySectionProps) => {
+  const { getUrl } = props;
   const [count, setCount] = useState(1);
   const [photos, setPhotos] = useState<ImageProps[]>([]);
   const [hasSpinner, setHasSpinner] = useState(true);
@@ -14,7 +21,12 @@ const MasonrySection = () => {
   const onScreen = useOnScreen(spinnerRef, '0px', false, 1);
 
   const getPhotos = async (c: number) => {
-    const { data } = await api.get(`/photos?page=${c}&per_page=30`);
+    const { data } = await api.get(getUrl, {
+      params: {
+        page: c,
+        per_page: 30,
+      },
+    });
     setPhotos([...photos, ...data]);
     setHasSpinner(true);
   };
@@ -49,16 +61,7 @@ const MasonrySection = () => {
           }
         >
           {photos?.map((photo) => (
-            <div className="relative flex" key={photo.id}>
-              <Image
-                src={photo.urls.regular}
-                alt={photo.alt_description}
-                width={photo.width}
-                height={photo.height}
-                className="z-10"
-              />
-              <div className="animate-pulse bg-gray-300 w-full h-full absolute top-0 left-0" />
-            </div>
+            <ImageContent href="" key={photo.id} image={photo} />
           ))}
         </Masonry>
       </div>

@@ -42,18 +42,17 @@ const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
         }}
       >
         {renderColumn(column)}
-        {i === 1 &&
-          React.Children.map<React.ReactNode, React.ReactNode>(
-            spinnerChild,
-            (child) => {
-              return (
-                React.isValidElement(child) &&
-                React.cloneElement(child, {
-                  style: { marginTop: i > 0 ? gutter : undefined },
-                })
-              );
-            },
-          )}
+        {React.Children.map<React.ReactNode, React.ReactNode>(
+          spinnerChild,
+          (child) => {
+            return (
+              React.isValidElement(child) &&
+              React.cloneElement(child, {
+                style: { marginTop: i > 0 ? gutter : undefined },
+              })
+            );
+          },
+        )}
       </div>
     ));
 
