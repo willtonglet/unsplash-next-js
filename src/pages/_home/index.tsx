@@ -45,6 +45,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   const { data: coverData } = await api.get('/photos/random', {
     params: {
+      topics: 'bo8jQKTaE0Y',
       orientation: 'landscape',
     },
   });

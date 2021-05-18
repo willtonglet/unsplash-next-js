@@ -15,7 +15,6 @@ const MainCover = ({ image }: Props) => {
           width={image.width}
           height={image.height}
           layout="responsive"
-          loading="eager"
           priority
         />
       )}
