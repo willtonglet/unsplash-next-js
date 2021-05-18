@@ -13,6 +13,8 @@ export interface ImageProps {
   urls: {
     regular: string;
     full: string;
+    small: string;
+    thumb: string;
   };
   width: number;
   height: number;

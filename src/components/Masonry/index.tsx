@@ -1,16 +1,16 @@
 import React, { forwardRef } from 'react';
-import Spinner from '../Spinner';
 import { StyledMasonry } from './styles';
 
 interface MasonryProps {
   children: React.ReactNode;
   columnsCount?: number;
   gutter?: string;
+  spinnerChild?: React.ReactNode;
 }
 
 const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
-  (props: MasonryProps, spinnerRef) => {
-    const { children, columnsCount = 3, gutter = '0' } = props;
+  (props: MasonryProps, ref) => {
+    const { children, columnsCount = 3, gutter = '0', spinnerChild } = props;
 
     const getColumn = () => {
       const columns: React.ReactNodeArray[] = Array.from(
@@ -42,20 +42,22 @@ const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
         }}
       >
         {renderColumn(column)}
-        {i === 1 && (
-          <div
-            className="animate-pulse bg-gray-200 w-full h-96 flex items-center"
-            style={{ marginTop: i > 0 ? gutter : undefined }}
-          >
-            <div className="flex w-full justify-center" ref={spinnerRef}>
-              <Spinner />
-            </div>
-          </div>
-        )}
+        {i === 1 &&
+          React.Children.map<React.ReactNode, React.ReactNode>(
+            spinnerChild,
+            (child) => {
+              return (
+                React.isValidElement(child) &&
+                React.cloneElement(child, {
+                  style: { marginTop: i > 0 ? gutter : undefined },
+                })
+              );
+            },
+          )}
       </div>
     ));
 
-    return <StyledMasonry>{renderColumns}</StyledMasonry>;
+    return <StyledMasonry ref={ref}>{renderColumns}</StyledMasonry>;
   },
 );
 
