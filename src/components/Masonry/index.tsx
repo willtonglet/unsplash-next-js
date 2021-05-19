@@ -5,12 +5,11 @@ interface MasonryProps {
   children: React.ReactNode;
   columnsCount?: number;
   gutter?: string;
-  spinnerChild?: React.ReactNode;
 }
 
 const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
   (props: MasonryProps, ref) => {
-    const { children, columnsCount = 3, gutter = '0', spinnerChild } = props;
+    const { children, columnsCount = 3, gutter = '0' } = props;
 
     const getColumn = () => {
       const columns: React.ReactNodeArray[] = Array.from(
@@ -42,17 +41,6 @@ const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
         }}
       >
         {renderColumn(column)}
-        {React.Children.map<React.ReactNode, React.ReactNode>(
-          spinnerChild,
-          (child) => {
-            return (
-              React.isValidElement(child) &&
-              React.cloneElement(child, {
-                style: { marginTop: i > 0 ? gutter : undefined },
-              })
-            );
-          },
-        )}
       </div>
     ));
 

@@ -2,26 +2,27 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import {
-  IoIosAdd,
-  IoIosHeart,
-  IoMdArrowDown,
-  IoMdCheckmarkCircleOutline,
-} from 'react-icons/io';
+import { IoIosAdd, IoIosHeart, IoMdArrowDown } from 'react-icons/io';
+import { useContextualRouting } from '../../hooks/useContextualRouting';
 import { ImageProps } from '../../pages/_home';
+import AvatarInfo from '../AvatarInfo';
 import ButtonIcon from '../ButtonIcon';
 import { StyledImageContent } from './styles';
 
 interface ImageContentProps {
   image: ImageProps;
-  href: string;
 }
 
 const ImageContent = (props: ImageContentProps) => {
-  const { image, href } = props;
+  const { image } = props;
+  const { makeContextualHref } = useContextualRouting();
 
   return (
-    <Link href={href} key={image.id}>
+    <Link
+      href={makeContextualHref({ id: image.id })}
+      as={`/photos/${image.id}`}
+      key={image.id}
+    >
       <StyledImageContent className="relative flex">
         <Image
           src={image.urls.regular}
@@ -40,24 +41,7 @@ const ImageContent = (props: ImageContentProps) => {
             </ButtonIcon>
           </div>
           <div className="flex justify-between items-end w-full">
-            <div className="flex items-center">
-              <img
-                src={image.user.profile_image.medium}
-                alt={image.user.name}
-                className="overflow-hidden h-9 w-9 rounded-full"
-              />
-              <div className="flex flex-col ml-2">
-                <span>{image.user.name}</span>
-                {image.user.for_hire && (
-                  <div className="flex items-center">
-                    <span className="text-xs font-light">
-                      Available for hire
-                    </span>
-                    <IoMdCheckmarkCircleOutline size={12} className="ml-1" />
-                  </div>
-                )}
-              </div>
-            </div>
+            <AvatarInfo image={image} />
             <ButtonIcon>
               <IoMdArrowDown size={24} />
             </ButtonIcon>
