@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import AvatarInfo from '../../components/AvatarInfo';
 import Modal from '../../components/Modal';
 import { AppContext } from '../../contexts/AppContext';
@@ -16,6 +16,14 @@ const ModalPhoto = () => {
   );
   const previousPhoto = photosData[currentPhotoIndex - 1];
   const nextPhoto = photosData[currentPhotoIndex + 1];
+
+  useEffect(() => {
+    if (router.query.id) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [router.query.id]);
 
   if (currentPhoto && photosData)
     return (

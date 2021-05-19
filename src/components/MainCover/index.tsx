@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
+import api from '../../core/api';
 import { ImageProps } from '../../pages/_home';
 import { StyledMainCover } from './styles';
 
 export interface MainCoverProps {
-  image?: ImageProps;
   trends?: { title: string; id: string }[];
 }
 
 const MainCover = (props: MainCoverProps) => {
-  const { image, trends } = props;
+  const { trends } = props;
+  const [cover, setCover] = useState<ImageProps>();
+
+  const getData = async () => {
+    const { data } = await api.get('/photos/random', {
+      params: {
+        orientation: 'landscape',
+      },
+    });
+    setCover(data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
-    <StyledMainCover className="text-white" image={image?.urls.full}>
+    <StyledMainCover className="text-white" image={cover?.urls.full}>
       <div className="h-full bg-opacity-50 bg-black w-screen flex flex-col justify-between">
         <div className="flex items-center justify-center flex-1">
           <div className="flex flex-col w-2/3">
@@ -54,7 +68,7 @@ const MainCover = (props: MainCoverProps) => {
         <div className="flex justify-between text-sm text-gray-400 p-5">
           <div className="font-light">
             <span className="text-white">Photo of the Day</span> by{' '}
-            <span className="text-white">{image?.user.name}</span>
+            <span className="text-white">{cover?.user.name}</span>
           </div>
         </div>
       </div>

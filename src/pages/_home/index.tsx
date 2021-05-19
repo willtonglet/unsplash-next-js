@@ -33,10 +33,9 @@ export interface ImageProps {
 interface PageProps {
   topics: { title: string; id: string }[];
   trends: { title: string; id: string }[];
-  cover: ImageProps;
 }
 
-const HomePage = ({ topics, cover, trends }: PageProps) => {
+const HomePage = ({ topics, trends }: PageProps) => {
   return (
     <PageWrapper>
       <Head>
@@ -45,7 +44,7 @@ const HomePage = ({ topics, cover, trends }: PageProps) => {
       <header className="sticky z-50 bg-white top-0 w-screen shadow-md">
         <TopicsNav topics={topics} />
       </header>
-      <MainCover image={cover} trends={trends} />
+      <MainCover trends={trends} />
       <ModalPhoto />
       <MasonrySection getUrl="/photos" />
     </PageWrapper>
@@ -66,17 +65,10 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  const { data: coverData } = await api.get('/photos/random', {
-    params: {
-      orientation: 'landscape',
-    },
-  });
-
   return {
     props: {
       trends: trendsData,
       topics: topicsData,
-      cover: coverData,
     },
   };
 };
