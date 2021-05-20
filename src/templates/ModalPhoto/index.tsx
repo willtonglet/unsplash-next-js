@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import AvatarInfo from '../../components/AvatarInfo';
 import Modal from '../../components/Modal';
 import { AppContext } from '../../contexts/AppContext';
@@ -17,23 +17,15 @@ const ModalPhoto = () => {
   const previousPhoto = photosData[currentPhotoIndex - 1];
   const nextPhoto = photosData[currentPhotoIndex + 1];
 
-  useEffect(() => {
-    if (router.query.id) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [router.query.id]);
-
   if (currentPhoto && photosData)
     return (
       <Modal
         isOpen={Boolean(router.query.id)}
-        onRequestClose={() => router.push(returnHref as string)}
+        requestClose={returnHref as string}
         requestPrevId={previousPhoto?.id}
         requestNextId={nextPhoto?.id}
       >
-        <div className="sticky top-0 bg-white z-20 py-3">
+        <div className="sticky rounded-t px-2 top-0 bg-white z-20 py-3">
           <AvatarInfo image={currentPhoto} />
         </div>
         <div className="w-full flex justify-center">

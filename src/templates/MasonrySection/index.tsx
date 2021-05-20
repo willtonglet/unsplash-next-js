@@ -50,7 +50,7 @@ const MasonrySection = (props: MasonrySectionProps) => {
         </Masonry>
         <div
           className={`flex w-full my-6 justify-center ${
-            !hasSpinner && 'hidden'
+            !hasSpinner && photosData.length === 0 && 'hidden'
           }`}
           ref={spinnerRef}
         >

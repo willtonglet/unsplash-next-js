@@ -22,6 +22,7 @@ const ImageContent = (props: ImageContentProps) => {
       href={makeContextualHref({ id: image.id })}
       as={`/photos/${image.id}`}
       key={image.id}
+      scroll={false}
     >
       <StyledImageContent className="relative flex">
         <Image

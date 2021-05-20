@@ -6,36 +6,40 @@ import { StyledModal } from './styles';
 
 interface ModalProps {
   isOpen: boolean;
-  onRequestClose: () => void;
+  requestClose: string;
   requestPrevId?: string;
   requestNextId?: string;
   children: React.ReactNode;
 }
 
 const Modal = (props: ModalProps) => {
-  const { isOpen, onRequestClose, requestPrevId, requestNextId, children } =
+  const { isOpen, requestClose, requestPrevId, requestNextId, children } =
     props;
-  const modalRef = useRef<HTMLDivElement>(null);
   const { makeContextualHref } = useContextualRouting();
 
   useEffect(() => {
-    modalRef.current?.addEventListener('click', onRequestClose);
-    return () => modalRef.current?.removeEventListener('click', onRequestClose);
-  }, []);
+    if (isOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [isOpen]);
 
   if (isOpen) {
     return (
       <StyledModal className="w-screen h-screen min-h-screen fixed top-0 left-0 overflow-scroll z-50 flex items-start justify-center">
-        <IoIosClose
-          size={36}
-          onClick={onRequestClose}
-          className="fixed top-1 left-1 text-gray-200 cursor-pointer z-20 hover:text-white"
-        />
+        <Link href={requestClose} scroll={false}>
+          <IoIosClose
+            size={36}
+            className="fixed top-1 left-1 text-gray-200 cursor-pointer z-20 hover:text-white"
+          />
+        </Link>
         {requestPrevId && (
           <div className="fixed inset-y-0 left-10 my-auto h-0 z-20">
             <Link
               href={makeContextualHref({ id: requestPrevId })}
               as={`/photos/${requestPrevId}`}
+              scroll={false}
             >
               <a className="text-gray-200 cursor-pointer hover:text-white">
                 <IoIosArrowBack size={32} />
@@ -48,6 +52,7 @@ const Modal = (props: ModalProps) => {
             <Link
               href={makeContextualHref({ id: requestNextId })}
               as={`/photos/${requestNextId}`}
+              scroll={false}
             >
               <a className="text-gray-200 cursor-pointer hover:text-white">
                 <IoIosArrowForward size={32} />
@@ -56,14 +61,14 @@ const Modal = (props: ModalProps) => {
           </div>
         )}
 
-        <div className="bg-white px-3 rounded w-10/12 my-10 z-20">
+        <div className="bg-white rounded w-10/12 min-h-full my-10 z-20">
           {children}
         </div>
-
-        <div
-          className="overlay w-screen min-h-screen fixed top-0 left-0 bg-opacity-50 bg-black z-10"
-          ref={modalRef}
-        />
+        <Link href={requestClose} scroll={false}>
+          <a>
+            <div className="overlay w-screen min-h-screen fixed top-0 left-0 bg-opacity-50 bg-black z-10" />
+          </a>
+        </Link>
       </StyledModal>
     );
   }
