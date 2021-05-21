@@ -30,7 +30,7 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
       {cover && (
         <ImageWithPreview
           src={cover.urls.regular}
-          previewSrc={cover.urls.thumb}
+          hash={cover.blur_hash}
           width={cover.width}
           height={cover.height}
           alt={cover.alt_description}

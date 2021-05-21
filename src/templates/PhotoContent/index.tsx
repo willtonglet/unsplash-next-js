@@ -39,7 +39,7 @@ const PhotoContent = (props: PhotoContentProps): JSX.Element => {
 
         <ImageWithPreview
           src={isExpanded ? image.urls.full : image.urls.regular}
-          previewSrc={image.urls.thumb}
+          hash={image.blur_hash}
           alt={image.alt_description}
           width={image.width}
           height={image.height}

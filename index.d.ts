@@ -26,6 +26,7 @@ interface ImageProps {
   width: number;
   height: number;
   user: UserProps;
+  blur_hash: string;
 }
 interface PageProps {
   topics: { title: string; id: string }[];

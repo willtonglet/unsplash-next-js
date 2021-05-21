@@ -1,23 +1,17 @@
 import Image, { ImageProps } from 'next/image';
+import { Blurhash } from 'react-blurhash';
 
-type ImageWithPreviewProps = ImageProps & { previewSrc?: string };
+type ImageWithPreviewProps = ImageProps & { hash: string };
 
 const ImageWithPreview = (props: ImageWithPreviewProps): JSX.Element => {
-  const { src, width, height, alt, previewSrc } = props;
+  const { src, hash, className } = props;
 
   if (src)
     return (
-      <div className="relative flex">
+      <div className={`relative flex ${className}`}>
         <Image {...props} className="z-10" />
-
-        <div className="preview animate-pulse bg-gray-300 w-full h-full absolute top-0 left-0 overflow-hidden">
-          <img
-            src={previewSrc}
-            className="w-full filter blur-xl"
-            alt={`Preview - ${alt}`}
-            width={width}
-            height={height}
-          />
+        <div className="w-full h-full absolute top-0 left-0">
+          <Blurhash hash={hash} width="100%" height="100%" />
         </div>
       </div>
     );

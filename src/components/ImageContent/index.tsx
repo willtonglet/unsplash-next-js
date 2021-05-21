@@ -26,7 +26,7 @@ const ImageContent = (props: ImageContentProps): JSX.Element => {
         <ImageWithPreview
           key={image.id}
           src={image.urls.regular}
-          previewSrc={image.urls.thumb}
+          hash={image.blur_hash}
           width={image.width}
           height={image.height}
           alt={image.alt_description}
