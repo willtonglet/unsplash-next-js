@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import api from '../../core/middleware/api';
+import { api } from '../../core/middleware/api';
 import TopicsNav from '../../components/TopicsNav';
 import PageWrapper from '../../templates/PageWrapper';
 import MainCover from '../../components/MainCover';

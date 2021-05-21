@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import Link from 'next/link';
 import React from 'react';
 import { IoIosAdd, IoIosHeart, IoMdArrowDown } from 'react-icons/io';
@@ -25,7 +23,14 @@ const ImageContent = (props: ImageContentProps): JSX.Element => {
       scroll={false}
     >
       <StyledImageContent className="relative flex">
-        <ImageWithPreview image={image} />
+        <ImageWithPreview
+          key={image.id}
+          src={image.urls.regular}
+          previewSrc={image.urls.thumb}
+          width={image.width}
+          height={image.height}
+          alt={image.alt_description}
+        />
         <div className="content bg-opacity-40 bg-black text-white z-20">
           <div className="flex justify-end items-center">
             <ButtonIcon>

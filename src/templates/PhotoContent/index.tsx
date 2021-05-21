@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoIosExpand } from 'react-icons/io';
+import ImageWithPreview from '@components/ImageWithPreview';
 import { StyledPhotoContent } from './styles';
 
 interface PhotoContentProps {
@@ -12,6 +12,11 @@ const PhotoContent = (props: PhotoContentProps): JSX.Element => {
   const { image, className } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpand = () => setIsExpanded(!isExpanded);
+
+  useEffect(() => {
+    setIsExpanded(false);
+  }, [image]);
+
   return (
     <StyledPhotoContent
       isExpanded={isExpanded}
@@ -31,12 +36,13 @@ const PhotoContent = (props: PhotoContentProps): JSX.Element => {
           size={24}
           className="absolute text-white top-4 right-4 z-20"
         />
-        <Image
-          src={image.urls.regular}
+
+        <ImageWithPreview
+          src={isExpanded ? image.urls.full : image.urls.regular}
+          previewSrc={image.urls.thumb}
           alt={image.alt_description}
           width={image.width}
           height={image.height}
-          layout="responsive"
           className={className}
           priority
         />

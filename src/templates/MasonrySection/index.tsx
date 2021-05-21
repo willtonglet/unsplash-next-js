@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import Masonry from '../../components/Masonry';
 import Spinner from '../../components/Spinner';
-import api from '../../core/middleware/api';
+import { api } from '../../core/middleware/api';
 import ImageContent from '../../components/ImageContent';
 import { AppContext } from '../../contexts/AppContext';
 import useMediaQuery from '../../hooks/useMediaQuery';

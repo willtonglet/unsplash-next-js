@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
-import api from '../../core/middleware/api';
+import { api } from '../../core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
 import { StyledMainCover } from './styles';
 
@@ -27,7 +27,18 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
 
   return (
     <StyledMainCover className="text-white">
-      <ImageWithPreview image={cover as ImageProps} />
+      {cover && (
+        <ImageWithPreview
+          src={cover.urls.regular}
+          previewSrc={cover.urls.thumb}
+          width={cover.width}
+          height={cover.height}
+          alt={cover.alt_description}
+          priority
+          loading="eager"
+        />
+      )}
+
       <div className="h-full absolute top-0 left-0 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-20">
         <div className="flex items-center justify-center flex-1">
           <div className="flex flex-col w-2/3">

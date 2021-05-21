@@ -11,6 +11,7 @@ interface ImageSizes {
   thumb: string;
   medium: string;
   large: string;
+  cover: string;
 }
 interface UserProps {
   name: string;

@@ -1,28 +1,22 @@
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 
-interface ImageWithPreviewProps {
-  image: ImageProps;
-}
+type ImageWithPreviewProps = ImageProps & { previewSrc?: string };
 
-const ImageWithPreview = ({ image }: ImageWithPreviewProps): JSX.Element => {
-  if (image)
+const ImageWithPreview = (props: ImageWithPreviewProps): JSX.Element => {
+  const { src, width, height, alt, previewSrc } = props;
+
+  if (src)
     return (
       <div className="relative flex">
-        <Image
-          src={image.urls.regular}
-          alt={image.alt_description}
-          width={image.width}
-          height={image.height}
-          className="z-10"
-        />
+        <Image {...props} className="z-10" />
 
         <div className="preview animate-pulse bg-gray-300 w-full h-full absolute top-0 left-0 overflow-hidden">
           <img
-            src={image.urls.thumb}
+            src={previewSrc}
             className="w-full filter blur-xl"
-            alt={`Preview - ${image?.alt_description}`}
-            width={image.width}
-            height={image.height}
+            alt={`Preview - ${alt}`}
+            width={width}
+            height={height}
           />
         </div>
       </div>
