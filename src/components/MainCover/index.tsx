@@ -1,7 +1,9 @@
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import api from '../../core/api';
 import { ImageProps } from '../../pages/_home';
+import ImageWithPreview from '../ImageWithPreview';
 import { StyledMainCover } from './styles';
 
 export interface MainCoverProps {
@@ -26,8 +28,9 @@ const MainCover = (props: MainCoverProps) => {
   }, []);
 
   return (
-    <StyledMainCover className="text-white" image={cover?.urls.full}>
-      <div className="h-full bg-opacity-50 bg-black w-screen flex flex-col justify-between">
+    <StyledMainCover className="text-white">
+      <ImageWithPreview image={cover as ImageProps} />
+      <div className="h-full absolute top-0 left-0 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-20">
         <div className="flex items-center justify-center flex-1">
           <div className="flex flex-col w-2/3">
             <h2 className="text-5xl font-bold mb-5">Unsplash</h2>

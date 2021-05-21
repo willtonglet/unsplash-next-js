@@ -1,8 +1,13 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+} from 'react';
 import Masonry from '../../components/Masonry';
 import Spinner from '../../components/Spinner';
 import api from '../../core/api';
-import useOnScreen from '../../hooks/useOnScreen';
 import ImageContent from '../../components/ImageContent';
 import { AppContext } from '../../contexts/AppContext';
 
@@ -12,33 +17,49 @@ interface MasonrySectionProps {
 
 const MasonrySection = (props: MasonrySectionProps) => {
   const { getUrl } = props;
-  const [count, setCount] = useState(1);
-  const [hasSpinner, setHasSpinner] = useState(true);
-  const spinnerRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(AppContext);
-  const onScreen = useOnScreen(spinnerRef, '0px', false, 1);
+  const loader = useRef<HTMLDivElement>(null);
 
-  const getPhotos = async (c: number) => {
-    const { data } = await api.get(getUrl, {
-      params: {
-        page: c,
-        per_page: 30,
-      },
-    });
-    setPhotosData([...photosData, ...data]);
-    setHasSpinner(true);
+  const getPhotos = () => {
+    api
+      .get(getUrl, {
+        params: {
+          page,
+          per_page: 30,
+        },
+      })
+      .then((response) => {
+        if (page > 1) {
+          const arr = [...photosData, ...response.data];
+
+          setPhotosData(arr);
+        } else {
+          setPhotosData(response.data);
+        }
+      });
   };
 
   useEffect(() => {
-    getPhotos(count);
-  }, [count]);
+    getPhotos();
+  }, [page]);
+
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      setPage((prev) => prev + 1);
+    }
+  }, []);
 
   useEffect(() => {
-    if (onScreen) {
-      setHasSpinner(false);
-      setCount(count + 1);
-    }
-  }, [onScreen, count]);
+    const option = {
+      root: null,
+      rootMargin: '20px',
+      threshold: 0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loader.current) observer.observe(loader.current);
+  }, [handleObserver]);
 
   return (
     <section className="flex flex-col w-full items-center bg-gray-50 py-12">
@@ -48,12 +69,7 @@ const MasonrySection = (props: MasonrySectionProps) => {
             <ImageContent key={photo.id} image={photo} />
           ))}
         </Masonry>
-        <div
-          className={`flex w-full my-6 justify-center ${
-            !hasSpinner && photosData.length === 0 && 'hidden'
-          }`}
-          ref={spinnerRef}
-        >
+        <div className="flex w-full my-6 justify-center" ref={loader}>
           <Spinner />
         </div>
       </div>

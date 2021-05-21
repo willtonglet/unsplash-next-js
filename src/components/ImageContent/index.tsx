@@ -7,6 +7,7 @@ import { useContextualRouting } from '../../hooks/useContextualRouting';
 import { ImageProps } from '../../pages/_home';
 import AvatarInfo from '../AvatarInfo';
 import ButtonIcon from '../ButtonIcon';
+import ImageWithPreview from '../ImageWithPreview';
 import { StyledImageContent } from './styles';
 
 interface ImageContentProps {
@@ -25,13 +26,7 @@ const ImageContent = (props: ImageContentProps) => {
       scroll={false}
     >
       <StyledImageContent className="relative flex">
-        <Image
-          src={image.urls.regular}
-          alt={image.alt_description}
-          width={image.width}
-          height={image.height}
-          className="z-10"
-        />
+        <ImageWithPreview image={image} />
         <div className="content bg-opacity-40 bg-black text-white z-20">
           <div className="flex justify-end items-center">
             <ButtonIcon>
@@ -48,7 +43,6 @@ const ImageContent = (props: ImageContentProps) => {
             </ButtonIcon>
           </div>
         </div>
-        <div className="animate-pulse bg-gray-300 w-full h-full absolute top-0 left-0" />
       </StyledImageContent>
     </Link>
   );
