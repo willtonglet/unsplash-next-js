@@ -1,41 +1,13 @@
-/* eslint-disable camelcase */
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import api from '../../core/api';
+import api from '../../core/middleware/api';
 import TopicsNav from '../../components/TopicsNav';
 import PageWrapper from '../../templates/PageWrapper';
 import MainCover from '../../components/MainCover';
 import MasonrySection from '../../templates/MasonrySection';
 import ModalPhoto from '../../templates/ModalPhoto';
 
-export interface ImageSizes {
-  regular: string;
-  full: string;
-  small: string;
-  thumb: string;
-  medium: string;
-  large: string;
-}
-export interface UserProps {
-  name: string;
-  profile_image: ImageSizes;
-  for_hire: boolean;
-}
-
-export interface ImageProps {
-  id: string;
-  alt_description: string;
-  urls: ImageSizes;
-  width: number;
-  height: number;
-  user: UserProps;
-}
-interface PageProps {
-  topics: { title: string; id: string }[];
-  trends: { title: string; id: string }[];
-}
-
-const HomePage = ({ topics, trends }: PageProps) => {
+const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
   return (
     <PageWrapper>
       <Head>

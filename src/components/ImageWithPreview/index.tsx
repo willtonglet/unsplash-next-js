@@ -1,11 +1,10 @@
 import Image from 'next/image';
-import { ImageProps } from '../../pages/_home';
 
 interface ImageWithPreviewProps {
   image: ImageProps;
 }
 
-const ImageWithPreview = ({ image }: ImageWithPreviewProps) => {
+const ImageWithPreview = ({ image }: ImageWithPreviewProps): JSX.Element => {
   if (image)
     return (
       <div className="relative flex">

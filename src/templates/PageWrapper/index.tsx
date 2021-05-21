@@ -7,7 +7,7 @@ interface PageWrapperProps {
   children?: ReactNode;
 }
 
-const PageWrapper = ({ children }: PageWrapperProps) => {
+const PageWrapper = ({ children }: PageWrapperProps): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {

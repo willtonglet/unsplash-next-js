@@ -1,10 +1,9 @@
 /* eslint-disable camelcase */
-import Image from 'next/image';
+
 import Link from 'next/link';
 import React from 'react';
 import { IoIosAdd, IoIosHeart, IoMdArrowDown } from 'react-icons/io';
 import { useContextualRouting } from '../../hooks/useContextualRouting';
-import { ImageProps } from '../../pages/_home';
 import AvatarInfo from '../AvatarInfo';
 import ButtonIcon from '../ButtonIcon';
 import ImageWithPreview from '../ImageWithPreview';
@@ -14,7 +13,7 @@ interface ImageContentProps {
   image: ImageProps;
 }
 
-const ImageContent = (props: ImageContentProps) => {
+const ImageContent = (props: ImageContentProps): JSX.Element => {
   const { image } = props;
   const { makeContextualHref } = useContextualRouting();
 

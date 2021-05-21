@@ -1,13 +1,12 @@
 import { GetServerSideProps } from 'next';
-import api from '../../core/api';
+import api from '../../core/middleware/api';
 import PhotoContent from '../../templates/PhotoContent';
-import { ImageProps } from '../_home';
 
 interface PhotoPageProps {
   image: ImageProps;
 }
 
-const Photos = ({ image }: PhotoPageProps) => {
+const Photos = ({ image }: PhotoPageProps): JSX.Element => {
   return <PhotoContent image={image} />;
 };
 

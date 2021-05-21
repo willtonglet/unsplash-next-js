@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { IoIosArrowBack, IoIosArrowForward, IoIosClose } from 'react-icons/io';
 import { useContextualRouting } from '../../hooks/useContextualRouting';
 import { StyledModal } from './styles';
@@ -12,7 +12,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal = (props: ModalProps) => {
+const Modal = (props: ModalProps): JSX.Element => {
   const { isOpen, requestClose, requestPrevId, requestNextId, children } =
     props;
   const { makeContextualHref } = useContextualRouting();

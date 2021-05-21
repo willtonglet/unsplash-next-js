@@ -1,8 +1,6 @@
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
-import api from '../../core/api';
-import { ImageProps } from '../../pages/_home';
+import api from '../../core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
 import { StyledMainCover } from './styles';
 
@@ -10,7 +8,7 @@ export interface MainCoverProps {
   trends?: { title: string; id: string }[];
 }
 
-const MainCover = (props: MainCoverProps) => {
+const MainCover = (props: MainCoverProps): JSX.Element => {
   const { trends } = props;
   const [cover, setCover] = useState<ImageProps>();
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { ImageProps } from '../../pages/_home';
 
 interface AvatarInfoProps {
   image: ImageProps;
 }
 
-const AvatarInfo = (props: AvatarInfoProps) => {
+const AvatarInfo = (props: AvatarInfoProps): JSX.Element => {
   const { image } = props;
 
   return (

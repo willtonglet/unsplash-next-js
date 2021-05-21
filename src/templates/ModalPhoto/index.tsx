@@ -6,7 +6,7 @@ import { AppContext } from '../../contexts/AppContext';
 import { useContextualRouting } from '../../hooks/useContextualRouting';
 import PhotoContent from '../PhotoContent';
 
-const ModalPhoto = () => {
+const ModalPhoto = (): JSX.Element => {
   const { photosData } = useContext(AppContext);
   const router = useRouter();
   const { returnHref } = useContextualRouting();

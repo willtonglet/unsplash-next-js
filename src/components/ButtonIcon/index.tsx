@@ -1,8 +1,8 @@
 import React from 'react';
 
-interface ButtonIconProps extends React.HTMLAttributes<HTMLButtonElement> {}
+type ButtonIconProps = React.HTMLAttributes<HTMLButtonElement>;
 
-const ButtonIcon = (props: ButtonIconProps) => {
+const ButtonIcon = (props: ButtonIconProps): JSX.Element => {
   const { children, className, ...rest } = props;
 
   return (

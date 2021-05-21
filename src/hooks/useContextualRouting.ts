@@ -4,7 +4,10 @@ import stringify from 'qs-stringify';
 
 export const RETURN_HREF_QUERY_PARAM = '_UCR_return_href';
 
-export function useContextualRouting() {
+export function useContextualRouting(): {
+  returnHref: string | string[];
+  makeContextualHref: (extraParams: any) => string;
+} {
   const router = useRouter();
   const returnHrefQueryParam = router.query[RETURN_HREF_QUERY_PARAM];
   const watchedQuery = { ...router.query };

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { IoIosExpand } from 'react-icons/io';
-import { ImageProps } from '../../pages/_home';
 import { StyledPhotoContent } from './styles';
 
 interface PhotoContentProps {
@@ -9,7 +8,7 @@ interface PhotoContentProps {
   className?: string;
 }
 
-const PhotoContent = (props: PhotoContentProps) => {
+const PhotoContent = (props: PhotoContentProps): JSX.Element => {
   const { image, className } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpand = () => setIsExpanded(!isExpanded);
