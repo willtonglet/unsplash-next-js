@@ -4,7 +4,6 @@ import React, {
   SetStateAction,
   useState,
 } from 'react';
-import { ImageProps } from '../pages/_home';
 
 interface AppContextProps {
   photosData: ImageProps[];
@@ -13,7 +12,7 @@ interface AppContextProps {
 
 export const AppContext = createContext<AppContextProps>({
   photosData: [] as ImageProps[],
-  setPhotosData: () => {},
+  setPhotosData: () => null,
 });
 
 export const AppContextProvider: React.FC = ({ children }) => {
