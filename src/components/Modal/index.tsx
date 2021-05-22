@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { IoIosArrowBack, IoIosArrowForward, IoIosClose } from 'react-icons/io';
-import { useContextualRouting } from '../../hooks/useContextualRouting';
+import { useContextualRouting } from '@hooks/useContextualRouting';
 import { StyledModal } from './styles';
 
 interface ModalProps {

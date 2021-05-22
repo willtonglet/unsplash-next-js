@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import AvatarInfo from '../../components/AvatarInfo';
-import Modal from '../../components/Modal';
-import { AppContext } from '../../contexts/AppContext';
-import { useContextualRouting } from '../../hooks/useContextualRouting';
-import PhotoContent from '../PhotoContent';
+import React, { useContext } from 'react';
+import { AppContext } from '@contexts/AppContext';
+import { useContextualRouting } from '@hooks/useContextualRouting';
+import AvatarInfo from '@components/AvatarInfo';
+import Modal from '@components/Modal';
+import PhotoContent from '@templates/PhotoContent';
 
 const ModalPhoto = (): JSX.Element => {
   const { photosData } = useContext(AppContext);

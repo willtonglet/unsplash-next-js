@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { IoIosAdd, IoIosHeart, IoMdArrowDown } from 'react-icons/io';
-import { useContextualRouting } from '../../hooks/useContextualRouting';
+import { useContextualRouting } from '@hooks/useContextualRouting';
 import AvatarInfo from '../AvatarInfo';
 import ButtonIcon from '../ButtonIcon';
 import ImageWithPreview from '../ImageWithPreview';

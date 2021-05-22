@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { AppContextProvider } from '../../contexts/AppContext';
+import { AppContextProvider } from '@contexts/AppContext';
 
 interface PageWrapperProps {
   children?: ReactNode;

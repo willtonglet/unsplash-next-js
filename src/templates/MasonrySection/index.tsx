@@ -1,16 +1,9 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext,
-  useCallback,
-} from 'react';
-import Masonry from '../../components/Masonry';
-import Spinner from '../../components/Spinner';
-import { api } from '../../core/middleware/api';
-import ImageContent from '../../components/ImageContent';
-import { AppContext } from '../../contexts/AppContext';
-import useMediaQuery from '../../hooks/useMediaQuery';
+import React, { useState, useEffect, useContext } from 'react';
+import ImageContent from '@components/ImageContent';
+import Masonry from '@components/Masonry';
+import { AppContext } from '@contexts/AppContext';
+import { api } from '@core/middleware/api';
+import useMediaQuery from '@hooks/useMediaQuery';
 
 interface MasonrySectionProps {
   getUrl: string;

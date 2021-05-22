@@ -5,9 +5,8 @@ import {
   EffectCallback,
   DependencyList,
 } from 'react';
-import { mqs, mockMediaQueryList } from '../core/helpers/mqs';
+import { mqs, mockMediaQueryList } from '@core/helpers/mqs';
 
-// eslint-disable-next-line no-unused-vars
 export type Effect = (effect: EffectCallback, deps?: DependencyList) => void;
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'wd';
 

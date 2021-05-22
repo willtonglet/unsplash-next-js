@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
-import { api } from '../../core/middleware/api';
-import PhotoContent from '../../templates/PhotoContent';
+import { api } from '@core/middleware/api';
+import PhotoContent from '@templates/PhotoContent';
 
 interface PhotoPageProps {
   image: ImageProps;

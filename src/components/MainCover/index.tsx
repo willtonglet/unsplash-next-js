@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
-import { api } from '../../core/middleware/api';
+import { api } from '@core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
 import { StyledMainCover } from './styles';
 
