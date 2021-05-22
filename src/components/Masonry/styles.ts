@@ -8,12 +8,13 @@ export const StyledMasonry = styled.div`
   box-sizing: border-box;
   width: 100%;
 
-  .columns {
+  .column {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-content: stretch;
     flex: 1;
     width: 0;
+    height: fit-content;
   }
 `;
