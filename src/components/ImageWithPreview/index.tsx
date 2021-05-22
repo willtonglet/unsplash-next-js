@@ -1,5 +1,5 @@
 import Image, { ImageProps } from 'next/image';
-import { Blurhash } from 'react-blurhash';
+import Blurhash from '../BlurHash';
 
 type ImageWithPreviewProps = ImageProps & { hash: string };
 
