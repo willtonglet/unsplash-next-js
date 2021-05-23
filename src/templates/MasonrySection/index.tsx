@@ -72,17 +72,16 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
     if (isLg) setColumns(3);
   }, [isXs, isMd, isLg]);
 
+  console.log(spinnerRef);
+
   return (
     <section className="flex flex-col w-full items-center bg-gray-50 py-12">
       <div className="w-full max-w-screen-xl flex flex-col">
-        <Masonry columnsCount={columns} gutter="1.5rem">
+        <Masonry columnsCount={columns} gutter="1.5rem" spinnerRef={spinnerRef}>
           {photosData?.map((photo) => (
             <ImageContent key={photo.id} image={photo} />
           ))}
         </Masonry>
-      </div>
-      <div className="flex w-full my-6 justify-center" ref={spinnerRef}>
-        <Spinner />
       </div>
     </section>
   );
