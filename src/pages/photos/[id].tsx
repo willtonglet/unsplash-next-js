@@ -1,13 +1,20 @@
 import { GetServerSideProps } from 'next';
 import { api } from '@core/middleware/api';
 import PhotoContent from '@templates/PhotoContent';
+import MasonrySection from '@templates/MasonrySection';
+import PageWrapper from '@templates/PageWrapper';
 
 interface PhotoPageProps {
   image: ImageProps;
 }
 
 const Photos = ({ image }: PhotoPageProps): JSX.Element => {
-  return <PhotoContent image={image} />;
+  return (
+    <PageWrapper>
+      <PhotoContent image={image} />
+      <MasonrySection getUrl="/photos" />
+    </PageWrapper>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

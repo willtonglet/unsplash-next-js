@@ -1,5 +1,4 @@
-import Spinner from '@components/Spinner';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { StyledMasonry } from './styles';
 
@@ -7,12 +6,16 @@ interface MasonryProps {
   children: React.ReactNode;
   columnsCount?: number;
   gutter?: string;
-  spinnerRef?: React.RefObject<HTMLDivElement>;
+  onColumnsDifferenceSizes?: (difference: number) => void;
 }
 
 const Masonry = (props: MasonryProps): JSX.Element => {
-  const { children, columnsCount = 3, gutter = '0', spinnerRef } = props;
-  const [indexColumnWithRef, setIndesConlumnWithRef] = useState(0);
+  const {
+    children,
+    columnsCount = 3,
+    gutter = '0',
+    onColumnsDifferenceSizes,
+  } = props;
   const mainRef = useRef<HTMLDivElement>(null);
 
   const getColumn = () => {
@@ -36,23 +39,17 @@ const Masonry = (props: MasonryProps): JSX.Element => {
     ));
   };
 
-  const renderColumns = getColumn().map((column, i) => {
-    const hasSpinner = indexColumnWithRef === i;
-    return (
-      <div
-        key={i}
-        className="column"
-        style={{
-          marginLeft: i > 0 ? gutter : undefined,
-        }}
-      >
-        {renderColumn(column)}
-        <div ref={hasSpinner ? spinnerRef : null}>
-          {hasSpinner && <Spinner />}
-        </div>
-      </div>
-    );
-  });
+  const renderColumns = getColumn().map((column, i) => (
+    <div
+      key={i}
+      className="column"
+      style={{
+        marginLeft: i > 0 ? gutter : undefined,
+      }}
+    >
+      {renderColumn(column)}
+    </div>
+  ));
 
   useEffect(() => {
     const columnsHeight = Array.from({ length: columnsCount }).map(
@@ -60,10 +57,13 @@ const Masonry = (props: MasonryProps): JSX.Element => {
         mainRef.current &&
         Math.round(mainRef.current.children[i].getBoundingClientRect().height),
     );
-    setIndesConlumnWithRef(
-      columnsHeight.indexOf(Math.min(...(columnsHeight as number[]))),
-    );
-  }, [children]);
+
+    onColumnsDifferenceSizes &&
+      onColumnsDifferenceSizes(
+        Math.max(...(columnsHeight as number[])) -
+          Math.min(...(columnsHeight as number[])),
+      );
+  }, [children, onColumnsDifferenceSizes]);
 
   return <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>;
 };

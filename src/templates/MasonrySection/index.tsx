@@ -19,8 +19,10 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   const { getUrl } = props;
   const [page, setPage] = useState(1);
   const [columns, setColumns] = useState(3);
+  const [inifiniteScrollSize, setInfiniteScrollSize] = useState(0);
+
   const { photosData, setPhotosData } = useContext(AppContext);
-  const spinnerRef = useRef<HTMLDivElement>(null);
+  const infiniteScrollRef = useRef<HTMLDivElement>(null);
   const isXs = useMediaQuery('xs');
   const isMd = useMediaQuery('md');
   const isLg = useMediaQuery('lg');
@@ -54,11 +56,11 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: '20px',
-      threshold: 0,
+      rootMargin: '0px',
+      threshold: 1.0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
-    if (spinnerRef.current) observer.observe(spinnerRef.current);
+    if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
   }, [handleObserver]);
 
   useEffect(() => {
@@ -71,17 +73,24 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
     if (isLg) setColumns(3);
   }, [isXs, isMd, isLg]);
 
-  console.log(spinnerRef);
-
   return (
     <section className="flex flex-col w-full items-center bg-gray-50 py-12">
       <div className="w-full max-w-screen-xl flex flex-col">
-        <Masonry columnsCount={columns} gutter="1.5rem" spinnerRef={spinnerRef}>
+        <Masonry
+          columnsCount={columns}
+          gutter="1.5rem"
+          onColumnsDifferenceSizes={(val: number) => setInfiniteScrollSize(val)}
+        >
           {photosData?.map((photo) => (
             <ImageContent key={photo.id} image={photo} />
           ))}
         </Masonry>
       </div>
+      <div
+        className="flex"
+        style={{ marginTop: `-${inifiniteScrollSize}px` }}
+        ref={infiniteScrollRef}
+      />
     </section>
   );
 };
