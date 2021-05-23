@@ -10,7 +10,6 @@ import Masonry from '@components/Masonry';
 import { AppContext } from '@contexts/AppContext';
 import { api } from '@core/middleware/api';
 import useMediaQuery from '@hooks/useMediaQuery';
-import Spinner from '@components/Spinner';
 
 interface MasonrySectionProps {
   getUrl: string;
