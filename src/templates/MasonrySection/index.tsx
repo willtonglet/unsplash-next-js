@@ -10,6 +10,7 @@ import Masonry from '@components/Masonry';
 import { AppContext } from '@contexts/AppContext';
 import { api } from '@core/middleware/api';
 import useMediaQuery from '@hooks/useMediaQuery';
+import Spinner from '@components/Spinner';
 
 interface MasonrySectionProps {
   getUrl: string;
@@ -74,8 +75,8 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   }, [isXs, isMd, isLg]);
 
   return (
-    <section className="flex flex-col w-full items-center bg-gray-50 py-12">
-      <div className="w-full max-w-screen-xl flex flex-col">
+    <div className="flex flex-col w-full items-center">
+      <div className="w-full max-w-screen-xl flex flex-col z-10">
         <Masonry
           columnsCount={columns}
           gutter="1.5rem"
@@ -87,11 +88,11 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
         </Masonry>
       </div>
       <div
-        className="flex"
+        className="w-screen"
         style={{ marginTop: `-${inifiniteScrollSize}px` }}
         ref={infiniteScrollRef}
       />
-    </section>
+    </div>
   );
 };
 

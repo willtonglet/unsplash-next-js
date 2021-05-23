@@ -18,7 +18,9 @@ const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
       </header>
       <MainCover trends={trends} />
       <ModalPhoto />
-      <MasonrySection getUrl="/photos" />
+      <section className="bg-gray-50 py-12">
+        <MasonrySection getUrl="/photos" />
+      </section>
     </PageWrapper>
   );
 };
