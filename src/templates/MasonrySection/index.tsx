@@ -1,9 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+} from 'react';
 import ImageContent from '@components/ImageContent';
 import Masonry from '@components/Masonry';
 import { AppContext } from '@contexts/AppContext';
 import { api } from '@core/middleware/api';
 import useMediaQuery from '@hooks/useMediaQuery';
+import Spinner from '@components/Spinner';
 
 interface MasonrySectionProps {
   getUrl: string;
@@ -14,6 +21,7 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   const [page, setPage] = useState(1);
   const [columns, setColumns] = useState(3);
   const { photosData, setPhotosData } = useContext(AppContext);
+  const spinnerRef = useRef<HTMLDivElement>(null);
   const isXs = useMediaQuery('xs');
   const isMd = useMediaQuery('md');
   const isLg = useMediaQuery('lg');
@@ -37,6 +45,23 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
       });
   };
 
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      setPage((prev: number) => prev + 1);
+    }
+  }, []);
+
+  useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: '20px',
+      threshold: 0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (spinnerRef.current) observer.observe(spinnerRef.current);
+  }, [handleObserver]);
+
   useEffect(() => {
     getPhotos();
   }, [page]);
@@ -50,15 +75,14 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   return (
     <section className="flex flex-col w-full items-center bg-gray-50 py-12">
       <div className="w-full max-w-screen-xl flex flex-col">
-        <Masonry
-          columnsCount={columns}
-          gutter="1.5rem"
-          setStateSpinner={setPage}
-        >
+        <Masonry columnsCount={columns} gutter="1.5rem">
           {photosData?.map((photo) => (
             <ImageContent key={photo.id} image={photo} />
           ))}
         </Masonry>
+      </div>
+      <div className="flex w-full my-6 justify-center" ref={spinnerRef}>
+        <Spinner />
       </div>
     </section>
   );
