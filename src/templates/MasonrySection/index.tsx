@@ -14,10 +14,11 @@ import { PhotosContext } from '@contexts/PhotosContext';
 interface MasonrySectionProps {
   getUrl: string;
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  withInfiniteScroll?: boolean;
 }
 
-const InfiniteScrollMasonry = (props: MasonrySectionProps): JSX.Element => {
-  const { getUrl, onPhotoClick } = props;
+const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
+  const { getUrl, onPhotoClick, withInfiniteScroll = true } = props;
   const [page, setPage] = useState(1);
   const [inifiniteScrollSize, setInfiniteScrollSize] = useState(0);
   const { photosData, setPhotosData } = useContext(PhotosContext);
@@ -28,7 +29,7 @@ const InfiniteScrollMasonry = (props: MasonrySectionProps): JSX.Element => {
     api
       .get(url, {
         params: {
-          page,
+          page: withInfiniteScroll ? page : 1,
           per_page: 30,
         },
       })
@@ -46,7 +47,7 @@ const InfiniteScrollMasonry = (props: MasonrySectionProps): JSX.Element => {
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
     if (target.isIntersecting) {
-      setPage((prev: number) => prev + 1);
+      setPage((prev) => prev + 1);
     }
   }, []);
 
@@ -57,8 +58,9 @@ const InfiniteScrollMasonry = (props: MasonrySectionProps): JSX.Element => {
       threshold: 1.0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
-    if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
-  }, [handleObserver]);
+    if (infiniteScrollRef.current && withInfiniteScroll)
+      observer.observe(infiniteScrollRef.current);
+  }, [handleObserver, withInfiniteScroll]);
 
   useEffect(() => {
     getPhotos(getUrl);
@@ -68,7 +70,9 @@ const InfiniteScrollMasonry = (props: MasonrySectionProps): JSX.Element => {
     <div className="flex flex-col w-full items-center">
       <div className="w-full max-w-screen-xl flex flex-col z-10">
         <Masonry
-          onColumnsDifferenceSizes={(val: number) => setInfiniteScrollSize(val)}
+          onColumnsDifferenceSizes={(val: number) =>
+            withInfiniteScroll && setInfiniteScrollSize(val)
+          }
         >
           {photosData?.map((photo) => (
             <ImageContent
@@ -84,11 +88,13 @@ const InfiniteScrollMasonry = (props: MasonrySectionProps): JSX.Element => {
       </div>
       <div
         className="w-screen"
-        style={{ marginTop: `-${inifiniteScrollSize}px` }}
+        style={{
+          marginTop: `-${withInfiniteScroll ? inifiniteScrollSize : 0}px`,
+        }}
         ref={infiniteScrollRef}
       />
     </div>
   );
 };
 
-export default InfiniteScrollMasonry;
+export default MasonrySection;

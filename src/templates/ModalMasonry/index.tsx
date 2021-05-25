@@ -5,12 +5,12 @@ import { api } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 
-interface CommonMasonryProps {
+interface ModalMasonryProps {
   getUrl: string;
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-const CommonMasonry = (props: CommonMasonryProps): JSX.Element => {
+const ModalMasonry = (props: ModalMasonryProps): JSX.Element => {
   const { getUrl, onPhotoClick } = props;
   const { modalPhotosData, setModalPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalContext);
@@ -46,4 +46,4 @@ const CommonMasonry = (props: CommonMasonryProps): JSX.Element => {
   );
 };
 
-export default CommonMasonry;
+export default ModalMasonry;

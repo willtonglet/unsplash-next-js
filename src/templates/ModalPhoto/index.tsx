@@ -4,7 +4,7 @@ import { useContextualRouting } from '@hooks/useContextualRouting';
 import AvatarInfo from '@components/AvatarInfo';
 import Modal from '@components/Modal';
 import PhotoContent from '@templates/PhotoContent';
-import CommonMasonry from '@templates/CommonMasonry';
+import ModalMasonry from '@templates/ModalMasonry';
 import { api } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { NavigationIdsProps, PhotosContext } from '@contexts/PhotosContext';
@@ -70,7 +70,7 @@ const ModalPhoto = (): JSX.Element => {
         <div className="w-full flex justify-center">
           <PhotoContent image={photoData} ref={photoRef} />
         </div>
-        <CommonMasonry
+        <ModalMasonry
           getUrl={`/collections/${photoData?.related_collections.results[0].id}/photos`}
           onPhotoClick={() => {
             setIsRelatedPhoto(true);

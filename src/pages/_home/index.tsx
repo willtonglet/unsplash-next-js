@@ -4,7 +4,7 @@ import { api } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import MainCover from '@components/MainCover';
 import ModalPhoto from '@templates/ModalPhoto';
-import InfiniteScrollMasonry from '@templates/InfiniteScrollMasonry';
+import MasonrySection from '@templates/MasonrySection';
 
 const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
   return (
@@ -15,7 +15,7 @@ const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
       <MainCover trends={trends} />
       <ModalPhoto />
       <section className="bg-gray-50 py-12">
-        <InfiniteScrollMasonry getUrl="/photos" />
+        <MasonrySection getUrl="/photos" />
       </section>
     </PageWrapper>
   );
