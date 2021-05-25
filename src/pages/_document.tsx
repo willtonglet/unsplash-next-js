@@ -37,7 +37,7 @@ export default class MyDocument extends Document {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Html lang="pt-br">
         <Head>
@@ -50,6 +50,7 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div id="modal-root" />
         </body>
       </Html>
     );

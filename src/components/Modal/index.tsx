@@ -21,7 +21,7 @@ const Modal = (props: ModalProps): JSX.Element => {
 
   if (isOpen) {
     return (
-      <Portal id="modal-root">
+      <Portal portalElementId="modal-root">
         <StyledModal className="w-screen h-screen min-h-screen fixed top-0 left-0 overflow-scroll z-50 flex items-start justify-center">
           <button
             onClick={onRequestClose as React.MouseEventHandler<HTMLElement>}

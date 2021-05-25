@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 interface PortalProps {
-  id?: string;
+  portalElementId?: string;
   children: React.ReactNode;
 }
 
-const Portal = ({ id, children }: PortalProps): JSX.Element => {
+const Portal = ({ portalElementId, children }: PortalProps): JSX.Element => {
   const [hasMounted, setHasMounted] = React.useState(false);
   React.useEffect(() => {
     setHasMounted(true);
@@ -16,7 +16,7 @@ const Portal = ({ id, children }: PortalProps): JSX.Element => {
 
   return ReactDOM.createPortal(
     children,
-    document.querySelector(`#${id}`) as HTMLElement,
+    document.querySelector(`#${portalElementId}`) as HTMLElement,
   );
 };
 
