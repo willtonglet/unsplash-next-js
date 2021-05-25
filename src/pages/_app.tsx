@@ -5,6 +5,11 @@ import '../styles/global.css';
 export default class MyApp extends App {
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
-    return <Component {...pageProps} />;
+    return (
+      <>
+        <Component {...pageProps} />
+        <div id="modal-root" />
+      </>
+    );
   }
 }

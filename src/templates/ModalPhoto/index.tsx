@@ -70,13 +70,15 @@ const ModalPhoto = (): JSX.Element => {
         <div className="w-full flex justify-center">
           <PhotoContent image={photoData} ref={photoRef} />
         </div>
-        <ModalMasonry
-          getUrl={`/collections/${photoData?.related_collections.results[0].id}/photos`}
-          onPhotoClick={() => {
-            setIsRelatedPhoto(true);
-            photoRef.current?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        />
+        <div className="px-3">
+          <ModalMasonry
+            getUrl={`/collections/${photoData?.related_collections.results[0].id}/photos`}
+            onPhotoClick={() => {
+              setIsRelatedPhoto(true);
+              photoRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
+        </div>
       </Modal>
     );
 
