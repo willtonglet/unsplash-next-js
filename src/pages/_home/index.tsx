@@ -1,25 +1,21 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { api } from '@core/middleware/api';
-import TopicsNav from '@components/TopicsNav';
 import PageWrapper from '@templates/PageWrapper';
 import MainCover from '@components/MainCover';
-import MasonrySection from '@templates/MasonrySection';
 import ModalPhoto from '@templates/ModalPhoto';
+import InfiniteScrollMasonry from '@templates/InfiniteScrollMasonry';
 
 const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
   return (
-    <PageWrapper>
+    <PageWrapper topics={topics}>
       <Head>
         <title>Home | Next.js + TypeScript Example</title>
       </Head>
-      <header className="sticky z-50 bg-white top-0 w-screen shadow-md">
-        <TopicsNav topics={topics} />
-      </header>
       <MainCover trends={trends} />
       <ModalPhoto />
       <section className="bg-gray-50 py-12">
-        <MasonrySection getUrl="/photos" />
+        <InfiniteScrollMasonry getUrl="/photos" />
       </section>
     </PageWrapper>
   );

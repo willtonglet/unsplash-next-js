@@ -1,31 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import useMediaQuery from '@hooks/useMediaQuery';
 
 import { StyledMasonry } from './styles';
 
 interface MasonryProps {
   children: React.ReactNode;
-  columnsCount?: number;
-  gutter?: string;
   onColumnsDifferenceSizes?: (difference: number) => void;
 }
 
 const Masonry = (props: MasonryProps): JSX.Element => {
-  const {
-    children,
-    columnsCount = 3,
-    gutter = '0',
-    onColumnsDifferenceSizes,
-  } = props;
+  const { children, onColumnsDifferenceSizes } = props;
+  const [columnsNumber, setColumnsNumber] = useState(3);
   const mainRef = useRef<HTMLDivElement>(null);
+  const isXs = useMediaQuery('xs');
+  const isMd = useMediaQuery('md');
+  const isLg = useMediaQuery('lg');
 
   const getColumn = () => {
     const columns: React.ReactNodeArray[] = Array.from(
-      { length: columnsCount },
+      { length: columnsNumber },
       () => [],
     );
 
     React.Children.map(children, (child, index) => {
-      columns[index % columnsCount].push(child);
+      columns[index % columnsNumber].push(child);
     });
 
     return columns;
@@ -33,7 +31,7 @@ const Masonry = (props: MasonryProps): JSX.Element => {
 
   const renderColumn = (column: React.ReactNodeArray) => {
     return column.map((item, i) => (
-      <div key={i} style={{ marginTop: i > 0 ? gutter : undefined }}>
+      <div key={i} style={{ marginTop: i > 0 ? '1.5rem' : undefined }}>
         {item}
       </div>
     ));
@@ -44,7 +42,7 @@ const Masonry = (props: MasonryProps): JSX.Element => {
       key={i}
       className="column"
       style={{
-        marginLeft: i > 0 ? gutter : undefined,
+        marginLeft: i > 0 ? '1.5rem' : undefined,
       }}
     >
       {renderColumn(column)}
@@ -52,7 +50,7 @@ const Masonry = (props: MasonryProps): JSX.Element => {
   ));
 
   useEffect(() => {
-    const columnsHeight = Array.from({ length: columnsCount }).map(
+    const columnsHeight = Array.from({ length: columnsNumber }).map(
       (_, i) =>
         mainRef.current &&
         Math.round(mainRef.current.children[i].getBoundingClientRect().height),
@@ -64,6 +62,12 @@ const Masonry = (props: MasonryProps): JSX.Element => {
           Math.min(...(columnsHeight as number[])),
       );
   }, [children, onColumnsDifferenceSizes]);
+
+  useEffect(() => {
+    if (isXs) setColumnsNumber(1);
+    if (isMd) setColumnsNumber(2);
+    if (isLg) setColumnsNumber(3);
+  }, [isXs, isMd, isLg]);
 
   return <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>;
 };

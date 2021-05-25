@@ -17,6 +17,7 @@ interface UserProps {
   name: string;
   profile_image: ImageSizes;
   for_hire: boolean;
+  username: string;
 }
 
 interface ImageProps {
@@ -27,6 +28,9 @@ interface ImageProps {
   height: number;
   user: UserProps;
   blur_hash: string;
+  related_collections: {
+    results: { id: string }[];
+  };
 }
 interface PageProps {
   topics: { title: string; id: string }[];

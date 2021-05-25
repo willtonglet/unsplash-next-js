@@ -7,29 +7,26 @@ import React, {
 } from 'react';
 import ImageContent from '@components/ImageContent';
 import Masonry from '@components/Masonry';
-import { AppContext } from '@contexts/AppContext';
 import { api } from '@core/middleware/api';
-import useMediaQuery from '@hooks/useMediaQuery';
+import { ModalContext } from '@components/Modal/ModalContext';
+import { PhotosContext } from '@contexts/PhotosContext';
 
 interface MasonrySectionProps {
   getUrl: string;
+  onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
-  const { getUrl } = props;
+const InfiniteScrollMasonry = (props: MasonrySectionProps): JSX.Element => {
+  const { getUrl, onPhotoClick } = props;
   const [page, setPage] = useState(1);
-  const [columns, setColumns] = useState(3);
   const [inifiniteScrollSize, setInfiniteScrollSize] = useState(0);
-
-  const { photosData, setPhotosData } = useContext(AppContext);
+  const { photosData, setPhotosData } = useContext(PhotosContext);
+  const { setIsModalOpen } = useContext(ModalContext);
   const infiniteScrollRef = useRef<HTMLDivElement>(null);
-  const isXs = useMediaQuery('xs');
-  const isMd = useMediaQuery('md');
-  const isLg = useMediaQuery('lg');
 
-  const getPhotos = () => {
+  const getPhotos = (url: string) => {
     api
-      .get(getUrl, {
+      .get(url, {
         params: {
           page,
           per_page: 30,
@@ -64,25 +61,24 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   }, [handleObserver]);
 
   useEffect(() => {
-    getPhotos();
-  }, [page]);
-
-  useEffect(() => {
-    if (isXs) setColumns(1);
-    if (isMd) setColumns(2);
-    if (isLg) setColumns(3);
-  }, [isXs, isMd, isLg]);
+    getPhotos(getUrl);
+  }, [getUrl, page]);
 
   return (
     <div className="flex flex-col w-full items-center">
       <div className="w-full max-w-screen-xl flex flex-col z-10">
         <Masonry
-          columnsCount={columns}
-          gutter="1.5rem"
           onColumnsDifferenceSizes={(val: number) => setInfiniteScrollSize(val)}
         >
           {photosData?.map((photo) => (
-            <ImageContent key={photo.id} image={photo} />
+            <ImageContent
+              key={photo.id}
+              image={photo}
+              onPhotoClick={(e) => {
+                setIsModalOpen(true);
+                onPhotoClick && onPhotoClick(e);
+              }}
+            />
           ))}
         </Masonry>
       </div>
@@ -95,4 +91,4 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   );
 };
 
-export default MasonrySection;
+export default InfiniteScrollMasonry;

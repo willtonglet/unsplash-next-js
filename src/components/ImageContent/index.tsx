@@ -9,20 +9,22 @@ import { StyledImageContent } from './styles';
 
 interface ImageContentProps {
   image: ImageProps;
+  onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const ImageContent = (props: ImageContentProps): JSX.Element => {
-  const { image } = props;
+  const { image, onPhotoClick } = props;
   const { makeContextualHref } = useContextualRouting();
 
   return (
     <Link
       href={makeContextualHref({ id: image.id })}
       as={`/photos/${image.id}`}
+      shallow={true}
       key={image.id}
       scroll={false}
     >
-      <StyledImageContent className="relative flex">
+      <StyledImageContent onClick={onPhotoClick} className="relative flex">
         <ImageWithPreview
           key={image.id}
           src={image.urls.regular}

@@ -1,30 +1,33 @@
-import React, { ReactNode, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { ReactNode } from 'react';
 import Head from 'next/head';
-import { AppContextProvider } from '@contexts/AppContext';
+import { ModalContextProvider } from '@components/Modal/ModalContext';
+import { PhotosContextProvider } from '@contexts/PhotosContext';
+import TopicsNav from '@components/TopicsNav';
 
 interface PageWrapperProps {
   children?: ReactNode;
+  topics?: { title: string; id: string }[];
 }
 
-const PageWrapper = ({ children }: PageWrapperProps): JSX.Element => {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!router.query.id) {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [router.query.id]);
-
+const PageWrapper = (props: PageWrapperProps): JSX.Element => {
+  const { children, topics } = props;
   return (
-    <AppContextProvider>
-      <Head>
-        <title>Hello</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <main>{children}</main>
-    </AppContextProvider>
+    <PhotosContextProvider>
+      <ModalContextProvider>
+        <Head>
+          <title>Hello</title>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
+        <header className="sticky z-50 bg-white top-0 w-screen shadow-md">
+          {topics && <TopicsNav topics={topics} />}
+        </header>
+        <main>{children}</main>
+      </ModalContextProvider>
+    </PhotosContextProvider>
   );
 };
 
