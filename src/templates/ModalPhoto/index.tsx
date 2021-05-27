@@ -7,18 +7,23 @@ import PhotoContent from '@templates/PhotoContent';
 import ModalMasonry from '@templates/ModalMasonry';
 import { api } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
-import { NavigationIdsProps, PhotosContext } from '@contexts/PhotosContext';
+import { PhotosContext } from '@contexts/PhotosContext';
 import { usePreviousState } from '@hooks/usePreviousState';
+import { handlePreviousAndNext } from '@core/utils/handlePreviousAndNext';
 
-const ModalPhoto = (): JSX.Element => {
+interface ModalPhotoProps {
+  isOpen?: boolean;
+}
+
+const ModalPhoto = ({ isOpen = false }: ModalPhotoProps): JSX.Element => {
   const [photoData, setPhotoData] = useState<ImageProps>();
   const [isRelatedPhoto, setIsRelatedPhoto] = useState(false);
-  const {
-    photosData,
-    modalPhotosData,
-    setmodalNavigationsIds,
-    modalNavigationsIds,
-  } = useContext(PhotosContext);
+  const [modalNavigationsIds, setmodalNavigationsIds] = useState({
+    current: '',
+    previous: '',
+    next: '',
+  });
+  const { photosData, modalPhotosData } = useContext(PhotosContext);
   const photoRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { returnHref } = useContextualRouting();
@@ -27,16 +32,6 @@ const ModalPhoto = (): JSX.Element => {
 
   const getPhoto = (id: string) =>
     api.get(`/photos/${id}`).then((response) => setPhotoData(response.data));
-
-  const handlePreviousAndNext = (data: ImageProps[], queryId: string) => {
-    const currentIndex = data.findIndex((photo) => photo.id === queryId);
-
-    return {
-      current: data.find((photo) => photo.id === queryId)?.id,
-      previous: data[currentIndex - 1]?.id,
-      next: data[currentIndex + 1]?.id,
-    };
-  };
 
   useEffect(() => {
     router.query.id && getPhoto(router.query.id as string);
@@ -47,8 +42,12 @@ const ModalPhoto = (): JSX.Element => {
       isRelatedPhoto ? (previousData as unknown as ImageProps[]) : photosData,
       String(router.query.id),
     );
-    setmodalNavigationsIds(navigationIds as NavigationIdsProps);
+    setmodalNavigationsIds(navigationIds);
   }, [photosData, router.query.id]);
+
+  useEffect(() => {
+    setIsModalOpen(isOpen);
+  }, [isOpen]);
 
   if (photoData)
     return (

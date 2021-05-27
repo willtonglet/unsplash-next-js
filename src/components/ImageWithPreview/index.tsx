@@ -10,9 +10,11 @@ const ImageWithPreview = (props: ImageWithPreviewProps): JSX.Element => {
     return (
       <div className={`relative flex ${className}`}>
         <Image {...props} className="z-10" />
-        <div className="w-full h-full absolute top-0 left-0">
-          <Blurhash hash={hash} width="100%" height="100%" />
-        </div>
+        {hash && (
+          <div className="w-full h-full absolute top-0 left-0">
+            <Blurhash hash={hash} width="100%" height="100%" />
+          </div>
+        )}
       </div>
     );
 

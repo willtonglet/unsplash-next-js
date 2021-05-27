@@ -4,12 +4,14 @@ import PhotoContent from '@templates/PhotoContent';
 import PageWrapper from '@templates/PageWrapper';
 import ModalPhoto from '@templates/ModalPhoto';
 import MasonrySection from '@templates/MasonrySection';
+import { useRouter } from 'next/router';
 
 interface PhotoPageProps {
   image: ImageProps;
 }
 
 const Photos = ({ image }: PhotoPageProps): JSX.Element => {
+  const router = useRouter();
   return (
     <PageWrapper>
       <PhotoContent image={image} />
@@ -17,7 +19,7 @@ const Photos = ({ image }: PhotoPageProps): JSX.Element => {
         withInfiniteScroll={false}
         getUrl={`/collections/${image?.related_collections.results[0].id}/photos`}
       />
-      <ModalPhoto />
+      <ModalPhoto isOpen={router.query.id !== image.id} />
     </PageWrapper>
   );
 };
