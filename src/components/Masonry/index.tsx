@@ -55,7 +55,7 @@ const Masonry = (props: MasonryProps): JSX.Element => {
     const option = {
       root: null,
       rootMargin: '0px',
-      threshold: 1.0,
+      threshold: 0,
     };
     const observer = new IntersectionObserver((entries) => {
       const target = entries[0];
@@ -87,7 +87,7 @@ const Masonry = (props: MasonryProps): JSX.Element => {
     <div className="relative">
       <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
       <div
-        className="absolute bottom-0 left-0 w-screen min-h-screen"
+        className="absolute bottom-0 left-0 w-full min-h-screen"
         style={{ height: intersectionHeight }}
         ref={infiniteScrollRef}
       />
