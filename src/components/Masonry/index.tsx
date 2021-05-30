@@ -5,13 +5,15 @@ import { StyledMasonry } from './styles';
 
 interface MasonryProps {
   children: React.ReactNode;
-  onColumnsDifferenceSizes?: (difference: number) => void;
+  onScrollIntersection?: () => void;
 }
 
 const Masonry = (props: MasonryProps): JSX.Element => {
-  const { children, onColumnsDifferenceSizes } = props;
+  const { children, onScrollIntersection } = props;
   const [columnsNumber, setColumnsNumber] = useState(3);
+  const [intersectionHeight, setIntersectionHeight] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
+  const infiniteScrollRef = useRef<HTMLDivElement>(null);
   const isXs = useMediaQuery('xs');
   const isMd = useMediaQuery('md');
   const isLg = useMediaQuery('lg');
@@ -50,18 +52,30 @@ const Masonry = (props: MasonryProps): JSX.Element => {
   ));
 
   useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0,
+    };
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && onScrollIntersection) onScrollIntersection();
+    }, option);
+    if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
+  }, []);
+
+  useEffect(() => {
     const columnsHeight = Array.from({ length: columnsNumber }).map(
       (_, i) =>
         mainRef.current &&
         Math.round(mainRef.current.children[i].getBoundingClientRect().height),
     );
 
-    onColumnsDifferenceSizes &&
-      onColumnsDifferenceSizes(
-        Math.max(...(columnsHeight as number[])) -
-          Math.min(...(columnsHeight as number[])),
-      );
-  }, [children, onColumnsDifferenceSizes]);
+    setIntersectionHeight(
+      Math.max(...(columnsHeight as number[])) -
+        Math.min(...(columnsHeight as number[])),
+    );
+  }, [children]);
 
   useEffect(() => {
     if (isXs) setColumnsNumber(1);
@@ -69,7 +83,16 @@ const Masonry = (props: MasonryProps): JSX.Element => {
     if (isLg) setColumnsNumber(3);
   }, [isXs, isMd, isLg]);
 
-  return <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>;
+  return (
+    <div className="relative">
+      <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
+      <div
+        className="absolute bottom-0 left-0 w-screen min-h-screen"
+        style={{ height: intersectionHeight }}
+        ref={infiniteScrollRef}
+      />
+    </div>
+  );
 };
 
 export default Masonry;

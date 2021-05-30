@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useRef,
-} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ImageContent from '@components/ImageContent';
 import Masonry from '@components/Masonry';
 import { api } from '@core/middleware/api';
@@ -20,10 +14,8 @@ interface MasonrySectionProps {
 const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   const { getUrl, onPhotoClick, withInfiniteScroll = true } = props;
   const [page, setPage] = useState(1);
-  const [inifiniteScrollSize, setInfiniteScrollSize] = useState(0);
   const { photosData, setPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalContext);
-  const infiniteScrollRef = useRef<HTMLDivElement>(null);
 
   const getPhotos = (url: string) => {
     api
@@ -44,24 +36,6 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
       });
   };
 
-  const handleObserver = useCallback((entries) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      setPage((prev) => prev + 1);
-    }
-  }, []);
-
-  useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 1.0,
-    };
-    const observer = new IntersectionObserver(handleObserver, option);
-    if (infiniteScrollRef.current && withInfiniteScroll)
-      observer.observe(infiniteScrollRef.current);
-  }, [handleObserver, withInfiniteScroll]);
-
   useEffect(() => {
     getPhotos(getUrl);
   }, [getUrl, page]);
@@ -70,8 +44,8 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
     <div className="flex flex-col w-full items-center">
       <div className="w-full max-w-screen-xl flex flex-col z-10">
         <Masonry
-          onColumnsDifferenceSizes={(val: number) =>
-            withInfiniteScroll && setInfiniteScrollSize(val)
+          onScrollIntersection={() =>
+            withInfiniteScroll && setPage((prev) => prev + 1)
           }
         >
           {photosData?.map((photo) => (
@@ -86,13 +60,6 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
           ))}
         </Masonry>
       </div>
-      <div
-        className="w-screen"
-        style={{
-          marginTop: `-${withInfiniteScroll ? inifiniteScrollSize : 0}px`,
-        }}
-        ref={infiniteScrollRef}
-      />
     </div>
   );
 };
