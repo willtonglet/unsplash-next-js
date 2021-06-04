@@ -24,13 +24,13 @@ const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: topicsData } = await apiRoute.get('/topics', {
+  const { data: topics } = await apiRoute.get('/topics', {
     params: {
       per_page: 25,
     },
   });
 
-  const { data: trendsData } = await apiRoute.get('/topics', {
+  const { data: trends } = await apiRoute.get('/topics', {
     params: {
       per_page: 5,
       order_by: 'featured',
@@ -39,8 +39,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      trends: trendsData,
-      topics: topicsData,
+      trends,
+      topics,
     },
   };
 };
