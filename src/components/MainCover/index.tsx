@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { IoIosSearch } from 'react-icons/io';
 import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
-import { StyledMainCover } from './styles';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 
 export interface MainCoverProps {
