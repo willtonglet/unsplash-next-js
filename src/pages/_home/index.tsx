@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { api } from '@core/middleware/api';
+import { apiRoute } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import MainCover from '@components/MainCover';
 import ModalPhoto from '@templates/ModalPhoto';
@@ -24,13 +24,13 @@ const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: topicsData } = await api.get('/topics', {
+  const { data: topicsData } = await apiRoute.get('/topics', {
     params: {
       per_page: 25,
     },
   });
 
-  const { data: trendsData } = await api.get('/topics', {
+  const { data: trendsData } = await apiRoute.get('/topics', {
     params: {
       per_page: 5,
       order_by: 'featured',

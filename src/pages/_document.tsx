@@ -48,9 +48,9 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
+          <div id="portal-root" />
           <Main />
           <NextScript />
-          <div id="modal-root" />
         </body>
       </Html>
     );

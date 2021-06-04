@@ -36,3 +36,8 @@ interface PageProps {
   topics: { title: string; id: string }[];
   trends: { title: string; id: string }[];
 }
+
+type AutoCompleteParams = {
+  query: string;
+  priority: numger;
+}[];

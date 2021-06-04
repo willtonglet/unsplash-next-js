@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { IoIosSearch } from 'react-icons/io';
-import { api } from '@core/middleware/api';
+import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
 import { StyledMainCover } from './styles';
+import useOnClickOutside from '@hooks/useOnClickOutside';
 
 export interface MainCoverProps {
   trends?: { title: string; id: string }[];
@@ -11,22 +13,50 @@ export interface MainCoverProps {
 const MainCover = (props: MainCoverProps): JSX.Element => {
   const { trends } = props;
   const [cover, setCover] = useState<ImageProps>();
+  const [searchResults, setSearchResults] = useState<AutoCompleteParams>([]);
+  const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
+  const [search, setSearch] = useState('');
+  const searchRef = useRef<HTMLDivElement>(null);
 
   const getData = async () => {
-    const { data } = await api.get('/photos/random', {
-      params: {
-        orientation: 'landscape',
-      },
-    });
+    const { data } = await apiRoute.get('/photos/day');
     setCover(data);
+  };
+
+  const getSearch = async (word: string) => {
+    const { data } = await apiRoute.get(`/search/${word}`);
+    setSearchResults(data.autocomplete);
+  };
+
+  const renderSearchResults = searchResults?.map((result, index) => (
+    <Link href="/" key={index}>
+      <a className="text-sm text-gray-800 p-3 d-block hover:bg-gray-100">
+        {result.query}
+      </a>
+    </Link>
+  ));
+
+  const handleClickOutside = () => {
+    setIsSearchResultsOpen(false);
   };
 
   useEffect(() => {
     getData();
   }, []);
 
+  useEffect(() => {
+    if (search) {
+      getSearch(search);
+      setIsSearchResultsOpen(true);
+    } else {
+      setIsSearchResultsOpen(false);
+    }
+  }, [search]);
+
+  useOnClickOutside(searchRef, handleClickOutside);
+
   return (
-    <StyledMainCover className="text-white">
+    <section className="text-white grid grid-cols-1 grid-rows-1">
       {cover && (
         <ImageWithPreview
           src={cover.urls.regular}
@@ -34,12 +64,12 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
           width={cover.width}
           height={cover.height}
           alt={cover.alt_description}
+          className="col-start-1 row-start-1"
           priority
           loading="eager"
         />
       )}
-
-      <div className="h-full absolute top-0 left-0 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-20">
+      <div className="col-start-1 row-start-1 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-20">
         <div className="flex items-center justify-center flex-1">
           <div className="flex flex-col w-2/3">
             <h2 className="text-5xl font-bold mb-5">Unsplash</h2>
@@ -48,7 +78,7 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
               <br />
               Powered by creators everywhere.
             </p>
-            <form>
+            <div className="relative">
               <div className="flex rounded shadow-md">
                 <button
                   type="button"
@@ -60,9 +90,19 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
                   type="text"
                   className="text-gray-800 w-full px-2 text-sm h-14 rounded-r focus:outline-none"
                   placeholder="Search free-high resolution photos"
+                  onFocus={() => search && setIsSearchResultsOpen(true)}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-            </form>
+              {isSearchResultsOpen && searchResults.length > 0 && (
+                <div
+                  ref={searchRef}
+                  className="absolute w-full bg-white shadow-md rounded flex flex-col py-2 mt-1"
+                >
+                  {renderSearchResults}
+                </div>
+              )}
+            </div>
             <p className="text-sm mt-4">
               Trending:{' '}
               {trends?.map((trend, index) => (
@@ -84,7 +124,7 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
           </div>
         </div>
       </div>
-    </StyledMainCover>
+    </section>
   );
 };
 

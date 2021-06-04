@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ImageContent from '@components/ImageContent';
 import Masonry from '@components/Masonry';
-import { api } from '@core/middleware/api';
+import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 
@@ -18,7 +18,7 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   const { setIsModalOpen } = useContext(ModalContext);
 
   const getPhotos = (url: string) => {
-    api
+    apiRoute
       .get(url, {
         params: {
           page: withInfiniteScroll ? page : 1,

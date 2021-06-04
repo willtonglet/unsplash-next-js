@@ -4,8 +4,8 @@ import { useContextualRouting } from '@hooks/useContextualRouting';
 import AvatarInfo from '@components/AvatarInfo';
 import Modal from '@components/Modal';
 import PhotoContent from '@templates/PhotoContent';
-import ModalMasonry from '@templates/ModalMasonry';
-import { api } from '@core/middleware/api';
+import SimpleMasonry from '@templates/SimpleMasonry';
+import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import { usePreviousState } from '@hooks/usePreviousState';
@@ -23,7 +23,8 @@ const ModalPhoto = ({ isOpen = false }: ModalPhotoProps): JSX.Element => {
     previous: '',
     next: '',
   });
-  const { photosData, modalPhotosData } = useContext(PhotosContext);
+  const { photosData, modalPhotosData, setModalPhotosData } =
+    useContext(PhotosContext);
   const photoRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { returnHref } = useContextualRouting();
@@ -31,10 +32,21 @@ const ModalPhoto = ({ isOpen = false }: ModalPhotoProps): JSX.Element => {
   const previousData = usePreviousState(modalPhotosData);
 
   const getPhoto = (id: string) =>
-    api.get(`/photos/${id}`).then((response) => setPhotoData(response.data));
+    apiRoute
+      .get(`/photos/${id}`)
+      .then((response) => setPhotoData(response.data));
+
+  const getRelatedPhotos = (id: string) =>
+    apiRoute
+      .get(`/photos/${id}/related`)
+      .then((response) => setModalPhotosData(response.data.results));
 
   useEffect(() => {
-    router.query.id && getPhoto(router.query.id as string);
+    const getRouteId = router.query.id as string;
+    if (router.query.id) {
+      getPhoto(getRouteId);
+      getRelatedPhotos(getRouteId);
+    }
   }, [router.query.id]);
 
   useEffect(() => {
@@ -70,8 +82,8 @@ const ModalPhoto = ({ isOpen = false }: ModalPhotoProps): JSX.Element => {
           <PhotoContent image={photoData} ref={photoRef} />
         </div>
         <div className="px-3">
-          <ModalMasonry
-            getUrl={`/collections/${photoData?.related_collections.results[0].id}/photos`}
+          <SimpleMasonry
+            photos={modalPhotosData}
             onPhotoClick={() => {
               setIsRelatedPhoto(true);
               photoRef.current?.scrollIntoView({ behavior: 'smooth' });
