@@ -5,13 +5,9 @@ import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 
-export interface MainCoverProps {
-  trends?: { title: string; id: string }[];
-}
-
-const MainCover = (props: MainCoverProps): JSX.Element => {
-  const { trends } = props;
+const MainCover = (): JSX.Element => {
   const [cover, setCover] = useState<ImageProps>();
+  const [trends, setTrends] = useState<{ title: string; id: string }[]>();
   const [searchResults, setSearchResults] = useState<AutoCompleteParams>([]);
   const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -25,6 +21,16 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
     setSearchResults(data.autocomplete);
+  };
+
+  const getTrends = async () => {
+    const { data } = await apiRoute.get('/topics', {
+      params: {
+        per_page: 5,
+        order_by: 'featured',
+      },
+    });
+    setTrends(data);
   };
 
   const renderSearchResults = searchResults?.map((result, index) => (
@@ -41,6 +47,7 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
 
   useEffect(() => {
     getData();
+    getTrends();
   }, []);
 
   useEffect(() => {

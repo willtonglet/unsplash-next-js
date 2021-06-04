@@ -6,11 +6,10 @@ import TopicsNav from '@components/TopicsNav';
 
 interface PageWrapperProps {
   children?: ReactNode;
-  topics?: { title: string; id: string }[];
 }
 
 const PageWrapper = (props: PageWrapperProps): JSX.Element => {
-  const { children, topics } = props;
+  const { children } = props;
   return (
     <PhotosContextProvider>
       <ModalContextProvider>
@@ -23,7 +22,7 @@ const PageWrapper = (props: PageWrapperProps): JSX.Element => {
           />
         </Head>
         <header className="sticky z-20 bg-white top-0 w-screen shadow-md">
-          {topics && <TopicsNav topics={topics} />}
+          <TopicsNav />
         </header>
         <main>{children}</main>
       </ModalContextProvider>
