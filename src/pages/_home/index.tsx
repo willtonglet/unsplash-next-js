@@ -1,9 +1,8 @@
-import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { apiRoute } from '@core/middleware/api';
+
 import PageWrapper from '@templates/PageWrapper';
-import MainCover from '@components/MainCover';
+
 import ModalPhoto from '@templates/ModalPhoto';
 import MasonrySection from '@templates/MasonrySection';
 
