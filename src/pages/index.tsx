@@ -1,4 +1,3 @@
-import Home, { getStaticProps as homeGetStaticProps } from './_home';
+import Home from './_home';
 
 export default Home;
-export const getStaticProps = homeGetStaticProps;
