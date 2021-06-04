@@ -22,7 +22,7 @@ const PageWrapper = (props: PageWrapperProps): JSX.Element => {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <header className="sticky z-50 bg-white top-0 w-screen shadow-md">
+        <header className="sticky z-20 bg-white top-0 w-screen shadow-md">
           {topics && <TopicsNav topics={topics} />}
         </header>
         <main>{children}</main>

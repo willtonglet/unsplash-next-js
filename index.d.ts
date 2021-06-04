@@ -12,6 +12,7 @@ interface ImageSizes {
   medium: string;
   large: string;
   cover: string;
+  raw: string;
 }
 interface UserProps {
   name: string;

@@ -55,20 +55,21 @@ const MainCover = (props: MainCoverProps): JSX.Element => {
   useOnClickOutside(searchRef, handleClickOutside);
 
   return (
-    <section className="text-white grid grid-cols-1 grid-rows-1">
-      {cover && (
-        <ImageWithPreview
-          src={cover.urls.regular}
-          hash={cover.blur_hash}
-          width={cover.width}
-          height={cover.height}
-          alt={cover.alt_description}
-          className="col-start-1 row-start-1"
-          priority
-          loading="eager"
-        />
-      )}
-      <div className="col-start-1 row-start-1 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-20">
+    <section className="text-white grid grid-cols-1 grid-rows-1 aspect-w-16 aspect-h-9 xl:aspect-h-6">
+      <div className="col-start-1 row-start-1 overflow-hidden">
+        {cover && (
+          <ImageWithPreview
+            src={cover.urls.full}
+            hash={cover.blur_hash}
+            alt={cover.alt_description}
+            width={cover.width}
+            height={cover.height}
+            priority
+            loading="eager"
+          />
+        )}
+      </div>
+      <div className="col-start-1 row-start-1 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-10">
         <div className="flex items-center justify-center flex-1">
           <div className="flex flex-col w-2/3">
             <h2 className="text-5xl font-bold mb-5">Unsplash</h2>

@@ -13,6 +13,7 @@
     "tsc:check": "tsc --pretty --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.2.1",
     "axios": "^0.21.1",
     "blurhash": "^1.1.3",
     "next": "10.0.6",
