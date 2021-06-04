@@ -66,7 +66,7 @@ const MainCover = (): JSX.Element => {
       <div className="col-start-1 row-start-1 overflow-hidden">
         {cover && (
           <ImageWithPreview
-            src={cover.urls.full}
+            src={cover.urls.raw}
             hash={cover.blur_hash}
             alt={cover.alt_description}
             width={cover.width}
