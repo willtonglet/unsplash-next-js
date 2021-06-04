@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { apiRoute } from '@core/middleware/api';
 import PhotoContent from '@templates/PhotoContent';
 import PageWrapper from '@templates/PageWrapper';
@@ -22,18 +22,9 @@ const Photos = ({ image, photos }: PhotoPageProps): JSX.Element => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = (await apiRoute.get(`/photos`)) as { data: ImageProps[] };
-  const paths = data.map((photo) => ({
-    params: { id: photo.id },
-  }));
-
-  return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { data: image } = await apiRoute.get(`/photos/${params?.id}`);
-  const { data: photos } = await apiRoute.get(`/photos/${params?.id}/related`);
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { data: image } = await apiRoute.get(`/photos/${query.id}`);
+  const { data: photos } = await apiRoute.get(`/photos/${query.id}/related`);
   return { props: { image, photos: photos.results } };
 };
 
