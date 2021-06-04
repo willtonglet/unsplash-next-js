@@ -10,13 +10,11 @@ const HomePage = (): JSX.Element => {
   return (
     <PageWrapper>
       <Head>
-        <title>Home | Next.js + TypeScript Example</title>
+        <title>Beautiful Free Images &amp; Pictures | Unsplash</title>
       </Head>
       <MainCover />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
-      <section className="bg-gray-50 py-12">
-        <MasonrySection getUrl="/photos" />
-      </section>
+      <MasonrySection />
     </PageWrapper>
   );
 };

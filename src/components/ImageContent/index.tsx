@@ -33,7 +33,7 @@ const ImageContent = (props: ImageContentProps): JSX.Element => {
           height={image.height}
           alt={image.alt_description}
         />
-        <div className="content bg-opacity-40 bg-black text-white z-20">
+        <div className="content bg-opacity-40 bg-black text-white z-10">
           <div className="flex justify-end items-center">
             <ButtonIcon>
               <IoIosHeart size={22} />

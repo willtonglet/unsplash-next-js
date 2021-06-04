@@ -70,6 +70,7 @@ const ModalPhoto = ({ isOpen = false }: ModalPhotoProps): JSX.Element => {
           setIsRelatedPhoto(false);
           router.push({ pathname: String(returnHref) }, undefined, {
             scroll: false,
+            shallow: true,
           });
         }}
         previousId={modalNavigationsIds.previous}

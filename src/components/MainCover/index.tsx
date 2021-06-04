@@ -4,6 +4,7 @@ import { IoIosSearch } from 'react-icons/io';
 import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
 import useOnClickOutside from '@hooks/useOnClickOutside';
+import { slugify } from '@core/utils/slugify';
 
 const MainCover = (): JSX.Element => {
   const [cover, setCover] = useState<ImageProps>();
@@ -20,7 +21,7 @@ const MainCover = (): JSX.Element => {
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
-    setSearchResults(data.autocomplete);
+    setSearchResults(data.fuzzy);
   };
 
   const getTrends = async () => {
@@ -34,7 +35,7 @@ const MainCover = (): JSX.Element => {
   };
 
   const renderSearchResults = searchResults?.map((result, index) => (
-    <Link href="/" key={index}>
+    <Link href={`/s/photos/${slugify(result.query)}`} key={index}>
       <a className="text-sm text-gray-800 p-3 d-block hover:bg-gray-100">
         {result.query}
       </a>
@@ -76,7 +77,7 @@ const MainCover = (): JSX.Element => {
           />
         )}
       </div>
-      <div className="col-start-1 row-start-1 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-10">
+      <div className="col-start-1 row-start-1 bg-opacity-40 bg-black w-screen flex flex-col justify-between z-10">
         <div className="flex items-center justify-center flex-1">
           <div className="flex flex-col w-2/3">
             <h2 className="text-5xl font-bold mb-5">Unsplash</h2>
