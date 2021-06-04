@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { apiRoute } from '@core/middleware/api';
@@ -23,7 +23,7 @@ const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { data: topics } = await apiRoute.get('/topics', {
     params: {
       per_page: 25,
