@@ -12,7 +12,7 @@ const unsplash = axios.create({
 });
 
 const apiRoute = axios.create({
-  baseURL: 'https://unsplash-next-js.vercel.app/api',
+  baseURL: process.env.NEXT_PUBLIC_ROUTE_URL,
 });
 
 export { api, unsplash, apiRoute };
