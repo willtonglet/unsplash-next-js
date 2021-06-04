@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { apiRoute } from '@core/middleware/api';
+import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import MainCover from '@components/MainCover';
 import ModalPhoto from '@templates/ModalPhoto';
@@ -24,23 +24,26 @@ const HomePage = ({ topics, trends }: PageProps): JSX.Element => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: topics } = await apiRoute.get('/topics', {
+  const { data: topics } = await unsplash.get('/napi/topics', {
     params: {
       per_page: 25,
     },
   });
 
-  const { data: trends } = await apiRoute.get('/topics', {
+  const { data: trends } = await unsplash.get('/napi/topics', {
     params: {
       per_page: 5,
       order_by: 'featured',
     },
   });
 
+  const { data: photos } = await unsplash.get('/napi/photos');
+
   return {
     props: {
       trends,
       topics,
+      photos,
     },
   };
 };

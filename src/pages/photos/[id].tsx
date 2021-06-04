@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { apiRoute } from '@core/middleware/api';
+import { unsplash } from '@core/middleware/api';
 import PhotoContent from '@templates/PhotoContent';
 import PageWrapper from '@templates/PageWrapper';
 import ModalPhoto from '@templates/ModalPhoto';
@@ -23,8 +23,10 @@ const Photos = ({ image, photos }: PhotoPageProps): JSX.Element => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { data: image } = await apiRoute.get(`/photos/${query.id}`);
-  const { data: photos } = await apiRoute.get(`/photos/${query.id}/related`);
+  const { data: image } = await unsplash.get(`/napi/photos/${query.id}`);
+  const { data: photos } = await unsplash.get(
+    `/napi/photos/${query.id}/related`,
+  );
   return { props: { image, photos: photos.results } };
 };
 
