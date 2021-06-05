@@ -55,10 +55,10 @@ const MasonrySectionTopics = (
 
     router.events.on('routeChangeStart', handleRouterChange);
     return () => router.events.off('routeChangeStart', handleRouterChange);
-  }, [router.pathname]);
+  }, []);
 
   return (
-    <section className="bg-gray-50 py-12">
+    <section className="py-12">
       <div className="flex flex-col w-full items-center">
         <div className="w-full max-w-screen-xl flex flex-col z-10">
           <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>

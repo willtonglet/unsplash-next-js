@@ -32,6 +32,7 @@ interface ImageProps {
   related_collections: {
     results: { id: string }[];
   };
+  tags: { [key: string]: { [key: string]: string }; type: string }[];
 }
 interface PageProps {
   topics: { title: string; id: string }[];

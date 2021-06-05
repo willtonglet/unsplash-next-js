@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { unsplash } from '@core/middleware/api';
 import PhotoContent from '@templates/PhotoContent';
-import PageWrapper from '@templates/PageWrapper';
 import ModalPhoto from '@templates/ModalPhoto';
 import { useRouter } from 'next/router';
 import SimpleMasonry from '@templates/SimpleMasonry';
@@ -14,11 +13,11 @@ interface PhotoPageProps {
 const Photos = ({ image, photos }: PhotoPageProps): JSX.Element => {
   const router = useRouter();
   return (
-    <PageWrapper>
+    <>
       <PhotoContent image={image} />
       <SimpleMasonry photos={photos} />
       <ModalPhoto isOpen={router.query.id !== image.id} />
-    </PageWrapper>
+    </>
   );
 };
 

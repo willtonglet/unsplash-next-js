@@ -1,27 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { IoIosSearch } from 'react-icons/io';
+import React, { useEffect, useState } from 'react';
 import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
-import useOnClickOutside from '@hooks/useOnClickOutside';
-import { slugify } from '@core/utils/slugify';
+import SearchBar from '@components/SearchBar';
 
 const MainCover = (): JSX.Element => {
   const [cover, setCover] = useState<ImageProps>();
   const [trends, setTrends] = useState<{ title: string; id: string }[]>();
-  const [searchResults, setSearchResults] = useState<AutoCompleteParams>([]);
-  const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
-  const [search, setSearch] = useState('');
-  const searchRef = useRef<HTMLDivElement>(null);
 
   const getData = async () => {
     const { data } = await apiRoute.get('/photos/day');
     setCover(data);
-  };
-
-  const getSearch = async (word: string) => {
-    const { data } = await apiRoute.get(`/search/${word}`);
-    setSearchResults(data.fuzzy);
   };
 
   const getTrends = async () => {
@@ -34,40 +22,17 @@ const MainCover = (): JSX.Element => {
     setTrends(data);
   };
 
-  const renderSearchResults = searchResults?.map((result, index) => (
-    <Link href={`/s/photos/${slugify(result.query)}`} key={index}>
-      <a className="text-sm text-gray-800 p-3 d-block hover:bg-gray-100">
-        {result.query}
-      </a>
-    </Link>
-  ));
-
-  const handleClickOutside = () => {
-    setIsSearchResultsOpen(false);
-  };
-
   useEffect(() => {
     getData();
     getTrends();
   }, []);
-
-  useEffect(() => {
-    if (search) {
-      getSearch(search);
-      setIsSearchResultsOpen(true);
-    } else {
-      setIsSearchResultsOpen(false);
-    }
-  }, [search]);
-
-  useOnClickOutside(searchRef, handleClickOutside);
 
   return (
     <section className="text-white grid grid-cols-1 grid-rows-1 aspect-w-16 aspect-h-9 xl:aspect-h-6">
       <div className="col-start-1 row-start-1 overflow-hidden">
         {cover && (
           <ImageWithPreview
-            src={cover.urls.raw}
+            src={cover.urls.full}
             hash={cover.blur_hash}
             alt={cover.alt_description}
             width={cover.width}
@@ -86,31 +51,12 @@ const MainCover = (): JSX.Element => {
               <br />
               Powered by creators everywhere.
             </p>
-            <div className="relative">
-              <div className="flex rounded shadow-md">
-                <button
-                  type="button"
-                  className="h-14 bg-white text-gray-500 pl-3 rounded-l focus:outline-none"
-                >
-                  <IoIosSearch size={24} />
-                </button>
-                <input
-                  type="text"
-                  className="text-gray-800 w-full px-2 text-sm h-14 rounded-r focus:outline-none"
-                  placeholder="Search free-high resolution photos"
-                  onFocus={() => search && setIsSearchResultsOpen(true)}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
-              {isSearchResultsOpen && searchResults.length > 0 && (
-                <div
-                  ref={searchRef}
-                  className="absolute w-full bg-white shadow-md rounded flex flex-col py-2 mt-1"
-                >
-                  {renderSearchResults}
-                </div>
-              )}
-            </div>
+            <SearchBar
+              hasShadow
+              hasRoundedPill={false}
+              variant="secondary"
+              size="medium"
+            />
             <p className="text-sm mt-4">
               Trending:{' '}
               {trends?.map((trend, index) => (

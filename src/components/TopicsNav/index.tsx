@@ -39,7 +39,7 @@ const TopicsNav = (): JSX.Element => {
                   router.query.slug === topic.slug
                     ? 'text-dark'
                     : 'text-gray-500'
-                } text-sm font-medium d-block py-4 hover:text-black`}
+                } text-sm font-medium d-block py-4 hover:text-black focus:outline-none`}
               >
                 {topic.title}
               </a>

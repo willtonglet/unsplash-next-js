@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import { ModalContextProvider } from '@components/Modal/ModalContext';
 import { PhotosContextProvider } from '@contexts/PhotosContext';
-import TopicsNav from '@components/TopicsNav';
+import Header from '@components/Header';
 
 interface PageWrapperProps {
   children?: ReactNode;
@@ -14,17 +14,15 @@ const PageWrapper = (props: PageWrapperProps): JSX.Element => {
     <PhotosContextProvider>
       <ModalContextProvider>
         <Head>
-          <title>Hello</title>
+          <title>Beautiful Free Images &amp; Pictures | Unsplash</title>
           <meta charSet="utf-8" />
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <header className="sticky z-20 bg-white top-0 w-screen shadow-md">
-          <TopicsNav />
-        </header>
-        <main>{children}</main>
+        <Header />
+        <main className="min-h-screen bg-gray-50">{children}</main>
       </ModalContextProvider>
     </PhotosContextProvider>
   );
