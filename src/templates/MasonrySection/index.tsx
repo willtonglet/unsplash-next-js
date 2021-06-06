@@ -25,13 +25,8 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
         },
       })
       .then((response) => {
-        if (page > 1) {
-          const arr = [...photosData, ...response.data];
-
-          setPhotosData(arr);
-        } else {
-          setPhotosData(response.data);
-        }
+        const arr = [...photosData, ...response.data];
+        setPhotosData(arr);
       });
 
   useEffect(() => {
