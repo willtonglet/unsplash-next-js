@@ -34,9 +34,11 @@ const SearchBar = (props: SearchBar): JSX.Element => {
 
   const handleHeight = size === 'small' ? 10 : 14;
   const handleBackground =
-    variant === 'primary' && isFocused
-      ? 'bg-white'
-      : 'bg-gray-200' || 'bg-gray-200';
+    variant === 'primary'
+      ? isFocused
+        ? 'bg-white'
+        : 'bg-gray-200' || 'bg-gray-200'
+      : 'bg-white';
 
   const handleRadius = (side: 'l' | 'r') =>
     hasRoundedPill ? `rounded-${side}-full` : `rounded-${side}`;
