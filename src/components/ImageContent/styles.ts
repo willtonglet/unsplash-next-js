@@ -12,7 +12,7 @@ export const StyledImageContent = styled.a`
     height: 100%;
     padding: 1rem;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   &:hover {

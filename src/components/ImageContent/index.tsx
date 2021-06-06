@@ -34,14 +34,6 @@ const ImageContent = (props: ImageContentProps): JSX.Element => {
           alt={image.alt_description}
         />
         <div className="content bg-opacity-40 bg-black text-white z-10">
-          <div className="flex justify-end items-center">
-            <ButtonIcon>
-              <IoIosHeart size={22} />
-            </ButtonIcon>
-            <ButtonIcon className="ml-2">
-              <IoIosAdd size={28} />
-            </ButtonIcon>
-          </div>
           <div className="flex justify-between items-end w-full">
             <AvatarInfo image={image} />
             <ButtonIcon>

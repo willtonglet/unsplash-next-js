@@ -1,25 +1,13 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { apiRoute } from '@core/middleware/api';
 import Link from 'next/link';
 import { StyledTopicsNav } from './styles';
 
-const TopicsNav = (): JSX.Element => {
-  const [topics, setTopics] = useState<{ [key: string]: string }[]>([]);
+interface TopicsNavProps {
+  topics: { title: string; slug: string; id: string }[];
+}
+
+const TopicsNav = ({ topics }: TopicsNavProps): JSX.Element => {
   const router = useRouter();
-
-  const getTopics = async () => {
-    const { data } = await apiRoute.get('/topics', {
-      params: {
-        per_page: 25,
-      },
-    });
-    setTopics(data);
-  };
-
-  useEffect(() => {
-    getTopics();
-  }, []);
 
   return (
     <StyledTopicsNav>
@@ -33,7 +21,7 @@ const TopicsNav = (): JSX.Element => {
                 : 'border-b-2	border-transparent'
             }`}
           >
-            <Link href={`/t/${topic.slug}`}>
+            <Link href={`/t/${topic.slug}`} shallow={false}>
               <a
                 className={`${
                   router.query.slug === topic.slug

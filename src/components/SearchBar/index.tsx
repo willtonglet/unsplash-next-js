@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
@@ -25,10 +25,11 @@ const SearchBar = (props: SearchBar): JSX.Element => {
   const [search, setSearch] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
-    setSearchResults(data.fuzzy);
+    setSearchResults(data.fuzzy || data.did_you_mean || data.autocomplete);
   };
 
   const handleHeight = size === 'small' ? 10 : 14;
@@ -41,15 +42,23 @@ const SearchBar = (props: SearchBar): JSX.Element => {
     hasRoundedPill ? `rounded-${side}-full` : `rounded-${side}`;
 
   const renderSearchResults = searchResults?.map((result, index) => (
-    <Link href={`/s/photos/${slugify(result.query)}`} key={index}>
-      <a className="text-sm text-gray-800 p-3 d-block hover:bg-gray-100">
-        {result.query}
-      </a>
-    </Link>
+    <button
+      key={index}
+      className="flex text-sm text-gray-800 p-3 d-block hover:bg-gray-100 focus:outline-none"
+      onClick={() => {
+        router.push(`/s/photos/${slugify(result.query)}`);
+        setSearch('');
+      }}
+    >
+      {result.query}
+    </button>
   ));
 
   const handleClickOutsideResults = () => setIsSearchResultsOpen(false);
   const handleClickOutsideInput = () => setIsFocused(false);
+
+  useOnClickOutside(searchRef, handleClickOutsideResults);
+  useOnClickOutside(inputRef, handleClickOutsideInput);
 
   const handleFocus = () => {
     search && setIsSearchResultsOpen(true);
@@ -64,9 +73,6 @@ const SearchBar = (props: SearchBar): JSX.Element => {
       setIsSearchResultsOpen(false);
     }
   }, [search]);
-
-  useOnClickOutside(searchRef, handleClickOutsideResults);
-  useOnClickOutside(inputRef, handleClickOutsideInput);
 
   return (
     <div className="relative">

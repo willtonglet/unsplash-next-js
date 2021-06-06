@@ -9,12 +9,13 @@ import Link from 'next/link';
 
 interface MasonrySearchTabPhotosProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  photos: ImageProps[];
 }
 
 const MasonrySearchTabPhotos = (
   props: MasonrySearchTabPhotosProps,
 ): JSX.Element => {
-  const { onPhotoClick } = props;
+  const { onPhotoClick, photos } = props;
   const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalContext);
@@ -30,34 +31,20 @@ const MasonrySearchTabPhotos = (
         },
       })
       .then((response) => {
-        if (page > 1) {
-          const arr = [...photosData, ...response.data.results];
-
-          setPhotosData(arr);
-        } else {
-          setPhotosData(response.data.results);
-        }
+        const arr = [...photosData, ...response.data.results];
+        setPhotosData(arr);
       });
   };
 
   useEffect(() => {
-    router.query.slug && getPhotos(String(router.query.slug));
-  }, [page, router.query.slug]);
-
-  useEffect(() => {
-    const handleRouterChange = (
-      _url: string,
-      { shallow }: { shallow: boolean },
-    ) => {
-      if (!shallow) {
-        setPage(1);
-        setPhotosData([]);
-      }
-    };
-
-    router.events.on('routeChangeStart', handleRouterChange);
-    return () => router.events.off('routeChangeStart', handleRouterChange);
-  }, []);
+    setPage(1);
+    setPhotosData([]);
+    if (page > 1) {
+      router.query.slug && getPhotos(String(router.query.slug));
+    } else {
+      setPhotosData(photos);
+    }
+  }, [page, router.query.slug, photos]);
 
   return (
     <section className="py-12">

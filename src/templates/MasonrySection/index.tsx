@@ -7,10 +7,11 @@ import { PhotosContext } from '@contexts/PhotosContext';
 
 interface MasonrySectionProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  photos: ImageProps[];
 }
 
 const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
-  const { onPhotoClick } = props;
+  const { onPhotoClick, photos } = props;
   const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalContext);
@@ -34,8 +35,12 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
       });
 
   useEffect(() => {
-    getPhotos();
+    page > 1 && getPhotos();
   }, [page]);
+
+  useEffect(() => {
+    setPhotosData(photos);
+  }, []);
 
   return (
     <section className="py-12">

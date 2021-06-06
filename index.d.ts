@@ -35,8 +35,11 @@ interface ImageProps {
   tags: { [key: string]: { [key: string]: string }; type: string }[];
 }
 interface PageProps {
-  topics: { title: string; id: string }[];
+  photos: ImageProps[];
+  cover: ImageProps;
   trends: { title: string; id: string }[];
+  topics: { title: string; slug: string; id: string }[];
+  slug: string;
 }
 
 type AutoCompleteParams = {

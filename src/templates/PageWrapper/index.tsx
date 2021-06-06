@@ -6,10 +6,10 @@ import Header from '@components/Header';
 
 interface PageWrapperProps {
   children?: ReactNode;
+  topics: { title: string; slug: string; id: string }[];
 }
 
-const PageWrapper = (props: PageWrapperProps): JSX.Element => {
-  const { children } = props;
+const PageWrapper = ({ children, topics }: PageWrapperProps): JSX.Element => {
   return (
     <PhotosContextProvider>
       <ModalContextProvider>
@@ -21,7 +21,7 @@ const PageWrapper = (props: PageWrapperProps): JSX.Element => {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <Header />
+        <Header topics={topics} />
         <main className="min-h-screen bg-gray-50">{children}</main>
       </ModalContextProvider>
     </PhotosContextProvider>

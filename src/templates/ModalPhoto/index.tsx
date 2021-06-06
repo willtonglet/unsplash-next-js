@@ -50,10 +50,12 @@ const ModalPhoto = ({ isOpen = false }: ModalPhotoProps): JSX.Element => {
   }, [router.query.id]);
 
   useEffect(() => {
-    const navigationIds = handlePreviousAndNext(
-      isRelatedPhoto ? (previousData as unknown as ImageProps[]) : photosData,
-      String(router.query.id),
-    );
+    const navigationIds =
+      photosData &&
+      handlePreviousAndNext(
+        isRelatedPhoto ? (previousData as unknown as ImageProps[]) : photosData,
+        String(router.query.id),
+      );
     setmodalNavigationsIds(navigationIds);
   }, [photosData, router.query.id]);
 

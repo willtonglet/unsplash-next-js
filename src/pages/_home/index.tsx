@@ -2,16 +2,50 @@ import { useRouter } from 'next/router';
 import MainCover from '@components/MainCover';
 import ModalPhoto from '@templates/ModalPhoto';
 import MasonrySection from '@templates/MasonrySection';
+import { GetStaticProps } from 'next';
+import { unsplash } from '@core/middleware/api';
+import PageWrapper from '@templates/PageWrapper';
 
-const HomePage = (): JSX.Element => {
+const HomePage = ({
+  photos,
+  cover,
+  trends,
+  topics,
+}: PageProps): JSX.Element => {
   const router = useRouter();
+
   return (
-    <>
-      <MainCover />
+    <PageWrapper topics={topics}>
+      <MainCover cover={cover} trends={trends} />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
-      <MasonrySection />
-    </>
+      <MasonrySection photos={photos} />
+    </PageWrapper>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data: photos } = await unsplash.get('/napi/photos', {
+    params: {
+      page: 1,
+      per_page: 30,
+    },
+  });
+  const { data: cover } = await unsplash.get('/napi/photos/day');
+  const { data: trends } = await unsplash.get('/napi/topics', {
+    params: {
+      per_page: 5,
+      order_by: 'featured',
+    },
+  });
+  const { data: topics } = await unsplash.get('/napi/topics', {
+    params: {
+      per_page: 25,
+    },
+  });
+
+  return {
+    props: { photos, cover, trends, topics },
+  };
 };
 
 export default HomePage;

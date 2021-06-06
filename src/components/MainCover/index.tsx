@@ -1,32 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '../ImageWithPreview';
 import SearchBar from '@components/SearchBar';
 
-const MainCover = (): JSX.Element => {
-  const [cover, setCover] = useState<ImageProps>();
-  const [trends, setTrends] = useState<{ title: string; id: string }[]>();
+interface MainCoverProps {
+  cover: ImageProps;
+  trends: { title: string; id: string }[];
+}
 
-  const getData = async () => {
-    const { data } = await apiRoute.get('/photos/day');
-    setCover(data);
-  };
-
-  const getTrends = async () => {
-    const { data } = await apiRoute.get('/topics', {
-      params: {
-        per_page: 5,
-        order_by: 'featured',
-      },
-    });
-    setTrends(data);
-  };
-
-  useEffect(() => {
-    getData();
-    getTrends();
-  }, []);
-
+const MainCover = ({ cover, trends }: MainCoverProps): JSX.Element => {
   return (
     <section className="text-white grid grid-cols-1 grid-rows-1 aspect-w-16 aspect-h-9 xl:aspect-h-6">
       <div className="col-start-1 row-start-1 overflow-hidden">

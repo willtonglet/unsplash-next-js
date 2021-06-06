@@ -2,7 +2,11 @@ import SearchBar from '@components/SearchBar';
 import TopicsNav from '@components/TopicsNav';
 import Link from 'next/link';
 
-const Header = (): JSX.Element => {
+interface HeaderProps {
+  topics: { title: string; slug: string; id: string }[];
+}
+
+const Header = ({ topics }: HeaderProps): JSX.Element => {
   return (
     <header className="sticky z-20 bg-white top-0 w-screen shadow-md">
       <div className="grid grid-cols-12 p-4">
@@ -18,7 +22,7 @@ const Header = (): JSX.Element => {
           <SearchBar />
         </div>
       </div>
-      <TopicsNav />
+      <TopicsNav topics={topics} />
     </header>
   );
 };
