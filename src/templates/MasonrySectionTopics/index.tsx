@@ -35,6 +35,8 @@ const MasonrySectionTopics = (
   };
 
   useEffect(() => {
+    setPage(1);
+    setPhotosData([]);
     if (page > 1) {
       router.query.slug && getPhotos(String(router.query.slug));
     } else {
