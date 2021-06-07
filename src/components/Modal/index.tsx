@@ -15,7 +15,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal = (props: ModalProps): JSX.Element => {
+const Modal = (props: ModalProps): React.ReactElement => {
   const { isOpen, onRequestClose, previousId, nextId, children } = props;
   const { makeContextualHref } = useContextualRouting();
 

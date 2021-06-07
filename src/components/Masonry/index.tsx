@@ -8,7 +8,7 @@ interface MasonryProps {
   onScrollIntersection?: () => void;
 }
 
-const Masonry = (props: MasonryProps): JSX.Element => {
+const Masonry = (props: MasonryProps): React.ReactElement => {
   const { children, onScrollIntersection } = props;
   const [columnsNumber, setColumnsNumber] = useState(3);
   const [intersectionHeight, setIntersectionHeight] = useState(0);

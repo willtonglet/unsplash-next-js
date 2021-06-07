@@ -4,7 +4,7 @@ export const StyledNavigationScroller = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
-  width: 100vw;
+  width: 100%;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 

@@ -9,7 +9,10 @@ interface PageWrapperProps {
   topics?: { title: string; slug: string; id: string }[];
 }
 
-const PageWrapper = ({ children, topics }: PageWrapperProps): JSX.Element => {
+const PageWrapper = ({
+  children,
+  topics,
+}: PageWrapperProps): React.ReactElement => {
   return (
     <PhotosContextProvider>
       <ModalContextProvider>

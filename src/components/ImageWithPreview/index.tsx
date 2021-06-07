@@ -3,7 +3,7 @@ import Blurhash from '../BlurHash';
 
 type ImageWithPreviewProps = ImageProps & { hash: string };
 
-const ImageWithPreview = (props: ImageWithPreviewProps): JSX.Element => {
+const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
   const { src, hash, className } = props;
 
   if (src)

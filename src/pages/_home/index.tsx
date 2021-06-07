@@ -11,7 +11,7 @@ const HomePage = ({
   cover,
   trends,
   topics,
-}: PageProps): JSX.Element => {
+}: PageProps): React.ReactElement => {
   const router = useRouter();
 
   return (

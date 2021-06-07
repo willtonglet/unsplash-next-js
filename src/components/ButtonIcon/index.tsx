@@ -2,7 +2,7 @@ import React from 'react';
 
 type ButtonIconProps = React.HTMLAttributes<HTMLButtonElement>;
 
-const ButtonIcon = (props: ButtonIconProps): JSX.Element => {
+const ButtonIcon = (props: ButtonIconProps): React.ReactElement => {
   const { children, className, ...rest } = props;
 
   return (

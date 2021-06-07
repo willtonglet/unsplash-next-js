@@ -9,7 +9,7 @@ interface PhotoContentProps {
 }
 
 const PhotoContent = forwardRef<HTMLDivElement, PhotoContentProps>(
-  (props: PhotoContentProps, ref): JSX.Element => {
+  (props: PhotoContentProps, ref): React.ReactElement => {
     const { image, className } = props;
     const [isExpanded, setIsExpanded] = useState(false);
     const handleExpand = () => setIsExpanded(!isExpanded);

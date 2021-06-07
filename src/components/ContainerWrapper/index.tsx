@@ -8,7 +8,7 @@ interface ContainerWrapperProps {
 const ContainerWrapper = ({
   children,
   className,
-}: ContainerWrapperProps): JSX.Element => {
+}: ContainerWrapperProps): React.ReactElement => {
   return (
     <section className={className}>
       <div className="flex w-full justify-center">

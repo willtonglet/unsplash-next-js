@@ -15,7 +15,9 @@ interface ModalPhotoProps {
   isOpen?: boolean;
 }
 
-const ModalPhoto = ({ isOpen = false }: ModalPhotoProps): JSX.Element => {
+const ModalPhoto = ({
+  isOpen = false,
+}: ModalPhotoProps): React.ReactElement => {
   const [photoData, setPhotoData] = useState<ImageProps>();
   const [isRelatedPhoto, setIsRelatedPhoto] = useState(false);
   const [modalNavigationsIds, setmodalNavigationsIds] = useState({

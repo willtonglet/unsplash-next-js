@@ -5,7 +5,7 @@ interface AvatarInfoProps {
   image: ImageProps;
 }
 
-const AvatarInfo = (props: AvatarInfoProps): JSX.Element => {
+const AvatarInfo = (props: AvatarInfoProps): React.ReactElement => {
   const { image } = props;
 
   return (

@@ -10,7 +10,11 @@ interface PhotoPageProps extends PageProps {
   image: ImageProps;
 }
 
-const Photos = ({ image, photos, topics }: PhotoPageProps): JSX.Element => {
+const Photos = ({
+  image,
+  photos,
+  topics,
+}: PhotoPageProps): React.ReactElement => {
   const router = useRouter();
   return (
     <PageWrapper topics={topics}>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import ImageContent from '@components/ImageContent';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
-import Link from 'next/link';
 import ContainerWrapper from '@components/ContainerWrapper';
 
 interface MasonrySearchTabPhotosProps {
@@ -15,7 +15,7 @@ interface MasonrySearchTabPhotosProps {
 
 const MasonrySearchTabPhotos = (
   props: MasonrySearchTabPhotosProps,
-): JSX.Element => {
+): React.ReactElement => {
   const { onPhotoClick, photos } = props;
   const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(PhotosContext);
@@ -63,6 +63,7 @@ const MasonrySearchTabPhotos = (
                 onPhotoClick && onPhotoClick(e);
               }}
             />
+
             <div className="mt-3">
               {photo.tags?.map((tag, index) => (
                 <Link
@@ -73,7 +74,7 @@ const MasonrySearchTabPhotos = (
                       : `/images/${tag.title}`
                   }
                 >
-                  <a className="bg-gray-200 rounded text-sm text-gray-600 inline-block px-2 py-1 mr-1 mb-1 capitalize">
+                  <a className="bg-gray-200 rounded text-sm text-gray-600 inline-block px-2 py-1 mr-2 mb-2 capitalize">
                     {tag.type === 'search' ? tag.title : tag.source.title}
                   </a>
                 </Link>

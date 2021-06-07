@@ -5,7 +5,7 @@ import MasonrySectionTopics from '@templates/MasonrySectionTopics';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 
-const TopicTabPhotos = ({ photos, topics }: PageProps): JSX.Element => {
+const TopicTabPhotos = ({ photos, topics }: PageProps): React.ReactElement => {
   const router = useRouter();
 
   return (

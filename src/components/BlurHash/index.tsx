@@ -11,7 +11,7 @@ type BlurHashProps = React.HTMLAttributes<HTMLDivElement> & {
   width?: number | string | 'auto';
 };
 
-const BlurHash = (props: BlurHashProps): JSX.Element => {
+const BlurHash = (props: BlurHashProps): React.ReactElement => {
   const {
     hash,
     height = 128,

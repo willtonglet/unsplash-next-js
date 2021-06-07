@@ -14,7 +14,7 @@ interface MasonrySectionTopicsProps {
 
 const MasonrySectionTopics = (
   props: MasonrySectionTopicsProps,
-): JSX.Element => {
+): React.ReactElement => {
   const { onPhotoClick, photos } = props;
   const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(PhotosContext);

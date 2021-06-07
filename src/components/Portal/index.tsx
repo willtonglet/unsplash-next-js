@@ -6,7 +6,10 @@ interface PortalProps {
   children: React.ReactNode;
 }
 
-const Portal = ({ portalElementId, children }: PortalProps): JSX.Element => {
+const Portal = ({
+  portalElementId,
+  children,
+}: PortalProps): React.ReactElement => {
   const [hasMounted, setHasMounted] = React.useState(false);
   React.useEffect(() => {
     setHasMounted(true);

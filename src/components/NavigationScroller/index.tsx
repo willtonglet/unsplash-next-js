@@ -8,7 +8,7 @@ interface NavigationScrollerProps {
 const NavigationScroller = ({
   children,
   className,
-}: NavigationScrollerProps): JSX.Element => {
+}: NavigationScrollerProps): React.ReactElement => {
   return (
     <StyledNavigationScroller className={className}>
       {children}

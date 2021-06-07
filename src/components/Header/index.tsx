@@ -6,7 +6,7 @@ interface HeaderProps {
   topics?: { title: string; slug: string; id: string }[];
 }
 
-const Header = ({ topics }: HeaderProps): JSX.Element => {
+const Header = ({ topics }: HeaderProps): React.ReactElement => {
   return (
     <header className="sticky z-20 bg-white top-0 w-screen">
       <div className="grid grid-cols-12 p-4">

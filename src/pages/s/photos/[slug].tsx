@@ -6,12 +6,12 @@ import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import SearchHeader from '@templates/SearchHeader';
 
-const SlugTabPhotos = ({ photos }: PageProps): JSX.Element => {
+const SlugTabPhotos = ({ photos }: PageProps): React.ReactElement => {
   const router = useRouter();
 
   return (
     <PageWrapper>
-      <SearchHeader />
+      <SearchHeader photos={photos} />
       <MasonrySearchTabPhotos photos={photos} />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
     </PageWrapper>

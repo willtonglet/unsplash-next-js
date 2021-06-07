@@ -12,7 +12,7 @@ interface SearchBar {
   hasShadow?: boolean;
 }
 
-const SearchBar = (props: SearchBar): JSX.Element => {
+const SearchBar = (props: SearchBar): React.ReactElement => {
   const {
     variant = 'primary',
     size = 'small',

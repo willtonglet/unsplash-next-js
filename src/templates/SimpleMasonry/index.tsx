@@ -8,7 +8,7 @@ interface SimpleMasonryProps {
   photos: ImageProps[];
 }
 
-const SimpleMasonry = (props: SimpleMasonryProps): JSX.Element => {
+const SimpleMasonry = (props: SimpleMasonryProps): React.ReactElement => {
   const { photos, onPhotoClick } = props;
   const { setIsModalOpen } = useContext(ModalContext);
 

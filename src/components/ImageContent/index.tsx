@@ -12,7 +12,7 @@ interface ImageContentProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-const ImageContent = (props: ImageContentProps): JSX.Element => {
+const ImageContent = (props: ImageContentProps): React.ReactElement => {
   const { image, onPhotoClick } = props;
   const { makeContextualHref } = useContextualRouting();
 

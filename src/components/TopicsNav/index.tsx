@@ -6,7 +6,7 @@ interface TopicsNavProps {
   topics: { title: string; slug: string; id: string }[];
 }
 
-const TopicsNav = ({ topics }: TopicsNavProps): JSX.Element => {
+const TopicsNav = ({ topics }: TopicsNavProps): React.ReactElement => {
   const router = useRouter();
 
   return (

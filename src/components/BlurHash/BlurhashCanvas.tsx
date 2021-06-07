@@ -8,7 +8,7 @@ type BlurhashCanvasProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
   width?: number;
 };
 
-const BlurhashCanvas = (props: BlurhashCanvasProps): JSX.Element => {
+const BlurhashCanvas = (props: BlurhashCanvasProps): React.ReactElement => {
   const { hash, height = 128, width = 128, punch, ...rest } = props;
 
   const canvas = useRef<HTMLCanvasElement>(null);
