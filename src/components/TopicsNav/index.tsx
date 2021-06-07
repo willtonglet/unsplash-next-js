@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { StyledTopicsNav } from './styles';
+import NavigationScroller from '@components/NavigationScroller';
 
 interface TopicsNavProps {
   topics: { title: string; slug: string; id: string }[];
@@ -10,7 +10,7 @@ const TopicsNav = ({ topics }: TopicsNavProps): JSX.Element => {
   const router = useRouter();
 
   return (
-    <StyledTopicsNav>
+    <NavigationScroller className="shadow-md">
       <ul className="flex">
         {topics.map((topic) => (
           <li
@@ -35,7 +35,7 @@ const TopicsNav = ({ topics }: TopicsNavProps): JSX.Element => {
           </li>
         ))}
       </ul>
-    </StyledTopicsNav>
+    </NavigationScroller>
   );
 };
 

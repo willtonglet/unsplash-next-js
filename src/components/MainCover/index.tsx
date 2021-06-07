@@ -22,7 +22,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): JSX.Element => {
           />
         )}
       </div>
-      <div className="col-start-1 row-start-1 bg-opacity-40 bg-black w-screen flex flex-col justify-between z-10">
+      <div className="col-start-1 row-start-1 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-10">
         <div className="flex items-center justify-center flex-1">
           <div className="flex flex-col w-2/3">
             <h2 className="text-5xl font-bold mb-5">Unsplash</h2>

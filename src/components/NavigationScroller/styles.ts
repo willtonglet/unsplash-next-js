@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledTopicsNav = styled.div`
+export const StyledNavigationScroller = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;

@@ -5,6 +5,7 @@ import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
+import ContainerWrapper from '@components/ContainerWrapper';
 
 interface MasonrySectionTopicsProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -49,24 +50,20 @@ const MasonrySectionTopics = (
   }, [page]);
 
   return (
-    <section className="py-12">
-      <div className="flex flex-col w-full items-center">
-        <div className="w-full max-w-screen-xl flex flex-col z-10">
-          <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
-            {photosData?.map((photo) => (
-              <ImageContent
-                key={photo.id}
-                image={photo}
-                onPhotoClick={(e) => {
-                  setIsModalOpen(true);
-                  onPhotoClick && onPhotoClick(e);
-                }}
-              />
-            ))}
-          </Masonry>
-        </div>
-      </div>
-    </section>
+    <ContainerWrapper className="py-12">
+      <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
+        {photosData?.map((photo) => (
+          <ImageContent
+            key={photo.id}
+            image={photo}
+            onPhotoClick={(e) => {
+              setIsModalOpen(true);
+              onPhotoClick && onPhotoClick(e);
+            }}
+          />
+        ))}
+      </Masonry>
+    </ContainerWrapper>
   );
 };
 

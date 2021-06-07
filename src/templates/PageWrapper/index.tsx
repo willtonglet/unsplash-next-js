@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import { ModalContextProvider } from '@components/Modal/ModalContext';
 import { PhotosContextProvider } from '@contexts/PhotosContext';
 import Header from '@components/Header';
 
 interface PageWrapperProps {
-  children?: ReactNode;
-  topics: { title: string; slug: string; id: string }[];
+  children?: React.ReactNode;
+  topics?: { title: string; slug: string; id: string }[];
 }
 
 const PageWrapper = ({ children, topics }: PageWrapperProps): JSX.Element => {

@@ -3,12 +3,12 @@ import TopicsNav from '@components/TopicsNav';
 import Link from 'next/link';
 
 interface HeaderProps {
-  topics: { title: string; slug: string; id: string }[];
+  topics?: { title: string; slug: string; id: string }[];
 }
 
 const Header = ({ topics }: HeaderProps): JSX.Element => {
   return (
-    <header className="sticky z-20 bg-white top-0 w-screen shadow-md">
+    <header className="sticky z-20 bg-white top-0 w-screen">
       <div className="grid grid-cols-12 p-4">
         <div className="col-start-1 col-end-3 flex items-center">
           <Link href="/">
@@ -22,7 +22,7 @@ const Header = ({ topics }: HeaderProps): JSX.Element => {
           <SearchBar />
         </div>
       </div>
-      <TopicsNav topics={topics} />
+      {topics && <TopicsNav topics={topics} />}
     </header>
   );
 };
