@@ -19,8 +19,14 @@ const MasonrySectionTopics = (
   const { photosData, setPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalContext);
   const router = useRouter();
+  const { slug } = router.query;
 
-  const getPhotos = (slug: string) => {
+  useEffect(() => {
+    if (slug) setPhotosData([]);
+    setPage(1);
+  }, [slug]);
+
+  const getPhotos = () => {
     apiRoute
       .get(`/topics/${slug}/photos`, {
         params: {
@@ -35,14 +41,12 @@ const MasonrySectionTopics = (
   };
 
   useEffect(() => {
-    setPage(1);
-    setPhotosData([]);
-    if (page > 1) {
-      router.query.slug && getPhotos(String(router.query.slug));
-    } else {
-      setPhotosData(photos);
-    }
-  }, [page, router.query.slug, photos]);
+    setPhotosData(photos);
+  }, [photos]);
+
+  useEffect(() => {
+    if (page > 1) getPhotos();
+  }, [page]);
 
   return (
     <section className="py-12">
