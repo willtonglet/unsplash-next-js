@@ -16,6 +16,11 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
   const { photosData, setPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalContext);
 
+  useEffect(() => {
+    setPhotosData([]);
+    setPage(1);
+  }, []);
+
   const getPhotos = () =>
     apiRoute
       .get('/photos', {
@@ -30,12 +35,12 @@ const MasonrySection = (props: MasonrySectionProps): JSX.Element => {
       });
 
   useEffect(() => {
-    page > 1 && getPhotos();
-  }, [page]);
+    setPhotosData(photos);
+  }, [photos]);
 
   useEffect(() => {
-    setPhotosData(photos);
-  }, []);
+    page > 1 && getPhotos();
+  }, [page]);
 
   return (
     <section className="py-12">
