@@ -62,7 +62,7 @@ const NavigationScroller = ({
                 sideScroll(
                   direction,
                   5,
-                  mainRef.current?.getBoundingClientRect().width / 2,
+                  mainRef.current?.getBoundingClientRect().width / 2.5,
                   15,
                 );
             }}
@@ -111,12 +111,14 @@ const NavigationScroller = ({
   }, [children]);
 
   return (
-    <div className="w-full relative">
-      <StyledNavigationScroller ref={mainRef} className={className}>
-        {children}
-      </StyledNavigationScroller>
-      {handleArrowControl('left')}
-      {handleArrowControl('right')}
+    <div className={className}>
+      <div className="relative isolate">
+        <StyledNavigationScroller ref={mainRef}>
+          {children}
+        </StyledNavigationScroller>
+        {handleArrowControl('left')}
+        {handleArrowControl('right')}
+      </div>
     </div>
   );
 };
