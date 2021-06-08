@@ -33,6 +33,7 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             width={image.width}
             height={image.height}
             color={image.color}
+            loading="lazy"
             alt={image.alt_description}
           />
           <div className="content bg-opacity-40 bg-black text-white z-10">
