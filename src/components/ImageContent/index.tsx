@@ -17,32 +17,34 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
   const { makeContextualHref } = useContextualRouting();
 
   return (
-    <Link
-      href={makeContextualHref({ id: image.id })}
-      as={`/photos/${image.id}`}
-      shallow={true}
-      key={image.id}
-      scroll={false}
-    >
-      <StyledImageContent onClick={onPhotoClick} className="relative flex">
-        <ImageWithPreview
-          key={image.id}
-          src={image.urls.regular}
-          hash={image.blur_hash}
-          width={image.width}
-          height={image.height}
-          alt={image.alt_description}
-        />
-        <div className="content bg-opacity-40 bg-black text-white z-10">
-          <div className="flex justify-between items-end w-full">
-            <AvatarInfo image={image} />
-            <ButtonIcon>
-              <IoMdArrowDown size={24} />
-            </ButtonIcon>
+    <div>
+      <Link
+        href={makeContextualHref({ id: image.id })}
+        as={`/photos/${image.id}`}
+        shallow={true}
+        key={image.id}
+        scroll={false}
+      >
+        <StyledImageContent onClick={onPhotoClick} className="relative flex">
+          <ImageWithPreview
+            key={image.id}
+            src={image.urls.regular}
+            hash={image.blur_hash}
+            width={image.width}
+            height={image.height}
+            alt={image.alt_description}
+          />
+          <div className="content bg-opacity-40 bg-black text-white z-10">
+            <div className="flex justify-between items-end w-full">
+              <AvatarInfo image={image} />
+              <ButtonIcon>
+                <IoMdArrowDown size={24} />
+              </ButtonIcon>
+            </div>
           </div>
-        </div>
-      </StyledImageContent>
-    </Link>
+        </StyledImageContent>
+      </Link>
+    </div>
   );
 };
 

@@ -29,6 +29,7 @@ interface UserProps {
 interface ImageProps {
   id: string;
   alt_description: string;
+  color: string;
   urls: ImageSizes;
   width: number;
   height: number;
