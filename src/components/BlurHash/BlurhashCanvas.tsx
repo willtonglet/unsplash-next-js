@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { decode, isBlurhashValid } from 'blurhash';
+import { decode } from 'blurhash';
 
 type BlurhashCanvasProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
   hash: string;
@@ -27,10 +27,7 @@ const BlurhashCanvas = (props: BlurhashCanvasProps): React.ReactElement => {
     }
   }, []);
 
-  if (isBlurhashValid(hash))
-    return <canvas {...rest} height={height} width={width} ref={canvas} />;
-
-  return <></>;
+  return <canvas {...rest} height={height} width={width} ref={canvas} />;
 };
 
 export default BlurhashCanvas;
