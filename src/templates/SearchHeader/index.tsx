@@ -31,7 +31,7 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
       {isMd && (
         <NavigationScroller backgroundColor="secondary" className="mb-4">
           {tagsArr.map((tag, index) => (
-            <div key={index} className="pl-2">
+            <div key={index} className="pr-2">
               <div className="rounded border w-36 text-center border-gray-300 hover:border-gray-400">
                 <Link href={`/s/photos/${slugify(String(tag))}`}>
                   <a className="text-gray-500 block text-sm p-2.5 whitespace-nowrap font-medium focus:outline-none capitalize hover:text-gray-600">
