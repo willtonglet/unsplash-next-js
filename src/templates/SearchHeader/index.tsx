@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import ContainerWrapper from '@components/ContainerWrapper';
 import NavigationScroller from '@components/NavigationScroller';
 import useMediaQuery from '@hooks/useMediaQuery';
@@ -28,18 +29,17 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
         {String(slug).replace('-', ' ')}
       </h2>
       {isMd && (
-        <NavigationScroller
-          backgroundColor="secondary"
-          className="none md:block mb-4"
-        >
+        <NavigationScroller backgroundColor="secondary" className="mb-4">
           {tagsArr.map((tag, index) => (
-            <button
-              key={index}
-              className="text-gray-500 mr-2 w-36 rounded border border-gray-300 text-sm py-2.5 px-3 font-medium focus:outline-none capitalize hover:border-gray-400 hover:text-gray-600"
-              onClick={() => router.push(`/s/photos/${slugify(String(tag))}`)}
-            >
-              {tag}
-            </button>
+            <div key={index} className="pl-2">
+              <div className="rounded border w-36 text-center border-gray-300 hover:border-gray-400">
+                <Link href={`/s/photos/${slugify(String(tag))}`}>
+                  <a className="text-gray-500 block text-sm p-2.5 whitespace-nowrap font-medium focus:outline-none capitalize hover:text-gray-600">
+                    {tag}
+                  </a>
+                </Link>
+              </div>
+            </div>
           ))}
         </NavigationScroller>
       )}
