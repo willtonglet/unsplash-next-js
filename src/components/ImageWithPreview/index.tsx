@@ -12,7 +12,6 @@ const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
     <div className={className}>
       <div className="relative flex">
         <Image {...props} className="z-10" />
-
         <div
           className="w-full h-full absolute top-0 left-0"
           style={{ backgroundColor: color }}
