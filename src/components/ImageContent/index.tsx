@@ -32,6 +32,7 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             hash={image.blur_hash}
             width={image.width}
             height={image.height}
+            color={image.color}
             alt={image.alt_description}
           />
           <div className="content bg-opacity-40 bg-black text-white z-10">

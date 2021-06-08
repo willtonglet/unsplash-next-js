@@ -17,6 +17,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
             alt={cover.alt_description}
             width={cover.width}
             height={cover.height}
+            color={cover.color}
             priority
             loading="eager"
           />
