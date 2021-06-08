@@ -62,7 +62,7 @@ const NavigationScroller = ({
                 sideScroll(
                   direction,
                   5,
-                  mainRef.current?.getBoundingClientRect().width,
+                  mainRef.current?.getBoundingClientRect().width / 2,
                   15,
                 );
             }}

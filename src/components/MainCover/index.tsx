@@ -8,7 +8,7 @@ interface MainCoverProps {
 
 const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
   return (
-    <section className="text-white grid grid-cols-1 grid-rows-1 aspect-w-16 aspect-h-9 xl:aspect-h-6">
+    <section className="text-white grid grid-cols-1 grid-rows-1 aspect-w-16 bg-black aspect-h-9 xl:aspect-h-6">
       <div className="col-start-1 row-start-1 overflow-hidden">
         {cover && (
           <ImageWithPreview
