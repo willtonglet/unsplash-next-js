@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import ContainerWrapper from '@components/ContainerWrapper';
 import NavigationScroller from '@components/NavigationScroller';
 import useMediaQuery from '@hooks/useMediaQuery';
+import { slugify } from '@core/utils/slugify';
 
 interface SearchHeaderProps {
   photos: ImageProps[];
@@ -24,7 +25,7 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
   return (
     <ContainerWrapper className="pt-12">
       <h2 className="capitalize text-5xl font-bold mb-8">
-        {router.query.slug}
+        {String(slug).replace('-', ' ')}
       </h2>
       {isMd && (
         <NavigationScroller
@@ -35,7 +36,7 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
             <button
               key={index}
               className="text-gray-500 mr-2 w-36 rounded border border-gray-300 text-sm py-2.5 px-3 font-medium focus:outline-none capitalize hover:border-gray-400 hover:text-gray-600"
-              onClick={() => router.push(`/s/photos/${tag}`)}
+              onClick={() => router.push(`/s/photos/${slugify(String(tag))}`)}
             >
               {tag}
             </button>
