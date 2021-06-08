@@ -27,7 +27,10 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
         {router.query.slug}
       </h2>
       {isMd && (
-        <NavigationScroller className="none md:block mb-4">
+        <NavigationScroller
+          backgroundColor="secondary"
+          className="none md:block mb-4"
+        >
           {tagsArr.map((tag, index) => (
             <button
               key={index}

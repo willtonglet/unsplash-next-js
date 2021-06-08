@@ -37,7 +37,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
     variant === 'primary'
       ? isFocused
         ? 'bg-white'
-        : 'bg-gray-200' || 'bg-gray-200'
+        : 'bg-gray-300 bg-opacity-50' || 'bg-gray-300 bg-opacity-50'
       : 'bg-white';
 
   const handleRadius = (side: 'l' | 'r') =>
@@ -90,7 +90,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
             'border-l border-t border-b border-gray-300'
           } focus:outline-none`}
         >
-          <IoIosSearch size={24} />
+          <IoIosSearch size={size === 'small' ? 21 : 24} />
         </button>
         <input
           type="text"
@@ -119,7 +119,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
       {isSearchResultsOpen && searchResults.length > 0 && (
         <div
           ref={searchRef}
-          className={`absolute w-full bg-white ${
+          className={`absolute w-full bg-white z-10 ${
             hasShadow && 'shadow-md'
           } rounded flex flex-col py-2 mt-1 ${
             variant === 'primary' && 'border border-gray-300'
