@@ -19,7 +19,6 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
             height={cover.height}
             color={cover.color}
             priority
-            loading="eager"
           />
         )}
       </div>
