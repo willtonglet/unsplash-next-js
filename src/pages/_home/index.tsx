@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+import { GetStaticProps } from 'next';
 import MainCover from '@components/MainCover';
 import ModalPhoto from '@templates/ModalPhoto';
-import MasonrySection from '@templates/MasonrySection';
-import { GetStaticProps } from 'next';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
+
+const MasonrySection = dynamic(() => import('@templates/MasonrySection'), {
+  ssr: false,
+});
 
 const HomePage = ({
   photos,
