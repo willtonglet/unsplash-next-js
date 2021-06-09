@@ -6,9 +6,7 @@ import ModalPhoto from '@templates/ModalPhoto';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 
-const MasonrySection = dynamic(() => import('@templates/MasonrySection'), {
-  ssr: false,
-});
+const MasonrySection = dynamic(() => import('@templates/MasonrySection'));
 
 const HomePage = ({
   photos,
