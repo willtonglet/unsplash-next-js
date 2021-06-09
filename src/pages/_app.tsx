@@ -1,18 +1,22 @@
-import React from 'react';
-import App from 'next/app';
+import React, { useEffect } from 'react';
+import { AppProps } from 'next/app';
 import { ModalContextProvider } from '@components/Modal/ModalContext';
 import { PhotosContextProvider } from '@contexts/PhotosContext';
 import '../styles/global.css';
 
-export default class MyApp extends App {
-  render(): React.ReactElement {
-    const { Component, pageProps } = this.props;
-    return (
-      <PhotosContextProvider>
-        <ModalContextProvider>
-          <Component {...pageProps} />
-        </ModalContextProvider>
-      </PhotosContextProvider>
-    );
-  }
+export default function MyApp({
+  Component,
+  pageProps,
+}: AppProps): React.ReactElement {
+  useEffect(() => {
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <PhotosContextProvider>
+      <ModalContextProvider>
+        <Component {...pageProps} />
+      </ModalContextProvider>
+    </PhotosContextProvider>
+  );
 }
