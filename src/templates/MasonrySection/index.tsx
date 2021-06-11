@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, Suspense } from 'react';
-import dynamic from 'next/dynamic';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
