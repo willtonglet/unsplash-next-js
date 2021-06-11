@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ImageContent from '@components/ImageContent';
+import dynamic from 'next/dynamic';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import ContainerWrapper from '@components/ContainerWrapper';
+
+const ImageContent = dynamic(() => import('@components/ImageContent'), {
+  ssr: false,
+});
 
 interface MasonrySectionProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
