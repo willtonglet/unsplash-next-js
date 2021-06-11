@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import React from 'react';
 import { IoMdArrowDown } from 'react-icons/io';
 import { useContextualRouting } from '@hooks/useContextualRouting';
 import AvatarInfo from '../AvatarInfo';
@@ -50,4 +49,4 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
   );
 };
 
-export default React.memo(ImageContent);
+export default ImageContent;

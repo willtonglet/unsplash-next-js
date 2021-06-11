@@ -28,4 +28,4 @@ const AvatarInfo = (props: AvatarInfoProps): React.ReactElement => {
   );
 };
 
-export default AvatarInfo;
+export default React.memo(AvatarInfo);
