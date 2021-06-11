@@ -50,4 +50,4 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
   );
 };
 
-export default ImageContent;
+export default React.memo(ImageContent);
