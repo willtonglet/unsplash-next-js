@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import ImageContent from '@components/ImageContent';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import ContainerWrapper from '@components/ContainerWrapper';
+
+const ImageContent = React.lazy(() => import('@components/ImageContent'));
 
 interface MasonrySearchTabPhotosProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -55,32 +56,44 @@ const MasonrySearchTabPhotos = (
     <ContainerWrapper className="py-12">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
         {photosData?.map((photo) => (
-          <div key={photo.id} className="flex flex-col">
-            <ImageContent
-              image={photo}
-              onPhotoClick={(e) => {
-                setIsModalOpen(true);
-                onPhotoClick && onPhotoClick(e);
-              }}
-            />
+          <Suspense
+            key={photo.id}
+            fallback={
+              <div
+                style={{
+                  backgroundColor: photo.color,
+                  height: photo.height / 10,
+                }}
+              />
+            }
+          >
+            <div className="flex flex-col">
+              <ImageContent
+                image={photo}
+                onPhotoClick={(e) => {
+                  setIsModalOpen(true);
+                  onPhotoClick && onPhotoClick(e);
+                }}
+              />
 
-            <div className="mt-3">
-              {photo.tags?.map((tag, index) => (
-                <Link
-                  key={index}
-                  href={
-                    tag.type === 'search'
-                      ? `/s/photos/${tag.title}`
-                      : `/images/${tag.title}`
-                  }
-                >
-                  <a className="bg-gray-200 rounded text-sm text-gray-600 inline-block px-2 py-1 mr-2 mb-2 capitalize">
-                    {tag.type === 'search' ? tag.title : tag.source.title}
-                  </a>
-                </Link>
-              ))}
+              <div className="mt-3">
+                {photo.tags?.map((tag, index) => (
+                  <Link
+                    key={index}
+                    href={
+                      tag.type === 'search'
+                        ? `/s/photos/${tag.title}`
+                        : `/images/${tag.title}`
+                    }
+                  >
+                    <a className="bg-gray-200 rounded text-sm text-gray-600 inline-block px-2 py-1 mr-2 mb-2 capitalize">
+                      {tag.type === 'search' ? tag.title : tag.source.title}
+                    </a>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          </Suspense>
         ))}
       </Masonry>
     </ContainerWrapper>

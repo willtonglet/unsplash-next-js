@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import { useRouter } from 'next/router';
-import ImageContent from '@components/ImageContent';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import ContainerWrapper from '@components/ContainerWrapper';
+
+const ImageContent = React.lazy(() => import('@components/ImageContent'));
 
 interface MasonrySectionTopicsProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -53,14 +54,26 @@ const MasonrySectionTopics = (
     <ContainerWrapper className="py-12">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
         {photosData?.map((photo) => (
-          <ImageContent
+          <Suspense
             key={photo.id}
-            image={photo}
-            onPhotoClick={(e) => {
-              setIsModalOpen(true);
-              onPhotoClick && onPhotoClick(e);
-            }}
-          />
+            fallback={
+              <div
+                style={{
+                  backgroundColor: photo.color,
+                  height: photo.height / 10,
+                }}
+              />
+            }
+          >
+            <ImageContent
+              key={photo.id}
+              image={photo}
+              onPhotoClick={(e) => {
+                setIsModalOpen(true);
+                onPhotoClick && onPhotoClick(e);
+              }}
+            />
+          </Suspense>
         ))}
       </Masonry>
     </ContainerWrapper>

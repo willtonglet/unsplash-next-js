@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
-import ImageContent from '@components/ImageContent';
+import React, { Suspense, useContext } from 'react';
 import Masonry from '@components/Masonry';
 import { ModalContext } from '@components/Modal/ModalContext';
+
+const ImageContent = React.lazy(() => import('@components/ImageContent'));
 
 interface SimpleMasonryProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -15,14 +16,26 @@ const SimpleMasonry = (props: SimpleMasonryProps): React.ReactElement => {
   return (
     <Masonry>
       {photos.map((photo) => (
-        <ImageContent
+        <Suspense
           key={photo.id}
-          image={photo}
-          onPhotoClick={(e) => {
-            setIsModalOpen(true);
-            onPhotoClick && onPhotoClick(e);
-          }}
-        />
+          fallback={
+            <div
+              style={{
+                backgroundColor: photo.color,
+                height: photo.height / 10,
+              }}
+            />
+          }
+        >
+          <ImageContent
+            key={photo.id}
+            image={photo}
+            onPhotoClick={(e) => {
+              setIsModalOpen(true);
+              onPhotoClick && onPhotoClick(e);
+            }}
+          />
+        </Suspense>
       ))}
     </Masonry>
   );

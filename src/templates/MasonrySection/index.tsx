@@ -50,7 +50,14 @@ const MasonrySection = (props: MasonrySectionProps): React.ReactElement => {
         {photosData?.map((photo) => (
           <Suspense
             key={photo.id}
-            fallback={<div className="h-96 bg-gray-200" />}
+            fallback={
+              <div
+                style={{
+                  backgroundColor: photo.color,
+                  height: photo.height / 10,
+                }}
+              />
+            }
           >
             <ImageContent
               image={photo}
