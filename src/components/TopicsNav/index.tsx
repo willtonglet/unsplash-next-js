@@ -19,7 +19,7 @@ const TopicsNav = ({ topics }: TopicsNavProps): React.ReactElement => {
               : 'border-b-2 border-transparent'
           }`}
         >
-          <Link href={`/`} shallow={false}>
+          <Link href="/" shallow={false}>
             <a
               className={`${
                 router.pathname === '/' ? 'text-dark' : 'text-gray-500'

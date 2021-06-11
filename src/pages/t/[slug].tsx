@@ -4,12 +4,18 @@ import ModalPhoto from '@templates/ModalPhoto';
 import MasonrySectionTopics from '@templates/MasonrySectionTopics';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
+import TopicHeader from '@templates/TopicHeader';
 
-const TopicTabPhotos = ({ photos, topics }: PageProps): React.ReactElement => {
+const TopicTabPhotos = ({
+  photos,
+  topics,
+  topicInfo,
+}: PageProps): React.ReactElement => {
   const router = useRouter();
 
   return (
     <PageWrapper topics={topics}>
+      <TopicHeader topicInfo={topicInfo} />
       <MasonrySectionTopics photos={photos} />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
     </PageWrapper>
@@ -17,6 +23,9 @@ const TopicTabPhotos = ({ photos, topics }: PageProps): React.ReactElement => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { data: topicInfo } = await unsplash.get(
+    `/napi/topics/${String(query.slug)}`,
+  );
   const { data: photos } = await unsplash.get(
     `/napi/topics/${String(query.slug)}/photos`,
     {
@@ -32,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   });
 
-  return { props: { photos, topics } };
+  return { props: { photos, topics, topicInfo } };
 };
 
 export default TopicTabPhotos;

@@ -4,6 +4,7 @@ import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
 import { slugify } from '@core/utils/slugify';
+import useMediaQuery from '@hooks/useMediaQuery';
 
 interface SearchBar {
   variant?: 'primary' | 'secondary';
@@ -26,6 +27,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const isSm = useMediaQuery('sm');
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
@@ -101,7 +103,9 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
             isFocused &&
             'border-r border-t border-b border-gray-300'
           } focus:outline-none`}
-          placeholder="Search free-high resolution photos"
+          placeholder={
+            isSm ? 'Search free-high resolution photos' : 'Search Photos'
+          }
           onFocus={handleFocus}
           value={search}
           onChange={(e) => setSearch(e.target.value)}

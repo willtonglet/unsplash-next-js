@@ -10,7 +10,6 @@ interface MasonryProps {
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
   const { children, onScrollIntersection } = props;
-  const [columnsNumber, setColumnsNumber] = useState(3);
   const [intersectionHeight, setIntersectionHeight] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
   const infiniteScrollRef = useRef<HTMLDivElement>(null);
@@ -18,14 +17,16 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
   const isMd = useMediaQuery('md');
   const isLg = useMediaQuery('lg');
 
+  const getColumnsNumber = isLg ? 3 : isMd ? 2 : isXs ? 1 : 1;
+
   const getColumn = () => {
     const columns: React.ReactNodeArray[] = Array.from(
-      { length: columnsNumber },
+      { length: getColumnsNumber },
       () => [],
     );
 
     React.Children.map(children, (child, index) => {
-      columns[index % columnsNumber].push(child);
+      columns[index % getColumnsNumber].push(child);
     });
 
     return columns;
@@ -65,7 +66,7 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    const columnsHeight = Array.from({ length: columnsNumber }).map(
+    const columnsHeight = Array.from({ length: getColumnsNumber }).map(
       (_, i) =>
         mainRef.current &&
         Math.round(mainRef.current.children[i].getBoundingClientRect().height),
@@ -76,12 +77,6 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
         Math.min(...(columnsHeight as number[])),
     );
   }, [children]);
-
-  useEffect(() => {
-    if (isXs) setColumnsNumber(1);
-    if (isMd) setColumnsNumber(2);
-    if (isLg) setColumnsNumber(3);
-  }, [isXs, isMd, isLg]);
 
   return (
     <div className="relative">

@@ -9,13 +9,12 @@ interface HeaderProps {
 const Header = ({ topics }: HeaderProps): React.ReactElement => {
   return (
     <header className="sticky z-20 bg-white top-0 w-screen">
-      <nav className="flex items-center py-3 px-5 w-full border-box">
+      <nav className="flex items-center py-3 px-3 md:px-5 w-full border-box">
         <div className="flex-1 flex items-center">
           <Link href="/">
             <a className="text-black leading-3 flex items-center focus:outline-none">
               <svg
-                width="32"
-                height="32"
+                className="w-6"
                 version="1.1"
                 viewBox="0 0 32 32"
                 aria-labelledby="unsplash-home"
@@ -24,7 +23,7 @@ const Header = ({ topics }: HeaderProps): React.ReactElement => {
                 <title id="unsplash-home">Unsplash Home</title>
                 <path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path>
               </svg>
-              <div className="flex flex-col justify-center whitespace-nowrap ml-3 leading-tight">
+              <div className="hidden md:flex flex-col justify-center whitespace-nowrap ml-3 leading-tight">
                 <strong className="block">Unsplash</strong>
                 <span className="text-xs font-medium">Photos for everyone</span>
               </div>

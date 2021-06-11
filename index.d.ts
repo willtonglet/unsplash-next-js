@@ -40,12 +40,30 @@ interface ImageProps {
   };
   tags: { [key: string]: { [key: string]: string }; type: string }[];
 }
+
+interface Contributor {
+  name: string;
+  username: string;
+  profile_image: {
+    small: string;
+  };
+}
+
+interface TopicProps {
+  title: string;
+  description: string;
+  status: string;
+  total_photos: number;
+  owners: Contributor[];
+  top_contributors: Contributor[];
+}
 interface PageProps {
   photos: ImageProps[];
   cover: ImageProps;
   trends: { title: string; id: string }[];
   topics: { title: string; slug: string; id: string }[];
   slug: string;
+  topicInfo: TopicProps;
 }
 
 type AutoCompleteParams = {
