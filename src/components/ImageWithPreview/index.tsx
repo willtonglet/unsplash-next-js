@@ -6,12 +6,12 @@ type ImageWithPreviewProps = ImageProps & {
 };
 
 const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
-  const { hash, color, className } = props;
+  const { hash, color, className, ...rest } = props;
 
   return (
     <div className={className}>
       <div className="relative flex">
-        <Image {...props} className="z-10" />
+        <Image {...rest} className="z-10" />
         <div
           className="w-full h-full absolute top-0 left-0"
           style={{ backgroundColor: color }}
