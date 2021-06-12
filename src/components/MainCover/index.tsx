@@ -18,6 +18,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
             width={cover.width}
             height={cover.height}
             color={cover.color}
+            layout="responsive"
             priority
           />
         )}

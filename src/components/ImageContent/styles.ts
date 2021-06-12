@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledImageContent = styled.a`
   cursor: zoom-in;
+  display: block;
 
   .content {
     display: none;

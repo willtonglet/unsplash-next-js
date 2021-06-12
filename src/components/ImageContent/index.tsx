@@ -24,7 +24,7 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
         key={image.id}
         scroll={false}
       >
-        <StyledImageContent onClick={onPhotoClick} className="relative flex">
+        <StyledImageContent onClick={onPhotoClick} className="relative block">
           <ImageWithPreview
             key={image.id}
             src={image.urls.regular}
@@ -32,6 +32,7 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             width={image.width}
             height={image.height}
             color={image.color}
+            layout="responsive"
             loading="lazy"
             alt={image.alt_description}
           />
