@@ -11,7 +11,7 @@ const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
   return (
     <div className={className}>
       <div className="relative">
-        <Image {...rest} className="z-10" />
+        <Image {...rest} color={color} className="z-10" />
         <div
           className="w-full h-full absolute top-0 left-0"
           style={{ backgroundColor: color }}
