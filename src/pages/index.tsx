@@ -1,3 +1,3 @@
-import Home, { getServerSideProps as HomeGetServerSideProps } from './_home';
+import Home, { getStaticProps as HomeGetStaticProps } from './_home';
 export default Home;
-export const getServerSideProps = HomeGetServerSideProps;
+export const getStaticProps = HomeGetStaticProps;

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import MainCover from '@components/MainCover';
 import ModalPhoto from '@templates/ModalPhoto';
 import { unsplash } from '@core/middleware/api';
@@ -23,7 +23,7 @@ const HomePage = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const { data: photos } = await unsplash.get('/napi/photos', {
     params: {
       page: 1,
