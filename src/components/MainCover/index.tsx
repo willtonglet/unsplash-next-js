@@ -11,18 +11,30 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
     <section className="text-white grid grid-cols-1 grid-rows-1 bg-black">
       <div className="col-start-1 row-start-1">
         {cover && (
-          <ImageWithPreview
-            src={{
-              xs: cover.urls.full,
-              lg: `${cover.urls.raw}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=1599&h=594`,
-            }}
-            hash={cover.blur_hash}
-            alt={cover.alt_description}
-            width={{ xs: cover.width, lg: 1599 }}
-            height={{ xs: cover.height, lg: 594 }}
-            color={cover.color}
-            priority
-          />
+          <>
+            <ImageWithPreview
+              src={cover.urls.full}
+              hash={cover.blur_hash}
+              alt={cover.alt_description}
+              width={cover.width}
+              height={cover.height}
+              color={cover.color}
+              layout="responsive"
+              className="lg:hidden"
+              priority
+            />
+            <ImageWithPreview
+              src={`${cover.urls.raw}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=1599&h=594`}
+              hash={cover.blur_hash}
+              alt={cover.alt_description}
+              width={1599}
+              height={594}
+              color={cover.color}
+              layout="responsive"
+              className="hidden lg:block"
+              priority
+            />
+          </>
         )}
       </div>
       <div className="col-start-1 row-start-1 bg-opacity-50 bg-black w-screen flex flex-col justify-between z-10">
