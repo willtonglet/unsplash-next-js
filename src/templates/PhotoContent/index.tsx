@@ -46,6 +46,7 @@ const PhotoContent = forwardRef<HTMLDivElement, PhotoContentProps>(
             width={image.width}
             height={image.height}
             className={className}
+            layout="responsive"
             loading="eager"
             priority
           />
