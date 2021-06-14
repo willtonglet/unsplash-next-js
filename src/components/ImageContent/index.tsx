@@ -32,7 +32,6 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             width={image.width}
             height={image.height}
             color={image.color}
-            layout="responsive"
             loading="lazy"
             alt={image.alt_description}
           />
