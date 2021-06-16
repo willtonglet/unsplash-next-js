@@ -1,5 +1,4 @@
 import SearchBar from '@components/SearchBar';
-import Picture from '@components/Picture';
 import CoverPicture from '@components/CoverPicture';
 
 interface MainCoverProps {
