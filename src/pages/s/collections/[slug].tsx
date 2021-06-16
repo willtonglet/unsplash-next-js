@@ -2,11 +2,7 @@ import { GetServerSideProps } from 'next';
 import { unsplash } from '@core/middleware/api';
 import PageWrapperWithSearch from '@templates/PageWrapperWithSearch';
 
-const SlugTabPhotos = ({
-  collections,
-  results,
-  photos,
-}: PageProps): React.ReactElement => {
+const SlugTabPhotos = ({ results, photos }: PageProps): React.ReactElement => {
   return (
     <PageWrapperWithSearch results={results} photos={photos}>
       oi
