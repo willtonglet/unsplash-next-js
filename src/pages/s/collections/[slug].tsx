@@ -1,16 +1,15 @@
-import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import ModalPhoto from '@templates/ModalPhoto';
-import MasonrySearchTabPhotos from '@templates/MasonrySearchTabPhotos';
 import { unsplash } from '@core/middleware/api';
 import PageWrapperWithSearch from '@templates/PageWrapperWithSearch';
 
-const SlugTabPhotos = ({ results, photos }: PageProps): React.ReactElement => {
-  const router = useRouter();
+const SlugTabPhotos = ({
+  collections,
+  results,
+  photos,
+}: PageProps): React.ReactElement => {
   return (
     <PageWrapperWithSearch results={results} photos={photos}>
-      <MasonrySearchTabPhotos photos={photos} />
-      <ModalPhoto isOpen={Boolean(router.query.id)} />
+      oi
     </PageWrapperWithSearch>
   );
 };
@@ -40,6 +39,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   return {
     props: {
+      collections: collections.results,
       photos: photos.results,
       results: {
         photos: photos.total,

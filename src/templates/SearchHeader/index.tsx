@@ -24,7 +24,7 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
   ];
 
   return (
-    <ContainerWrapper className="pt-12">
+    <ContainerWrapper className="pt-16 pb-3">
       <h2 className="capitalize text-5xl font-bold mb-8">
         {String(slug).replace('-', ' ')}
       </h2>

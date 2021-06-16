@@ -123,7 +123,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
       {isSearchResultsOpen && searchResults.length > 0 && (
         <div
           ref={searchRef}
-          className={`absolute w-full bg-white z-10 ${
+          className={`absolute w-full bg-white z-20 ${
             hasShadow && 'shadow-md'
           } rounded flex flex-col py-2 mt-1 ${
             variant === 'primary' && 'border border-gray-300'

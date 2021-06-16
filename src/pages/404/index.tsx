@@ -1,5 +1,5 @@
-const NotFound = (): React.ReactElement => {
+const Custom404 = (): React.ReactElement => {
   return <h1>404</h1>;
 };
 
-export default NotFound;
+export default Custom404;

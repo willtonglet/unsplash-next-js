@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = ({ topics }: HeaderProps): React.ReactElement => {
   return (
-    <header className="sticky z-20 bg-white top-0 w-screen">
+    <header className="sticky z-30 bg-white top-0 w-screen">
       <nav className="flex items-center py-3 px-3 md:px-5 w-full border-box">
         <div className="flex-1 flex items-center">
           <Link href="/">

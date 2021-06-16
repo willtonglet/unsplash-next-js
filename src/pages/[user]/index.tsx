@@ -26,15 +26,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   });
 
-  if (!userInfo) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
   return { props: { userInfo, photos } };
 };
 

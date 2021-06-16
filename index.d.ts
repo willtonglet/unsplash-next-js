@@ -64,6 +64,8 @@ interface PageProps {
   topics: { title: string; slug: string; id: string }[];
   slug: string;
   topicInfo: TopicProps;
+  results: { photos: number; collections: number; users: number };
+  collections: { [key: string]: string }[];
 }
 
 type AutoCompleteParams = {
