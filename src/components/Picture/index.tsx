@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyledPicture } from './styles';
 
 export interface PictureProps extends React.HTMLAttributes<HTMLImageElement> {
@@ -46,4 +47,4 @@ const Picture = (props: PictureProps): React.ReactElement => {
   );
 };
 
-export default Picture;
+export default React.memo(Picture);

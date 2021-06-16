@@ -1,5 +1,4 @@
-import React from 'react';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import HireLink from '@components/HireLink';
 
 interface AvatarInfoProps {
   image: ImageProps;
@@ -17,15 +16,10 @@ const AvatarInfo = (props: AvatarInfoProps): React.ReactElement => {
       />
       <div className="flex flex-col ml-2">
         <span>{image.user.name}</span>
-        {image.user.for_hire && (
-          <div className="flex items-center">
-            <span className="text-xs font-light">Available for hire</span>
-            <IoMdCheckmarkCircleOutline size={12} className="ml-1" />
-          </div>
-        )}
+        {image.user.for_hire && <HireLink />}
       </div>
     </div>
   );
 };
 
-export default React.memo(AvatarInfo);
+export default AvatarInfo;
