@@ -4,6 +4,7 @@ const CoverPicture = ({ alt, src }: PictureProps): React.ReactElement => (
   <Picture
     alt={alt}
     loading="eager"
+    priority
     src={Array.from({ length: 30 }).map(
       (_, index) =>
         `${src}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=${
