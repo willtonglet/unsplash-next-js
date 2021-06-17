@@ -27,7 +27,6 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const isSm = useMediaQuery('sm');
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
@@ -96,16 +95,30 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
         </button>
         <input
           type="text"
-          className={`text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
+          className={`hidden md:block text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
             'r',
           )} ${
             variant === 'primary' &&
             isFocused &&
             'border-r border-t border-b border-gray-300'
           } focus:outline-none`}
-          placeholder={
-            isSm ? 'Search free-high resolution photos' : 'Search Photos'
-          }
+          placeholder="Search free-high resolution photos"
+          onFocus={handleFocus}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          ref={inputRef}
+        />
+
+        <input
+          type="text"
+          className={`md:hidden text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
+            'r',
+          )} ${
+            variant === 'primary' &&
+            isFocused &&
+            'border-r border-t border-b border-gray-300'
+          } focus:outline-none`}
+          placeholder="Search photos"
           onFocus={handleFocus}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
