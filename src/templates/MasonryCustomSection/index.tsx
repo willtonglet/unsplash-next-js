@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, Suspense } from 'react';
-import { useRouter } from 'next/router';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
@@ -8,29 +7,29 @@ import ContainerWrapper from '@components/ContainerWrapper';
 
 const ImageContent = React.lazy(() => import('@components/ImageContent'));
 
-interface MasonrySectionTopicsProps {
+interface MasonryCustomSectionProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
   photos: ImageProps[];
+  url: string;
+  queryToBeListened?: string | string[];
 }
 
-const MasonrySectionTopics = (
-  props: MasonrySectionTopicsProps,
+const MasonryCustomSection = (
+  props: MasonryCustomSectionProps,
 ): React.ReactElement => {
-  const { onPhotoClick, photos } = props;
+  const { onPhotoClick, photos, url, queryToBeListened } = props;
   const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalContext);
-  const router = useRouter();
-  const { slug } = router.query;
 
   useEffect(() => {
-    if (slug) setPhotosData([]);
+    if (queryToBeListened) setPhotosData([]);
     setPage(1);
-  }, [slug]);
+  }, [queryToBeListened, url]);
 
-  const getPhotos = () => {
+  const getPhotos = () =>
     apiRoute
-      .get(`/topics/${slug}/photos`, {
+      .get(url, {
         params: {
           page: page,
           per_page: 30,
@@ -40,14 +39,13 @@ const MasonrySectionTopics = (
         const arr = [...photosData, ...response.data];
         setPhotosData(arr);
       });
-  };
 
   useEffect(() => {
     setPhotosData(photos);
   }, [photos]);
 
   useEffect(() => {
-    if (page > 1) getPhotos();
+    page > 1 && getPhotos();
   }, [page]);
 
   return (
@@ -66,7 +64,6 @@ const MasonrySectionTopics = (
             }
           >
             <ImageContent
-              key={photo.id}
               image={photo}
               onPhotoClick={(e) => {
                 setIsModalOpen(true);
@@ -80,4 +77,4 @@ const MasonrySectionTopics = (
   );
 };
 
-export default MasonrySectionTopics;
+export default MasonryCustomSection;

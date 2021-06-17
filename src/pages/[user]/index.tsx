@@ -1,30 +1,40 @@
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import ModalPhoto from '@templates/ModalPhoto';
-import MasonrySectionTopics from '@templates/MasonrySectionTopics';
+import MasonryCustomSection from '@templates/MasonryCustomSection';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
+import UserInfoHeader from '@templates/UserInfoHeader';
 
-const UserPhotos = ({ photos }: PageProps): React.ReactElement => {
+const getUser = (user?: string | string[]) => String(user)?.replace('@', '');
+
+const UserPhotos = ({ userInfo, photos }: PageProps): React.ReactElement => {
   const router = useRouter();
-
   return (
     <PageWrapper>
-      <MasonrySectionTopics photos={photos} /> */
+      <UserInfoHeader userInfo={userInfo} />
+      <MasonryCustomSection
+        photos={photos}
+        url={`/users/${getUser(router.query.user)}/photos`}
+      />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
     </PageWrapper>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const getUser = String(params?.user).replace('@', '');
-  const { data: userInfo } = await unsplash.get(`/napi/users/${getUser}`);
-  const { data: photos } = await unsplash.get(`/napi/users/${getUser}/photos`, {
-    params: {
-      page: 1,
-      per_page: 30,
+  const { data: userInfo } = await unsplash.get(
+    `/napi/users/${getUser(params?.user)}`,
+  );
+  const { data: photos } = await unsplash.get(
+    `/napi/users/${getUser(params?.user)}/photos`,
+    {
+      params: {
+        page: 1,
+        per_page: 30,
+      },
     },
-  });
+  );
 
   return { props: { userInfo, photos } };
 };

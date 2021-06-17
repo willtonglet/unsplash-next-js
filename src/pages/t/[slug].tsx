@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import ModalPhoto from '@templates/ModalPhoto';
-import MasonrySectionTopics from '@templates/MasonrySectionTopics';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import TopicHeader from '@templates/TopicHeader';
+import MasonryCustomSection from '@templates/MasonryCustomSection';
 
 const TopicTabPhotos = ({
   photos,
@@ -16,7 +16,11 @@ const TopicTabPhotos = ({
   return (
     <PageWrapper topics={topics}>
       <TopicHeader topicInfo={topicInfo} />
-      <MasonrySectionTopics photos={photos} />
+      <MasonryCustomSection
+        url={`/topics/${String(router.query.slug)}/photos`}
+        queryToBeListened={router.query.slug}
+        photos={photos}
+      />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
     </PageWrapper>
   );

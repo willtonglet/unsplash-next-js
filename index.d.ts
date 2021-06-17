@@ -66,6 +66,23 @@ interface PageProps {
   topicInfo: TopicProps;
   results: { photos: number; collections: number; users: number };
   collections: { [key: string]: string }[];
+  userInfo: {
+    name: string;
+    bio: string;
+    location: string;
+    portfolio_url: string;
+    profile_image: {
+      large: string;
+    };
+    tags: {
+      custom: {
+        source: {
+          title: string;
+        };
+        title: string;
+      }[];
+    };
+  };
 }
 
 type AutoCompleteParams = {

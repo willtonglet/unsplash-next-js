@@ -67,6 +67,14 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
     setIsFocused(true);
   };
 
+  const inputClasses = `text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
+    'r',
+  )} ${
+    variant === 'primary' &&
+    isFocused &&
+    'border-r border-t border-b border-gray-300'
+  } focus:outline-none`;
+
   useEffect(() => {
     if (search) {
       getSearch(search);
@@ -94,13 +102,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
         </button>
         <input
           type="text"
-          className={`hidden md:block text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
-            'r',
-          )} ${
-            variant === 'primary' &&
-            isFocused &&
-            'border-r border-t border-b border-gray-300'
-          } focus:outline-none`}
+          className={`hidden md:block ${inputClasses}`}
           placeholder="Search free-high resolution photos"
           onFocus={handleFocus}
           value={search}
@@ -110,13 +112,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
 
         <input
           type="text"
-          className={`md:hidden text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
-            'r',
-          )} ${
-            variant === 'primary' &&
-            isFocused &&
-            'border-r border-t border-b border-gray-300'
-          } focus:outline-none`}
+          className={`md:hidden ${inputClasses}`}
           placeholder="Search photos"
           onFocus={handleFocus}
           value={search}

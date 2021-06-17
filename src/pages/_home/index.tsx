@@ -4,7 +4,7 @@ import MainCover from '@components/MainCover';
 import ModalPhoto from '@templates/ModalPhoto';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
-import MasonrySection from '@templates/MasonrySection';
+import MasonryCustomSection from '@templates/MasonryCustomSection';
 
 const HomePage = ({
   photos,
@@ -18,7 +18,7 @@ const HomePage = ({
     <PageWrapper topics={topics}>
       <MainCover cover={cover} trends={trends} />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
-      <MasonrySection photos={photos} />
+      <MasonryCustomSection url="/photos" photos={photos} />
     </PageWrapper>
   );
 };
