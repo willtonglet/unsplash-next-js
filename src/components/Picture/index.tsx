@@ -36,13 +36,7 @@ const Picture = (props: PictureProps): React.ReactElement => {
   return (
     <StyledPicture>
       {renderSources}
-      <img
-        role="presentation"
-        src={getImage}
-        alt={alt}
-        decoding="async"
-        {...rest}
-      />
+      <img role="presentation" src={getImage} alt={alt} {...rest} />
     </StyledPicture>
   );
 };
