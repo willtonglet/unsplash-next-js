@@ -4,7 +4,6 @@ import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
 import { slugify } from '@core/utils/slugify';
-import useMediaQuery from '@hooks/useMediaQuery';
 
 interface SearchBar {
   variant?: 'primary' | 'secondary';
