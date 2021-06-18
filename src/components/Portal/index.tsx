@@ -7,7 +7,7 @@ interface PortalProps {
 }
 
 const Portal = ({
-  portalElementId,
+  portalElementId = 'portal-root',
   children,
 }: PortalProps): React.ReactElement => {
   const [hasMounted, setHasMounted] = React.useState(false);

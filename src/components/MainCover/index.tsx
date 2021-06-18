@@ -1,5 +1,6 @@
 import SearchBar from '@components/SearchBar';
 import CoverPicture from '@components/CoverPicture';
+import UserInfoPopover from '@components/UserInfoPopover';
 
 interface MainCoverProps {
   cover: ImageProps;
@@ -43,10 +44,10 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
             </div>
           </div>
         </div>
-        <div className="hidden sm:flex justify-between text-sm text-gray-400 p-5">
+        <div className="hidden sm:flex justify-between text-sm text-gray-500 p-5">
           <div className="font-light">
-            <span className="text-white">Photo of the Day</span> by{' '}
-            <span className="text-white">{cover?.user.name}</span>
+            <span className="text-gray-300">Photo of the Day</span> by{' '}
+            <UserInfoPopover user={cover.user} />
           </div>
         </div>
       </div>
