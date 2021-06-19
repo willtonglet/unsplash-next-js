@@ -51,7 +51,7 @@ const MasonryCustomSection = (
   return (
     <ContainerWrapper className="py-12">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
-        {photosData?.map((photo) => (
+        {photosData?.map((photo, index) => (
           <Suspense
             key={photo.id}
             fallback={
@@ -64,6 +64,8 @@ const MasonryCustomSection = (
             }
           >
             <ImageContent
+              priority={index === 0}
+              loading={index === 0 ? 'eager' : 'lazy'}
               image={photo}
               onPhotoClick={(e) => {
                 setIsModalOpen(true);

@@ -7,12 +7,14 @@ import ImageWithPreview from '../ImageWithPreview';
 import { StyledImageContent } from './styles';
 
 interface ImageContentProps {
+  priority?: boolean;
   image: ImageProps;
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  loading?: 'lazy' | 'eager';
 }
 
 const ImageContent = (props: ImageContentProps): React.ReactElement => {
-  const { image, onPhotoClick } = props;
+  const { image, onPhotoClick, priority = false, loading } = props;
   const { makeContextualHref } = useContextualRouting();
 
   return (
@@ -33,8 +35,9 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             height={image.height}
             color={image.color}
             layout="responsive"
-            loading="lazy"
+            loading={loading}
             alt={image.alt_description}
+            priority={priority}
           />
           <div className="content bg-opacity-40 bg-black text-white z-10">
             <div className="flex justify-between items-end w-full">
