@@ -50,10 +50,10 @@ const NavigationScroller = ({
       arrow[direction] && (
         <>
           <div
-            className={`absolute ${handlePosition} top-0 h-full bg-gradient-to-${
-              direction === 'left' ? 'r' : 'l'
-            } from-${
-              backgroundColor === 'primary' ? 'white' : 'gray-50'
+            className={`absolute ${handlePosition} top-0 h-full ${
+              direction === 'left' ? 'bg-gradient-to-r' : 'bg-gradient-to-l'
+            } ${
+              backgroundColor === 'primary' ? 'from-white' : 'from-gray-50'
             } w-40 pointer-events-none`}
           />
           <button

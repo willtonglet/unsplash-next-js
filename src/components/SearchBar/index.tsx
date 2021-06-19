@@ -32,7 +32,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
     setSearchResults(data.fuzzy || data.did_you_mean || data.autocomplete);
   };
 
-  const handleHeight = size === 'small' ? 10 : 14;
+  const handleHeight = size === 'small' ? 'h-10' : 'h-14';
   const handleBackground =
     variant === 'primary'
       ? isFocused
@@ -41,7 +41,13 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
       : 'bg-white';
 
   const handleRadius = (side: 'l' | 'r') =>
-    hasRoundedPill ? `rounded-${side}-full` : `rounded-${side}`;
+    side === 'l'
+      ? hasRoundedPill
+        ? `rounded-l-full`
+        : `rounded-l`
+      : hasRoundedPill
+      ? `rounded-r-full`
+      : `rounded-r`;
 
   const renderSearchResults = searchResults?.map((result, index) => (
     <button
@@ -67,7 +73,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
     setIsFocused(true);
   };
 
-  const inputClasses = `text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
+  const inputClasses = `text-gray-800 w-full px-2 text-sm ${handleHeight} ${handleBackground} ${handleRadius(
     'r',
   )} ${
     variant === 'primary' && isFocused
