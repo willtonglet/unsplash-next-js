@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { StyledPicture } from './styles';
 
 export interface PictureProps extends React.HTMLAttributes<HTMLImageElement> {
@@ -17,21 +16,6 @@ const Picture = (props: PictureProps): React.ReactElement => {
     ...rest
   } = props;
   const getImage = typeof src === 'object' ? src[0] : src;
-
-  const getSrcSet = customMq
-    .map((_, index) =>
-      src[index]
-        ? index > 0
-          ? `${src[index]} 1x, ${src[index]} 2x`
-          : `${src[0]} 1x, ${src[0]} 2x`
-        : null,
-    )
-    .reverse();
-
-  const imgAttributes = {
-    src: getImage,
-    srcSet: getSrcSet,
-  };
 
   const renderSources = customMq
     .map((size, index) =>
