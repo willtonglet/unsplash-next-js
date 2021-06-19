@@ -15,7 +15,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
       </div>
       <div className="relative">
         <div className="bg-opacity-40 bg-black w-full h-full z-10">
-          <div className="py-24 md:py-36 flex justify-center">
+          <div className="py-12 sm:py-24 md:py-36 flex justify-center">
             <div className="flex flex-col w-full px-3 md:px-0 md:w-2/3">
               <h2 className="text-2xl md:text-5xl font-bold mb-5">Unsplash</h2>
               <p className="text-md md:text-lg font-light mb-7">
