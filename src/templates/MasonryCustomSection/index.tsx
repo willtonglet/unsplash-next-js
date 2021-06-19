@@ -51,19 +51,29 @@ const MasonryCustomSection = (
   return (
     <ContainerWrapper className="py-12">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
-        {photosData?.map((photo, index) => (
-          <RenderIfVisible key={photo.id}>
+        {photosData?.map((photo, index) =>
+          index === 0 ? (
             <ImageContent
-              priority={index === 0}
-              loading={index === 0 ? 'eager' : 'lazy'}
+              priority
+              loading="eager"
               image={photo}
               onPhotoClick={(e) => {
                 setIsModalOpen(true);
                 onPhotoClick && onPhotoClick(e);
               }}
             />
-          </RenderIfVisible>
-        ))}
+          ) : (
+            <RenderIfVisible key={photo.id}>
+              <ImageContent
+                image={photo}
+                onPhotoClick={(e) => {
+                  setIsModalOpen(true);
+                  onPhotoClick && onPhotoClick(e);
+                }}
+              />
+            </RenderIfVisible>
+          ),
+        )}
       </Masonry>
     </ContainerWrapper>
   );
