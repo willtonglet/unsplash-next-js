@@ -21,13 +21,15 @@ const Picture = (props: PictureProps): React.ReactElement => {
   } = props;
   const getImage = typeof src === 'object' ? src[0] : src;
 
-  const getSrcSet = customMq.map((_, index) =>
-    src[index]
-      ? index > 0
-        ? `${src[index]} 1x, ${src[index]} 2x`
-        : `${src[0]} 1x, ${src[0]} 2x`
-      : null,
-  );
+  const getSrcSet = customMq
+    .map((_, index) =>
+      src[index]
+        ? index > 0
+          ? `${src[index]} 1x, ${src[index]} 2x`
+          : `${src[0]} 1x, ${src[0]} 2x`
+        : null,
+    )
+    .reverse();
 
   const imgAttributes = {
     src: getImage,
