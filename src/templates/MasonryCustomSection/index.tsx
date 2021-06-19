@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext, Suspense } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import ContainerWrapper from '@components/ContainerWrapper';
-
-const ImageContent = React.lazy(() => import('@components/ImageContent'));
+import RenderIfVisible from '@components/RenderIfVisible';
+import ImageContent from '@components/ImageContent';
 
 interface MasonryCustomSectionProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -52,17 +52,7 @@ const MasonryCustomSection = (
     <ContainerWrapper className="py-12">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
         {photosData?.map((photo, index) => (
-          <Suspense
-            key={photo.id}
-            fallback={
-              <div
-                style={{
-                  backgroundColor: photo.color,
-                  height: photo.height / 10,
-                }}
-              />
-            }
-          >
+          <RenderIfVisible key={photo.id}>
             <ImageContent
               priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
@@ -72,7 +62,7 @@ const MasonryCustomSection = (
                 onPhotoClick && onPhotoClick(e);
               }}
             />
-          </Suspense>
+          </RenderIfVisible>
         ))}
       </Masonry>
     </ContainerWrapper>
