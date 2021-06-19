@@ -48,6 +48,7 @@ const PhotoContent = forwardRef<HTMLDivElement, PhotoContentProps>(
             className={className}
             layout="responsive"
             loading="eager"
+            priority
           />
         </div>
       </StyledPhotoContent>

@@ -3,6 +3,7 @@ import Picture, { PictureProps } from '@components/Picture';
 const CoverPicture = ({ alt, src }: PictureProps): React.ReactElement => (
   <Picture
     alt={alt}
+    priority
     loading="eager"
     src={Array.from({ length: 20 }).map(
       (_, index) =>
