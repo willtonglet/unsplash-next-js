@@ -3,8 +3,8 @@ import Picture, { PictureProps } from '@components/Picture';
 const CoverPicture = ({ alt, src }: PictureProps): React.ReactElement => (
   <Picture
     alt={alt}
-    priority
-    loading="eager"
+    // priority
+    // loading="eager"
     src={Array.from({ length: 20 }).map(
       (_, index) =>
         `${src}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=${
