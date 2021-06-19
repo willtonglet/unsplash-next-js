@@ -54,6 +54,7 @@ const MasonryCustomSection = (
         {photosData?.map((photo, index) =>
           index === 0 ? (
             <ImageContent
+              key={photo.id}
               priority
               loading="eager"
               image={photo}

@@ -29,8 +29,6 @@ const Picture = (props: PictureProps): React.ReactElement => {
       : null,
   );
 
-  console.log(getSrcSet);
-
   const imgAttributes = {
     src: getImage,
     srcSet: getSrcSet,
