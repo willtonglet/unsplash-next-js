@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import Popover from '@components/Popover';
-import { useState } from 'react';
 import { apiRoute } from '@core/middleware/api';
-import { useEffect } from 'react';
+import ImageWithPreview from '@components/ImageWithPreview';
 
 interface UserInfoPopoverProps {
   user: PageProps['cover']['user'];
@@ -56,11 +56,12 @@ const UserInfoPopover = ({
               </Link>
             </div>
           </div>
-          <div className="flex my-3">
+          <div className="flex mt-3 mb-4">
             {userPhotos.map((photo, i) => (
               <Link href={`/@${user.username}`} key={i}>
                 <a className={i === 1 ? 'px-2' : 'p-0'}>
-                  <Image
+                  <ImageWithPreview
+                    hash={photo.blur_hash}
                     src={photo.urls.thumb}
                     width={photo.width}
                     height={photo.height}

@@ -14,7 +14,7 @@ const Header = ({ topics }: HeaderProps): React.ReactElement => {
           <Link href="/">
             <a className="text-black leading-3 flex items-center focus:outline-none">
               <svg
-                className="w-6"
+                className="w-6 sm:w-8"
                 version="1.1"
                 viewBox="0 0 32 32"
                 aria-labelledby="unsplash-home"
