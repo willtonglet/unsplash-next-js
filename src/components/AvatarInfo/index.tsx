@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import HireLink from '@components/HireLink';
 
 interface AvatarInfoProps {
@@ -9,9 +10,11 @@ const AvatarInfo = (props: AvatarInfoProps): React.ReactElement => {
 
   return (
     <div className="flex items-center">
-      <img
+      <Image
         src={image.user.profile_image.medium}
         alt={image.user.name}
+        heigh={36}
+        width={36}
         className="overflow-hidden h-9 w-9 rounded-full"
       />
       <div className="flex flex-col ml-2">
