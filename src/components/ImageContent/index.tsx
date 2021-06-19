@@ -26,7 +26,13 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
         key={image.id}
         scroll={false}
       >
-        <StyledImageContent onClick={onPhotoClick} className="relative block">
+        <StyledImageContent
+          onClick={onPhotoClick}
+          className="relative block group"
+        >
+          <div className="mb-3 px-3 md:hidden">
+            <AvatarInfo image={image} />
+          </div>
           <ImageWithPreview
             key={image.id}
             src={image.urls.regular}
@@ -39,7 +45,7 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             alt={image.alt_description}
             priority={priority}
           />
-          <div className="content bg-opacity-40 bg-black text-white z-10">
+          <div className="content absolute top-0 left-0 w-full h-full p-4 flex-col justify-end bg-opacity-40 bg-black text-white z-10 hidden md:flex">
             <div className="flex justify-between items-end w-full">
               <AvatarInfo image={image} />
               <ButtonIcon>
