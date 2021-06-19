@@ -70,9 +70,9 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
   const inputClasses = `text-gray-800 w-full px-2 text-sm h-${handleHeight} ${handleBackground} ${handleRadius(
     'r',
   )} ${
-    variant === 'primary' &&
-    isFocused &&
-    'border-r border-t border-b border-gray-300'
+    variant === 'primary' && isFocused
+      ? 'border-r border-t border-b border-gray-300'
+      : ''
   } focus:outline-none`;
 
   useEffect(() => {
@@ -86,16 +86,16 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
 
   return (
     <div className="relative">
-      <div className={`flex rounded ${hasShadow && 'shadow-md'} relative`}>
+      <div className={`flex rounded ${hasShadow ? 'shadow-md' : ''} relative`}>
         <button
           type="button"
           onClick={() => inputRef.current?.focus()}
           className={`h-${handleHeight} ${handleBackground} text-gray-500 pl-3 ${handleRadius(
             'l',
           )} ${
-            variant === 'primary' &&
-            isFocused &&
-            'border-l border-t border-b border-gray-300'
+            variant === 'primary' && isFocused
+              ? 'border-l border-t border-b border-gray-300'
+              : ''
           } focus:outline-none`}
         >
           <IoIosSearch size={size === 'small' ? 21 : 24} />
@@ -132,9 +132,9 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
         <div
           ref={searchRef}
           className={`absolute w-full bg-white z-20 ${
-            hasShadow && 'shadow-md'
+            hasShadow ? 'shadow-md' : ''
           } rounded flex flex-col py-2 mt-1 ${
-            variant === 'primary' && 'border border-gray-300'
+            variant === 'primary' ? 'border border-gray-300' : ''
           }`}
         >
           {renderSearchResults}
