@@ -7,7 +7,6 @@ interface AvatarInfoProps {
 
 const AvatarInfo = (props: AvatarInfoProps): React.ReactElement => {
   const { image } = props;
-
   return (
     <div className="flex items-center">
       <Image
