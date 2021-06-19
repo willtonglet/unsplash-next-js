@@ -55,10 +55,13 @@ const MasonryCustomSection = (
           <Suspense
             key={photo.id}
             fallback={
-              <div
-                style={{
-                  backgroundColor: photo.color,
-                  height: photo.height / 10,
+              <ImageContent
+                priority={index === 0}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                image={photo}
+                onPhotoClick={(e) => {
+                  setIsModalOpen(true);
+                  onPhotoClick && onPhotoClick(e);
                 }}
               />
             }
