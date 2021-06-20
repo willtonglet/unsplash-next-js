@@ -52,7 +52,7 @@ const MasonryCustomSection = (
     <ContainerWrapper className="py-12">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
         {photosData?.map((photo, index) =>
-          index === 0 ? (
+          index <= 2 ? (
             <ImageContent
               key={photo.id}
               priority
