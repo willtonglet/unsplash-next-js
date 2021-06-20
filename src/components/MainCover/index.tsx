@@ -9,7 +9,10 @@ interface MainCoverProps {
 
 const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
   return (
-    <section className="text-white relative bg-black">
+    <section
+      className="text-white relative"
+      style={{ backgroundColor: cover.color }}
+    >
       <div className="absolute top-0 left-0 w-full h-full">
         <CoverPicture
           src={cover.urls.raw}

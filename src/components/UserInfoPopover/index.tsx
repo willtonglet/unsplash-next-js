@@ -62,9 +62,9 @@ const UserInfoPopover = ({
                 <a className={i === 1 ? 'px-2' : 'p-0'}>
                   <ImageWithPreview
                     hash={photo.blur_hash}
-                    src={photo.urls.thumb}
-                    width={photo.width}
-                    height={photo.height}
+                    src={`${photo.urls.raw}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=120&h=70`}
+                    width={120}
+                    height={70}
                     alt={photo.alt_description}
                   />
                 </a>
