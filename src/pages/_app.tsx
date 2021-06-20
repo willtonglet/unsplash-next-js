@@ -21,7 +21,3 @@ export default function MyApp({
     </PhotosContextProvider>
   );
 }
-
-export function reportWebVitals(metric: NextWebVitalsMetric): void {
-  console.log(metric);
-}
