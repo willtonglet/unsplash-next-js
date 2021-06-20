@@ -11,10 +11,15 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
   return (
     <section className="text-white relative bg-black">
       <div className="absolute top-0 left-0 w-full h-full">
-        <CoverPicture src={cover.urls.raw} alt={cover.alt_description} />
+        <CoverPicture
+          src={cover.urls.raw}
+          alt={cover.alt_description}
+          hash={cover.blur_hash}
+          color={cover.color}
+        />
       </div>
-      <div className="relative">
-        <div className="bg-opacity-40 bg-black w-full h-full z-10">
+      <div className="relative z-20">
+        <div className="bg-opacity-40 bg-black w-full h-full">
           <div className="py-12 sm:py-24 md:py-36 flex justify-center">
             <div className="flex flex-col w-full px-3 md:px-0 md:w-2/3">
               <h2 className="text-2xl md:text-5xl font-bold mb-5">Unsplash</h2>

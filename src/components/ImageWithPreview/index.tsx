@@ -1,7 +1,7 @@
 import Image, { ImageProps } from 'next/image';
 import BlurHash from '../BlurHash';
 
-type ImageWithPreviewProps = ImageProps & {
+export type ImageWithPreviewProps = ImageProps & {
   hash: string;
 };
 
