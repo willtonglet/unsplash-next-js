@@ -1,12 +1,15 @@
 /* eslint-disable camelcase */
-declare module '*.svg' {
-  const content: any;
-  export default content;
-}
-
 interface Array<T> {
   flat(): Array<T>;
   flatMap(func: (x: T) => T): Array<T>;
+}
+
+interface Window {
+  requestIdleCallback: (
+    callback: (deadline: RequestIdleCallbackDeadline) => void,
+    opts?: RequestIdleCallbackOptions,
+  ) => RequestIdleCallbackHandle;
+  cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void;
 }
 
 interface ImageSizes {
