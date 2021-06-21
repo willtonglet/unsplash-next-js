@@ -1,7 +1,7 @@
+import Image from 'next/image';
+import BlurHash from '@components/BlurHash';
 import SearchBar from '@components/SearchBar';
-// import CoverPicture from '@components/CoverPicture';
 import UserInfoPopover from '@components/UserInfoPopover';
-import ImageWithPreview from '@components/ImageWithPreview';
 
 interface MainCoverProps {
   cover: ImageProps;
@@ -11,21 +11,26 @@ interface MainCoverProps {
 const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
   return (
     <section
-      className="text-white relative flex"
+      className="text-white relative"
       style={{ backgroundColor: cover.color }}
     >
-      <ImageWithPreview
-        src={cover.urls.full}
-        width={cover.width}
-        height={cover.height}
-        alt={cover.alt_description}
-        hash={cover.blur_hash}
-        color={cover.color}
-        layout="responsive"
-        className="flex-grow"
-        priority
-      />
-      <div className="absolute top-0 left-0 w-full h-full z-20">
+      <div className="absolute top-0 left-0 w-full h-full">
+        <Image
+          src={cover.urls.full}
+          quality={80}
+          layout="fill"
+          objectFit="cover"
+          className="relative z-10"
+          priority
+        />
+        <div
+          className="w-full h-full absolute top-0 left-0"
+          style={{ backgroundColor: cover.color }}
+        >
+          <BlurHash hash={cover.blur_hash} height="100%" width="100%" />
+        </div>
+      </div>
+      <div className="relative z-20">
         <div className="bg-opacity-40 bg-black w-full h-full">
           <div className="py-12 sm:py-24 md:py-36 flex justify-center">
             <div className="flex flex-col w-full px-3 md:px-0 md:w-2/3">
