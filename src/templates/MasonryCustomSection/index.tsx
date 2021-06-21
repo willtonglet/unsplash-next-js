@@ -56,7 +56,6 @@ const MasonryCustomSection = (
             <ImageContent
               key={photo.id}
               priority
-              loading="eager"
               image={photo}
               onPhotoClick={(e) => {
                 setIsModalOpen(true);
@@ -67,7 +66,6 @@ const MasonryCustomSection = (
             <RenderIfVisible key={photo.id}>
               <ImageContent
                 image={photo}
-                loading="lazy"
                 onPhotoClick={(e) => {
                   setIsModalOpen(true);
                   onPhotoClick && onPhotoClick(e);
