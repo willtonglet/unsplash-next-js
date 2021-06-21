@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const { data: photos } = await unsplash.get('/napi/photos', {
     params: {
       page: 1,
-      per_page: 30,
+      per_page: 12,
     },
   });
   const { data: cover } = await unsplash.get('/napi/photos/day');
@@ -39,7 +39,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   const { data: topics } = await unsplash.get('/napi/topics', {
     params: {
-      per_page: 25,
+      per_page: 15,
     },
   });
 

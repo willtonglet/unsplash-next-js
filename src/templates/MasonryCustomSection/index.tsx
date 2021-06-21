@@ -32,7 +32,7 @@ const MasonryCustomSection = (
       .get(url, {
         params: {
           page: page,
-          per_page: 30,
+          per_page: 12,
         },
       })
       .then((response) => {
