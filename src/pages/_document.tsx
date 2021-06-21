@@ -41,11 +41,30 @@ export default class MyDocument extends Document {
     return (
       <Html lang="pt-br">
         <Head>
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
-            rel="stylesheet"
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="true"
           />
+          <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+            media="print"
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            onLoad="this.media='all'"
+          />
+          <noscript>
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+            />
+          </noscript>
         </Head>
         <body>
           <div id="portal-root" />
