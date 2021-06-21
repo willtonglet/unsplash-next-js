@@ -34,7 +34,7 @@ const MasonrySearchTabPhotos = (
         params: {
           query: slug,
           page: page,
-          per_page: 30,
+          per_page: 12,
         },
       })
       .then((response) => {

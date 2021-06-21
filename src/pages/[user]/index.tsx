@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     {
       params: {
         page: 1,
-        per_page: 30,
+        per_page: 12,
       },
     },
   );

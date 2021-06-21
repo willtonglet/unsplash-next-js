@@ -15,21 +15,21 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     params: {
       query: query.slug,
       page: 1,
-      per_page: 30,
+      per_page: 12,
     },
   });
   const { data: collections } = await unsplash.get(`/napi/search/collections`, {
     params: {
       query: query.slug,
       page: 1,
-      per_page: 30,
+      per_page: 12,
     },
   });
   const { data: users } = await unsplash.get(`/napi/search/users`, {
     params: {
       query: query.slug,
       page: 1,
-      per_page: 30,
+      per_page: 12,
     },
   });
 
