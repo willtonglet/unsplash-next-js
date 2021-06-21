@@ -28,6 +28,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
           alt={cover.alt_description}
           hash={cover.blur_hash}
           color={cover.color}
+          priority
         />
       </div>
       <div className="relative z-20">
