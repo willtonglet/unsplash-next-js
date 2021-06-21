@@ -11,9 +11,8 @@ interface MasonryProps {
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
   const { children, onScrollIntersection, visibleOffset = 1000 } = props;
-  const [intersectionHeight, setIntersectionHeight] = useState(0);
+  const [lowestColIndex, setLowestColIndex] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
-  const infiniteScrollRef = useRef<HTMLDivElement>(null);
   const isXs = useMediaQuery('xs');
   const isMd = useMediaQuery('md');
   const isLg = useMediaQuery('lg');
@@ -50,6 +49,7 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
       }}
     >
       {renderColumn(column)}
+      <div className="intersection" />
     </div>
   ));
 
@@ -59,16 +59,23 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
       rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px`,
       threshold: 0,
     };
+
     const observer = new IntersectionObserver((entries) => {
       const target = entries[0];
       if (target.isIntersecting && onScrollIntersection) onScrollIntersection();
     }, option);
-    if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
 
-    return () => {
-      if (infiniteScrollRef.current)
-        observer.unobserve(infiniteScrollRef.current);
-    };
+    const intersectionElement = (colIndex: number) =>
+      mainRef.current &&
+      mainRef.current.children[colIndex] &&
+      mainRef.current.children[colIndex].children[
+        mainRef.current.children[colIndex].children.length - 1
+      ];
+
+    observer.observe(intersectionElement(lowestColIndex) as Element);
+
+    return () =>
+      observer.unobserve(intersectionElement(lowestColIndex) as Element);
   }, []);
 
   useEffect(() => {
@@ -78,22 +85,12 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
         Math.round(mainRef.current.children[i].getBoundingClientRect().height),
     );
 
-    setIntersectionHeight(
-      Math.max(...(columnsHeight as number[])) -
-        Math.min(...(columnsHeight as number[])),
+    setLowestColIndex(
+      columnsHeight.indexOf(Math.min(...(columnsHeight as number[]))),
     );
   }, [children]);
 
-  return (
-    <div className="relative">
-      <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
-      <div
-        className="absolute bottom-0 left-0 w-full min-h-screen"
-        style={{ height: intersectionHeight }}
-        ref={infiniteScrollRef}
-      />
-    </div>
-  );
+  return <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>;
 };
 
 export default Masonry;
