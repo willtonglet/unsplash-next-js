@@ -56,7 +56,6 @@ const MasonryCustomSection = (
             <ImageContent
               key={photo.id}
               priority
-              loading="eager"
               image={photo}
               onPhotoClick={(e) => {
                 setIsModalOpen(true);
