@@ -69,7 +69,7 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
       if (infiniteScrollRef.current)
         observer.unobserve(infiniteScrollRef.current);
     };
-  }, [infiniteScrollRef]);
+  }, []);
 
   useEffect(() => {
     const columnsHeight = Array.from({ length: getColumnsNumber }).map(
