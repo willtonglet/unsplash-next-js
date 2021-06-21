@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router';
 import { GetStaticProps } from 'next';
 import MainCover from '@components/MainCover';
-import ModalPhoto from '@templates/ModalPhoto';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
+import dynamic from 'next/dynamic';
+
+const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
+  ssr: false,
+});
 
 const HomePage = ({
   photos,
@@ -17,8 +21,8 @@ const HomePage = ({
   return (
     <PageWrapper topics={topics}>
       <MainCover cover={cover} trends={trends} />
-      <ModalPhoto isOpen={Boolean(router.query.id)} />
       <MasonryCustomSection url="/photos" photos={photos} />
+      <ModalPhoto isOpen={Boolean(router.query.id)} />
     </PageWrapper>
   );
 };
