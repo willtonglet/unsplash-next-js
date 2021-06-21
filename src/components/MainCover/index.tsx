@@ -1,6 +1,7 @@
 import SearchBar from '@components/SearchBar';
-import CoverPicture from '@components/CoverPicture';
+// import CoverPicture from '@components/CoverPicture';
 import UserInfoPopover from '@components/UserInfoPopover';
+import ImageWithPreview from '@components/ImageWithPreview';
 
 interface MainCoverProps {
   cover: ImageProps;
@@ -10,18 +11,21 @@ interface MainCoverProps {
 const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
   return (
     <section
-      className="text-white relative"
+      className="text-white relative flex"
       style={{ backgroundColor: cover.color }}
     >
-      <div className="absolute top-0 left-0 w-full h-full">
-        <CoverPicture
-          src={cover.urls.raw}
-          alt={cover.alt_description}
-          hash={cover.blur_hash}
-          color={cover.color}
-        />
-      </div>
-      <div className="relative z-20">
+      <ImageWithPreview
+        src={cover.urls.full}
+        width={cover.width}
+        height={cover.height}
+        alt={cover.alt_description}
+        hash={cover.blur_hash}
+        color={cover.color}
+        layout="responsive"
+        className="flex-grow"
+        priority
+      />
+      <div className="absolute top-0 left-0 w-full h-full z-20">
         <div className="bg-opacity-40 bg-black w-full h-full">
           <div className="py-12 sm:py-24 md:py-36 flex justify-center">
             <div className="flex flex-col w-full px-3 md:px-0 md:w-2/3">
