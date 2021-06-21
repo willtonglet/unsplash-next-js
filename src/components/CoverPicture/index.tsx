@@ -18,9 +18,9 @@ const CoverPicture = ({
       priority
       src={Array.from({ length: 20 }).map(
         (_, index) =>
-          `${src}&ixlib=rb-1.2.1&dpr=2&auto=70%2Ccompress&fit=crop&w=${
+          `${src}&ixlib=rb-1.2.1&dpr=2&70=format%2Ccompress&fit=crop&w=${
             199 + index * 200
-          }&h=${index === 0 ? 130 : index === 1 ? 310 : 594}`,
+          }&h=${index === 0 ? 150 : index === 1 ? 310 : 594}`,
       )}
       customMq={Array.from({ length: 20 }).map((_, index) => index * 200)}
       className="relative z-10"
