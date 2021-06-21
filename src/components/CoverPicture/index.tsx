@@ -16,7 +16,6 @@ const CoverPicture = ({
     <Picture
       alt={alt as string}
       priority
-      loading="lazy"
       src={Array.from({ length: 20 }).map(
         (_, index) =>
           `${src}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=${

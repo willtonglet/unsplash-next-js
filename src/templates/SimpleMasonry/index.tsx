@@ -25,7 +25,6 @@ const SimpleMasonry = (props: SimpleMasonryProps): React.ReactElement => {
             image={photo}
             key={photo.id}
             priority
-            loading="lazy"
             onPhotoClick={(e) => {
               setIsModalOpen(true);
               onPhotoClick && onPhotoClick(e);
