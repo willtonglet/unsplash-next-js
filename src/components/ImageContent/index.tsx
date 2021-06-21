@@ -36,16 +36,16 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             </div>
             <ImageWithPreview
               key={image.id}
-              src={`${image.urls.raw}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=800`}
+              src={image.urls.regular}
               quality={80}
               hash={image.blur_hash}
               width={image.width}
               height={image.height}
               color={image.color}
-              loading={loading}
-              priority={priority}
-              alt={image.alt_description}
               layout="responsive"
+              alt={image.alt_description}
+              priority={priority}
+              loading={loading}
             />
             <div className="content absolute top-0 left-0 w-full h-full p-4 flex-col justify-end bg-opacity-40 bg-black text-white z-10 hidden md:flex">
               <div className="flex justify-between items-end w-full">
