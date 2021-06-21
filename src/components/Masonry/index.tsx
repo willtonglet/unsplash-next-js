@@ -6,10 +6,11 @@ import { StyledMasonry } from './styles';
 interface MasonryProps {
   children: React.ReactNode;
   onScrollIntersection?: () => void;
+  visibleOffset?: number;
 }
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
-  const { children, onScrollIntersection } = props;
+  const { children, onScrollIntersection, visibleOffset = 1000 } = props;
   const [intersectionHeight, setIntersectionHeight] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
   const infiniteScrollRef = useRef<HTMLDivElement>(null);
@@ -55,7 +56,7 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: '0px',
+      rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px`,
       threshold: 0,
     };
     const observer = new IntersectionObserver((entries) => {
