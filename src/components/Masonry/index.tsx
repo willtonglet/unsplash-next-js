@@ -10,7 +10,7 @@ interface MasonryProps {
 }
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
-  const { children, onScrollIntersection, visibleOffset = 1000 } = props;
+  const { children, onScrollIntersection, visibleOffset = 400 } = props;
   const [intersectionHeight, setIntersectionHeight] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
   const infiniteScrollRef = useRef<HTMLDivElement>(null);
