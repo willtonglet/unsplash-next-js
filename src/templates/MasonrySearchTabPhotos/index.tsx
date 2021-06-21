@@ -60,7 +60,6 @@ const MasonrySearchTabPhotos = (
               image={photo}
               key={photo.id}
               priority
-              loading="eager"
               onPhotoClick={(e) => {
                 setIsModalOpen(true);
                 onPhotoClick && onPhotoClick(e);
