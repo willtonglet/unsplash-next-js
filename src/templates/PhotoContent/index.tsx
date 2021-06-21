@@ -19,14 +19,7 @@ const PhotoContent = forwardRef<HTMLDivElement, PhotoContentProps>(
     }, [image]);
 
     return (
-      <StyledPhotoContent
-        ref={ref}
-        isExpanded={isExpanded}
-        className={
-          (isExpanded && 'w-full') ||
-          (image.width > image.height ? 'w-2/3' : 'w-1/3')
-        }
-      >
+      <StyledPhotoContent ref={ref} isExpanded={isExpanded}>
         <div
           role="button"
           tabIndex={0}
