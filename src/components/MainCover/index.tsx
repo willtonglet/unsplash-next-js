@@ -1,7 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import BlurHash from '@components/BlurHash';
 import SearchBar from '@components/SearchBar';
 import UserInfoPopover from '@components/UserInfoPopover';
+import { useContextualRouting } from '@hooks/useContextualRouting';
 
 interface MainCoverProps {
   cover: ImageProps;
@@ -9,6 +11,7 @@ interface MainCoverProps {
 }
 
 const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
+  const { makeContextualHref } = useContextualRouting();
   return (
     <section
       className="text-white relative"
@@ -62,10 +65,20 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
               </div>
             </div>
           </div>
-          <div className="hidden md:flex justify-between text-sm text-gray-500 p-5">
+          <div className="hidden md:flex justify-between text-sm text-gray-400 p-5">
             <div className="font-light">
-              <span className="text-gray-300">Photo of the Day</span> by{' '}
-              <UserInfoPopover user={cover.user} />
+              <Link
+                href={makeContextualHref({ id: cover.id })}
+                as={`/photos/${cover.id}`}
+                shallow={true}
+                key={cover.id}
+                scroll={false}
+              >
+                <a className="zoom-in text-gray-200 hover:text-white">
+                  Photo of the Day
+                </a>
+              </Link>{' '}
+              by <UserInfoPopover user={cover.user} />
             </div>
           </div>
         </div>

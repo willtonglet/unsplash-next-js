@@ -35,18 +35,22 @@ const RenderIfVisible = ({
       },
       { root, rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px` },
     );
+
     if (intersectionRef.current) observer.observe(intersectionRef.current);
+
     return () => {
-      if (intersectionRef.current) {
-        observer.unobserve(intersectionRef.current);
-      }
+      if (intersectionRef.current) observer.unobserve(intersectionRef.current);
     };
   }, [intersectionRef]);
 
   useEffect(() => {
-    if (intersectionRef.current && isVisible) {
+    if (intersectionRef.current && isVisible)
       placeholderHeight.current = intersectionRef.current.offsetHeight;
-    }
+
+    return () => {
+      if (intersectionRef.current)
+        placeholderHeight.current = intersectionRef.current.offsetHeight;
+    };
   }, [isVisible, intersectionRef]);
 
   return (

@@ -10,7 +10,7 @@ interface MasonryProps {
 }
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
-  const { children, onScrollIntersection, visibleOffset = 400 } = props;
+  const { children, onScrollIntersection, visibleOffset = 1000 } = props;
   const [intersectionHeight, setIntersectionHeight] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
   const infiniteScrollRef = useRef<HTMLDivElement>(null);
@@ -64,7 +64,12 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
       if (target.isIntersecting && onScrollIntersection) onScrollIntersection();
     }, option);
     if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
-  }, []);
+
+    return () => {
+      if (infiniteScrollRef.current)
+        observer.unobserve(infiniteScrollRef.current);
+    };
+  }, [infiniteScrollRef]);
 
   useEffect(() => {
     const columnsHeight = Array.from({ length: getColumnsNumber }).map(

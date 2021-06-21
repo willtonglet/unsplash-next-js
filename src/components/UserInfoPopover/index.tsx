@@ -80,7 +80,7 @@ const UserInfoPopover = ({
       }
     >
       <Link href={`/@${user.username}`}>
-        <a className="text-gray-300 hover:text-white">{user.name}</a>
+        <a className="text-gray-200 hover:text-white">{user.name}</a>
       </Link>
     </Popover>
   );
