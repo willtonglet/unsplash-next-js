@@ -12,6 +12,7 @@ const AvatarInfo = (props: AvatarInfoProps): React.ReactElement => {
       <Image
         src={image.user.profile_image.medium}
         alt={image.user.name}
+        placeholder="blur"
         height={36}
         width={36}
         className="overflow-hidden h-9 w-9 rounded-full"
