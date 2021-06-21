@@ -23,6 +23,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
         /> */}
         <ImageWithPreview
           src={cover.urls.full}
+          quality={80}
           height={cover.height}
           width={cover.width}
           alt={cover.alt_description}
