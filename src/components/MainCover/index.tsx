@@ -1,7 +1,6 @@
 import SearchBar from '@components/SearchBar';
 import CoverPicture from '@components/CoverPicture';
 import UserInfoPopover from '@components/UserInfoPopover';
-import ImageWithPreview from '@components/ImageWithPreview';
 
 interface MainCoverProps {
   cover: ImageProps;
@@ -15,21 +14,11 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
       style={{ backgroundColor: cover.color }}
     >
       <div className="absolute top-0 left-0 w-full h-full">
-        {/* <CoverPicture
+        <CoverPicture
           src={cover.urls.raw}
           alt={cover.alt_description}
           hash={cover.blur_hash}
           color={cover.color}
-        /> */}
-        <ImageWithPreview
-          src={cover.urls.full}
-          quality={80}
-          height={cover.height}
-          width={cover.width}
-          alt={cover.alt_description}
-          hash={cover.blur_hash}
-          color={cover.color}
-          priority
         />
       </div>
       <div className="relative z-20">

@@ -35,13 +35,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     {
       params: {
         page: 1,
-        per_page: 30,
+        per_page: 12,
       },
     },
   );
   const { data: topics } = await unsplash.get('/napi/topics', {
     params: {
-      per_page: 25,
+      per_page: 15,
     },
   });
 
