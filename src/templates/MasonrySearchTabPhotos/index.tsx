@@ -60,7 +60,6 @@ const MasonrySearchTabPhotos = (
               image={photo}
               key={photo.id}
               priority
-              loading="eager"
               onPhotoClick={(e) => {
                 setIsModalOpen(true);
                 onPhotoClick && onPhotoClick(e);
@@ -70,7 +69,6 @@ const MasonrySearchTabPhotos = (
             <RenderIfVisible key={photo.id}>
               <ImageContent
                 image={photo}
-                loading="lazy"
                 onPhotoClick={(e) => {
                   setIsModalOpen(true);
                   onPhotoClick && onPhotoClick(e);
