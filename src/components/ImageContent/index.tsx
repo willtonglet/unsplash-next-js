@@ -36,12 +36,12 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             </div>
             <ImageWithPreview
               key={image.id}
-              src={`${image.urls.raw}&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60`}
+              src={image.urls.regular}
+              quality={80}
               hash={image.blur_hash}
               width={image.width}
               height={image.height}
               color={image.color}
-              sizes="(min-width: 1335px) 416px, (min-width: 992px) calc(calc(100vw - 72px) / 3), (min-width: 768px) calc(calc(100vw - 48px) / 2), 100vw"
               layout="responsive"
               loading={loading}
               alt={image.alt_description}
