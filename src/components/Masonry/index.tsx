@@ -72,10 +72,13 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
         mainRef.current.children[colIndex].children.length - 1
       ];
 
-    observer.observe(intersectionElement(lowestColIndex) as Element);
+    if (intersectionElement(lowestColIndex))
+      observer.observe(intersectionElement(lowestColIndex) as Element);
 
-    return () =>
-      observer.unobserve(intersectionElement(lowestColIndex) as Element);
+    return () => {
+      if (intersectionElement(lowestColIndex))
+        observer.unobserve(intersectionElement(lowestColIndex) as Element);
+    };
   }, []);
 
   useEffect(() => {

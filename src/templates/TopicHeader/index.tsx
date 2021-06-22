@@ -7,18 +7,20 @@ interface TopicHeaderProps {
 
 const TopicHeader = ({ topicInfo }: TopicHeaderProps): React.ReactElement => {
   return (
-    <ContainerWrapper className="pt-12 mb-12">
-      <div className="grid grid-cols-3">
-        <div className="col-start-1 col-end-3 mt-4">
+    <ContainerWrapper className="pt-12 mb-12 px-4 md:px-6 lg:px-0">
+      <div className="grid gap-x-6 grid-cols-topic-header">
+        <div className="col-start-1 col-end-3">
           <h2 className="capitalize text-5xl font-bold mb-6">
             {topicInfo.title}
           </h2>
           <div
             dangerouslySetInnerHTML={{ __html: topicInfo.description }}
-            className="text-lg w-8/12"
+            className="text-lg lg:w-8/12"
           />
         </div>
-        <TopicBoxInfo topicInfo={topicInfo} />
+        <div>
+          <TopicBoxInfo topicInfo={topicInfo} />
+        </div>
       </div>
     </ContainerWrapper>
   );
