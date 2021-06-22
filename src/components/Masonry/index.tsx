@@ -57,7 +57,6 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
     const option = {
       root: null,
       rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px`,
-      threshold: 0,
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -72,12 +71,20 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
         mainRef.current.children[colIndex].children.length - 1
       ];
 
-    if (intersectionElement(lowestColIndex))
-      observer.observe(intersectionElement(lowestColIndex) as Element);
+    if (intersectionElement(0))
+      observer.observe(intersectionElement(0) as Element);
+    if (intersectionElement(1))
+      observer.observe(intersectionElement(1) as Element);
+    if (intersectionElement(2))
+      observer.observe(intersectionElement(2) as Element);
 
     return () => {
-      if (intersectionElement(lowestColIndex))
-        observer.unobserve(intersectionElement(lowestColIndex) as Element);
+      if (intersectionElement(0))
+        observer.unobserve(intersectionElement(0) as Element);
+      if (intersectionElement(1))
+        observer.unobserve(intersectionElement(1) as Element);
+      if (intersectionElement(2))
+        observer.unobserve(intersectionElement(2) as Element);
     };
   }, []);
 
