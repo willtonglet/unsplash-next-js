@@ -17,7 +17,7 @@ const TopicHeader = ({ topicInfo }: TopicHeaderProps): React.ReactElement => {
           </h2>
           <div
             dangerouslySetInnerHTML={{ __html: topicInfo.description }}
-            className="md:text-lg lg:w-8/12"
+            className="md:text-lg lg:w-8/12 info-text"
           />
         </div>
         <div className="col-start-1 col-end-4 md:col-start-3">
