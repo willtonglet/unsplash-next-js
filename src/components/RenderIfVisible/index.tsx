@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-
-const isServer = typeof window === 'undefined';
+import { isServer } from '@core/utils/isServer';
 
 type Props = {
   defaultHeight?: number;

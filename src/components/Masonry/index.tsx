@@ -12,6 +12,7 @@ interface MasonryProps {
 const Masonry = (props: MasonryProps): React.ReactElement => {
   const { children, onScrollIntersection, visibleOffset = 1000 } = props;
   const mainRef = useRef<HTMLDivElement>(null);
+  const intersectionRef = useRef<SVGSVGElement>(null);
   const isXs = useMediaQuery('xs');
   const isMd = useMediaQuery('md');
   const isLg = useMediaQuery('lg');
@@ -53,41 +54,64 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
   ));
 
   useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px`,
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (typeof window !== undefined && window.requestIdleCallback) {
+          window.requestIdleCallback(
+            () => {
+              if (entries[0].isIntersecting && onScrollIntersection)
+                onScrollIntersection();
+            },
+            {
+              timeout: 600,
+            },
+          );
+        } else {
+          if (entries[0].isIntersecting && onScrollIntersection)
+            onScrollIntersection();
+        }
+      },
+      {
+        root: null,
+        rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px`,
+      },
+    );
 
-    const observer = new IntersectionObserver((entries) => {
-      const target = entries[0];
-      if (target.isIntersecting && onScrollIntersection) onScrollIntersection();
-    }, option);
-
-    const intersectionElement = (colIndex: number) =>
-      mainRef.current &&
-      mainRef.current.children[colIndex] &&
-      mainRef.current.children[colIndex].children[
-        mainRef.current.children[colIndex].children.length - 1
-      ];
-
-    if (intersectionElement(0))
-      observer.observe(intersectionElement(0) as Element);
-    if (intersectionElement(1))
-      observer.observe(intersectionElement(1) as Element);
-    if (intersectionElement(2))
-      observer.observe(intersectionElement(2) as Element);
+    if (intersectionRef.current) observer.observe(intersectionRef.current);
 
     return () => {
-      if (intersectionElement(0))
-        observer.unobserve(intersectionElement(0) as Element);
-      if (intersectionElement(1))
-        observer.unobserve(intersectionElement(1) as Element);
-      if (intersectionElement(2))
-        observer.unobserve(intersectionElement(2) as Element);
+      if (intersectionRef.current) observer.unobserve(intersectionRef.current);
     };
-  }, []);
+  }, [intersectionRef]);
 
-  return <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>;
+  return (
+    <div className="relative">
+      <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
+      <div className="w-full h-screen flex justify-center items-center absolute bottom-0 left-0">
+        <svg
+          className="animate-spin -ml-1 mr-3 h-6 w-6 text-gray-400"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          ref={intersectionRef}
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="3"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  );
 };
 
 export default Masonry;
