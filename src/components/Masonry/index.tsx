@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useMediaQuery from '@hooks/useMediaQuery';
 
 import { StyledMasonry } from './styles';
@@ -11,7 +11,6 @@ interface MasonryProps {
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
   const { children, onScrollIntersection, visibleOffset = 1000 } = props;
-  const [lowestColIndex, setLowestColIndex] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
   const isXs = useMediaQuery('xs');
   const isMd = useMediaQuery('md');
@@ -87,18 +86,6 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
         observer.unobserve(intersectionElement(2) as Element);
     };
   }, []);
-
-  useEffect(() => {
-    const columnsHeight = Array.from({ length: getColumnsNumber }).map(
-      (_, i) =>
-        mainRef.current &&
-        Math.round(mainRef.current.children[i].getBoundingClientRect().height),
-    );
-
-    setLowestColIndex(
-      columnsHeight.indexOf(Math.min(...(columnsHeight as number[]))),
-    );
-  }, [children]);
 
   return <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>;
 };
