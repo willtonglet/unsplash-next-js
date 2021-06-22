@@ -10,7 +10,7 @@ interface MasonryProps {
 }
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
-  const { children, onScrollIntersection, visibleOffset = 1000 } = props;
+  const { children, onScrollIntersection, visibleOffset = 0 } = props;
   const mainRef = useRef<HTMLDivElement>(null);
   const intersectionRef = useRef<SVGSVGElement>(null);
   const isXs = useMediaQuery('xs');
