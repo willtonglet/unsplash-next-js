@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useMediaQuery from '@hooks/useMediaQuery';
 
 import { StyledMasonry } from './styles';
@@ -11,6 +11,7 @@ interface MasonryProps {
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
   const { children, onScrollIntersection, visibleOffset = 0 } = props;
+  const [differenceBetweenCols, setDifferenceBetweenCols] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
   const intersectionRef = useRef<SVGSVGElement>(null);
   const isXs = useMediaQuery('xs');
@@ -84,10 +85,26 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
     };
   }, [intersectionRef]);
 
+  useEffect(() => {
+    const columnsHeightArr = Array.from({ length: getColumnsNumber }).map(
+      (_, index) =>
+        mainRef.current &&
+        mainRef.current.children[index].getBoundingClientRect().height,
+    );
+
+    setDifferenceBetweenCols(
+      Math.max(...(columnsHeightArr as number[])) -
+        Math.min(...(columnsHeightArr as number[])),
+    );
+  }, [children]);
+
   return (
     <div className="relative">
       <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
-      <div className="w-full h-screen flex justify-center items-center absolute bottom-0 left-0">
+      <div
+        className="w-full min-h-screen flex justify-center items-start pt-96 absolute bottom-0 left-0"
+        style={{ height: differenceBetweenCols }}
+      >
         <svg
           className="animate-spin -ml-1 mr-3 h-6 w-6 text-gray-400"
           xmlns="http://www.w3.org/2000/svg"
