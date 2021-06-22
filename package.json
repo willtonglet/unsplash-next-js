@@ -6,7 +6,6 @@
     "clean": "rm -rfv yarn.lock package-lock.json .next/ out/ dist/ node_modules/",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js",
-    "jit": "TAILWIND_MODE=watch postcss -i tailwind.css -o build.css --watch",
     "dev": "next",
     "build": "next build",
     "start": "next start",
@@ -27,7 +26,6 @@
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/jit": "^0.1.18",
     "@types/node": "^14.14.25",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",

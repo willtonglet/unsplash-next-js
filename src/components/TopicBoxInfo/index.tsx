@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { formatNumber } from '@core/utils/formatNumber';
+import { StyledTopicBoxInfo } from './styles';
 
 interface TopicBoxInfoProps {
   topicInfo: TopicProps;
@@ -8,7 +9,7 @@ interface TopicBoxInfoProps {
 
 const TopicBoxInfo = ({ topicInfo }: TopicBoxInfoProps): React.ReactElement => {
   return (
-    <dl className="rounded border border-gray-300 p-4 grid gap-2 grid-cols-topic-box-info">
+    <StyledTopicBoxInfo className="rounded md:border border-gray-300 md:p-4 grid gap-2">
       <dt className="flex items-center h-8">
         <svg
           width="18"
@@ -100,7 +101,7 @@ const TopicBoxInfo = ({ topicInfo }: TopicBoxInfoProps): React.ReactElement => {
           </Link>
         ))}
       </dd>
-    </dl>
+    </StyledTopicBoxInfo>
   );
 };
 
