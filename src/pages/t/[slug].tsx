@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { GetServerSideProps } from 'next';
-import ModalPhoto from '@templates/ModalPhoto';
 import { apiRoute } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import TopicHeader from '@templates/TopicHeader';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
+
+const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
+  ssr: false,
+});
 
 const TopicTabPhotos = ({
   photos,

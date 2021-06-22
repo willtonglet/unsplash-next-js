@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { GetStaticProps } from 'next';
 import MainCover from '@components/MainCover';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
-import dynamic from 'next/dynamic';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,

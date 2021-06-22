@@ -1,9 +1,13 @@
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { GetServerSideProps } from 'next';
-import ModalPhoto from '@templates/ModalPhoto';
 import MasonrySearchTabPhotos from '@templates/MasonrySearchTabPhotos';
 import { unsplash } from '@core/middleware/api';
 import PageWrapperWithSearch from '@templates/PageWrapperWithSearch';
+
+const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
+  ssr: false,
+});
 
 const SlugTabPhotos = ({ results, photos }: PageProps): React.ReactElement => {
   const router = useRouter();

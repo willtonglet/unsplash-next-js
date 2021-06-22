@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { GetServerSideProps } from 'next';
-import ModalPhoto from '@templates/ModalPhoto';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import UserInfoHeader from '@templates/UserInfoHeader';
+
+const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
+  ssr: false,
+});
 
 const getUser = (user?: string | string[]) => String(user)?.replace('@', '');
 

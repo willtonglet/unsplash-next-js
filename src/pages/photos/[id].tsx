@@ -1,10 +1,14 @@
 import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import { unsplash } from '@core/middleware/api';
 import { useRouter } from 'next/router';
 import PhotoContent from '@templates/PhotoContent';
-import ModalPhoto from '@templates/ModalPhoto';
 import SimpleMasonry from '@templates/SimpleMasonry';
 import PageWrapper from '@templates/PageWrapper';
+
+const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
+  ssr: false,
+});
 
 const Photos = ({ cover, photos }: PageProps): React.ReactElement => {
   const router = useRouter();
