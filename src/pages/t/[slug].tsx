@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import ModalPhoto from '@templates/ModalPhoto';
-import { unsplash } from '@core/middleware/api';
+import { apiRoute } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import TopicHeader from '@templates/TopicHeader';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
@@ -27,11 +27,11 @@ const TopicTabPhotos = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { data: topicInfo } = await unsplash.get(
-    `/napi/topics/${String(query.slug)}`,
+  const { data: topicInfo } = await apiRoute.get(
+    `/topics/${String(query.slug)}`,
   );
-  const { data: photos } = await unsplash.get(
-    `/napi/topics/${String(query.slug)}/photos`,
+  const { data: photos } = await apiRoute.get(
+    `/topics/${String(query.slug)}/photos`,
     {
       params: {
         page: 1,
@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       },
     },
   );
-  const { data: topics } = await unsplash.get('/napi/topics', {
+  const { data: topics } = await apiRoute.get('/topics', {
     params: {
       per_page: 15,
     },
