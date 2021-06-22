@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useMediaQuery from '@hooks/useMediaQuery';
+import { isServer } from '@core/utils/isServer';
 
 import { StyledMasonry } from './styles';
-import { isServer } from '@core/utils/isServer';
 
 interface MasonryProps {
   children: React.ReactNode;
@@ -61,16 +61,24 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
         if (typeof window !== undefined && window.requestIdleCallback) {
           window.requestIdleCallback(
             () => {
-              if (entries[0].isIntersecting && onScrollIntersection)
+              if (entries[0].isIntersecting && onScrollIntersection) {
+                setIsLoading(true);
                 onScrollIntersection();
+              } else {
+                setIsLoading(false);
+              }
             },
             {
               timeout: 600,
             },
           );
         } else {
-          if (entries[0].isIntersecting && onScrollIntersection)
+          if (entries[0].isIntersecting && onScrollIntersection) {
+            setIsLoading(true);
             onScrollIntersection();
+          } else {
+            setIsLoading(false);
+          }
         }
       },
       {
@@ -87,10 +95,10 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
   }, [intersectionRef]);
 
   useEffect(() => {
-    if (isServer) window.addEventListener('scroll', () => setIsLoading(true));
+    if (!isServer) window.addEventListener('scroll', () => setIsLoading(true));
 
     return () => {
-      if (isServer)
+      if (!isServer)
         window.removeEventListener('scroll', () => setIsLoading(false));
     };
   }, []);
