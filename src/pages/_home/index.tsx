@@ -4,16 +4,11 @@ import { GetStaticProps } from 'next';
 import MainCover from '@components/MainCover';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
+import MasonryCustomSection from '@templates/MasonryCustomSection';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
 });
-const MasonryCustomSection = dynamic(
-  () => import('@templates/MasonryCustomSection'),
-  {
-    ssr: false,
-  },
-);
 
 const HomePage = ({
   photos,
