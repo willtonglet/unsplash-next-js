@@ -48,6 +48,8 @@ const MasonryCustomSection = (
     page > 1 && getPhotos();
   }, [page]);
 
+  console.log({ page });
+
   return (
     <ContainerWrapper className="py-12">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>

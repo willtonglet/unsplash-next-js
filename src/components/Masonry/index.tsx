@@ -74,7 +74,6 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
           );
         } else {
           if (entries[0].isIntersecting && onScrollIntersection) {
-            setIsLoading(true);
             onScrollIntersection();
           } else {
             setIsLoading(false);
@@ -108,7 +107,9 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
       <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
       <div
         ref={intersectionRef}
-        className="flex justify-center items-center h-screen w-full absolute left-0 bottom-0"
+        className={`flex justify-center items-center w-full absolute left-0 bottom-0 ${
+          isLoading ? 'h-screen' : ''
+        }`}
       >
         {isLoading && (
           <svg
