@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
+import dynamic from 'next/dynamic';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import ContainerWrapper from '@components/ContainerWrapper';
 import RenderIfVisible from '@components/RenderIfVisible';
-import ImageContent from '@components/ImageContent';
 
 interface MasonryCustomSectionProps {
   onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -13,6 +13,10 @@ interface MasonryCustomSectionProps {
   url: string;
   queryToBeListened?: string | string[];
 }
+
+const ImageContent = dynamic(() => import('@components/ImageContent'), {
+  ssr: false,
+});
 
 const MasonryCustomSection = (
   props: MasonryCustomSectionProps,
