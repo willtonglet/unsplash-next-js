@@ -87,7 +87,6 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
     );
 
     if (intersectionRef.current) observer.observe(intersectionRef.current);
-
     return () => {
       if (intersectionRef.current) observer.unobserve(intersectionRef.current);
     };
