@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 import { IoMdArrowDown } from 'react-icons/io';
 import { useContextualRouting } from '@hooks/useContextualRouting';
@@ -9,7 +10,7 @@ import { StyledImageContent } from './styles';
 interface ImageContentProps {
   priority?: boolean;
   image: ImageProps;
-  onPhotoClick?: React.MouseEventHandler<HTMLImageElement>;
+  onPhotoClick?: React.MouseEventHandler<HTMLDivElement>;
   loading?: 'lazy' | 'eager';
 }
 
@@ -57,10 +58,15 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
             alt={image.alt_description}
             priority={priority}
             loading={loading}
-            onClick={onPhotoClick}
             layout="responsive"
           />
-          <div className="content absolute top-0 left-0 w-full h-full bg-opacity-40 bg-black hidden z-10 md:block" />
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={onPhotoClick as React.MouseEventHandler}
+            onKeyPress={onPhotoClick as unknown as React.KeyboardEventHandler}
+            className="content absolute top-0 left-0 w-full h-full bg-opacity-40 bg-black hidden z-10 md:block"
+          />
         </a>
       </Link>
     </StyledImageContent>

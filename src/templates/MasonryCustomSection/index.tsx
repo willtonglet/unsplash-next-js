@@ -8,7 +8,7 @@ import RenderIfVisible from '@components/RenderIfVisible';
 import ImageContent from '@components/ImageContent';
 
 interface MasonryCustomSectionProps {
-  onPhotoClick?: React.MouseEventHandler<HTMLImageElement>;
+  onPhotoClick?: React.MouseEventHandler<HTMLDivElement>;
   photos: ImageProps[];
   url: string;
   queryToBeListened?: string | string[];

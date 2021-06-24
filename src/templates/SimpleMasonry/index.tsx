@@ -9,7 +9,7 @@ const ImageContent = dynamic(() => import('@components/ImageContent'), {
 });
 
 interface SimpleMasonryProps {
-  onPhotoClick?: React.MouseEventHandler<HTMLImageElement>;
+  onPhotoClick?: React.MouseEventHandler<HTMLDivElement>;
   photos: ImageProps[];
 }
 
