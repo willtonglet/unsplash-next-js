@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const StyledImageContent = styled.a`
+export const StyledImageContent = styled.div`
   cursor: zoom-in;
   display: block;
-  z-index: 1;
 
   .content {
     visibility: hidden;
+    cursor: zoom-in;
   }
 
   &:hover {

@@ -78,7 +78,14 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
                   Photo of the Day
                 </a>
               </Link>{' '}
-              by <UserInfoPopover user={cover.user} />
+              by{' '}
+              <UserInfoPopover user={cover.user}>
+                <Link href={`/@${cover.user.username}`}>
+                  <a className="text-gray-200 hover:text-white">
+                    {cover.user.name}
+                  </a>
+                </Link>
+              </UserInfoPopover>
             </div>
           </div>
         </div>

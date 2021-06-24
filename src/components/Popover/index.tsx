@@ -77,7 +77,7 @@ const Popover = ({
         >
           <div
             ref={popperRef}
-            className="bg-white border rounded relative popper"
+            className="bg-white border rounded relative shadow-md popper"
             style={{
               animationName: startTransitionEnd ? 'pingOut' : 'ping',
             }}

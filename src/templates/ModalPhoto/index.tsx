@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useContextualRouting } from '@hooks/useContextualRouting';
 import AvatarInfo from '@components/AvatarInfo';
@@ -10,6 +11,7 @@ import { ModalContext } from '@components/Modal/ModalContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import { usePreviousState } from '@hooks/usePreviousState';
 import { handlePreviousAndNext } from '@core/utils/handlePreviousAndNext';
+import HireLink from '@components/HireLink';
 
 interface ModalPhotoProps {
   isOpen?: boolean;
@@ -81,7 +83,17 @@ const ModalPhoto = ({
         nextId={modalNavigationsIds.next}
       >
         <div className="sticky rounded-t px-2 top-0 bg-white z-20 py-3">
-          <AvatarInfo image={photoData} />
+          <AvatarInfo image={photoData} withHoverEffect={false}>
+            {photoData.user.for_hire ? (
+              <HireLink />
+            ) : (
+              <Link href={`/@${photoData.user.username}`}>
+                <a className="text-xs text-gray-500">
+                  @{photoData.user.username}
+                </a>
+              </Link>
+            )}
+          </AvatarInfo>
         </div>
         <div className="w-full flex justify-center">
           <PhotoContent image={photoData} ref={photoRef} />

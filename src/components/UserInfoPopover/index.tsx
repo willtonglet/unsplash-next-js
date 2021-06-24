@@ -7,10 +7,12 @@ import ImageWithPreview from '@components/ImageWithPreview';
 
 interface UserInfoPopoverProps {
   user: PageProps['cover']['user'];
+  children: React.ReactNode;
 }
 
 const UserInfoPopover = ({
   user,
+  children,
 }: UserInfoPopoverProps): React.ReactElement => {
   const [userPhotos, setUserPhotos] = useState<ImageProps[]>([]);
 
@@ -31,7 +33,7 @@ const UserInfoPopover = ({
   return (
     <Popover
       childrenToBeOpened={
-        <div className="w-96 p-4">
+        <div className="w-max p-4">
           <div className="flex items-center">
             <Link href={`/@${user.username}`}>
               <a className="mr-3">
@@ -63,7 +65,7 @@ const UserInfoPopover = ({
                   <ImageWithPreview
                     hash={photo.blur_hash}
                     src={`${photo.urls.raw}&ixlib=rb-1.2.1&dpr=2&auto=format%2Ccompress&fit=crop&w=120&h=70`}
-                    width={120}
+                    width={100}
                     height={70}
                     alt={photo.alt_description}
                   />
@@ -72,16 +74,14 @@ const UserInfoPopover = ({
             ))}
           </div>
           <Link href={`/@${user.username}`}>
-            <a className="border border-gray-300 rounded p-1.5 block text-center font-medium text-gray-500 hover:text-gray-900 hover:border-gray-400">
+            <a className="border border-gray-300 rounded p-1.5 text-sm block text-center font-medium text-gray-500 hover:text-gray-900 hover:border-gray-400">
               View Profile
             </a>
           </Link>
         </div>
       }
     >
-      <Link href={`/@${user.username}`}>
-        <a className="text-gray-200 hover:text-white">{user.name}</a>
-      </Link>
+      {children}
     </Popover>
   );
 };
