@@ -9,7 +9,7 @@ import RenderIfVisible from '@components/RenderIfVisible';
 import ImageContent from '@components/ImageContent';
 
 interface MasonrySearchTabPhotosProps {
-  onPhotoClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  onPhotoClick?: React.MouseEventHandler<HTMLImageElement>;
   photos: ImageProps[];
 }
 
