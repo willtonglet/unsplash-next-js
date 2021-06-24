@@ -37,7 +37,7 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
         </div>
       </div>
       <div className="mb-3 px-3 md:hidden">
-        <AvatarInfo image={image} />
+        <AvatarInfo image={image} withHoverEffect={false} />
       </div>
       <Link
         href={href}

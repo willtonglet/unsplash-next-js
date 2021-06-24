@@ -14,14 +14,15 @@ const AvatarInfo = (props: AvatarInfoProps): React.ReactElement => {
     <div className="flex items-center">
       <UserInfoPopover user={image.user}>
         <Link href={`/@${image.user.username}`}>
-          <a className="flex items-center">
+          <a className="flex items-center overflow-hidden h-9 w-9 rounded-full relative">
             <Image
               src={image.user.profile_image.medium}
               alt={image.user.name}
               height={36}
               width={36}
-              className="overflow-hidden h-9 w-9 rounded-full"
+              className="relative z-10"
             />
+            <div className="absolute bg-gray-300 top-0 left-0 h-9 w-9 animate-pulse" />
           </a>
         </Link>
       </UserInfoPopover>
