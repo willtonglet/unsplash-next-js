@@ -9,8 +9,8 @@ const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
   const { hash, color, className, ...rest } = props;
 
   return (
-    <div className={className}>
-      <div className="relative">
+    <div className={`h-full${className ? ` ${className}` : ''}`}>
+      <div className="relative h-full">
         <Image color={color} className="z-10" {...rest} />
         <div
           className="w-full h-full absolute top-0 left-0"
