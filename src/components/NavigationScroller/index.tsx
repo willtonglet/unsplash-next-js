@@ -69,9 +69,15 @@ const NavigationScroller = ({
             className={`flex items-center absolute ${handlePosition} top-0 h-full text-gray-500 focus:outline-none`}
           >
             {direction === 'left' ? (
-              <IoIosArrowBack size={21} />
+              <>
+                <IoIosArrowBack size={21} />
+                <span className="hidden">Go Back</span>
+              </>
             ) : (
-              <IoIosArrowForward size={21} />
+              <>
+                <IoIosArrowForward size={21} />
+                <span className="hidden">Go Forward</span>
+              </>
             )}
           </button>
         </>

@@ -105,6 +105,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
           } focus:outline-none`}
         >
           <IoIosSearch size={size === 'small' ? 21 : 24} />
+          <span className="hidden">Search</span>
         </button>
         <input
           type="text"
@@ -131,7 +132,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
             onClick={() => setSearch('')}
           >
             <IoIosClose size={24} />
-            <span className="hidden">Search</span>
+            <span className="hidden">Close</span>
           </button>
         )}
       </div>
