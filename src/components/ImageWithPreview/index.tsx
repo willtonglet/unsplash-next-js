@@ -11,10 +11,10 @@ const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
     <div className={`h-full${className ? ` ${className}` : ''}`}>
       <div className="relative h-full">
         <Image color={color} className="z-10" {...rest} />
-        <div
+        {/* <div
           className="w-full h-full absolute top-0 left-0"
           style={{ backgroundColor: color }}
-        />
+        /> */}
       </div>
     </div>
   );
