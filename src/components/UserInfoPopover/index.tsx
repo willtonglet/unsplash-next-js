@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Popover from '@components/Popover';
 import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '@components/ImageWithPreview';
