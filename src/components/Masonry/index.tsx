@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import useMediaQuery from '@hooks/useMediaQuery';
 import { isServer } from '@core/utils/isServer';
 import Spinner from '@components/Spinner';
-
 import { StyledMasonry } from './styles';
 
 interface MasonryProps {
@@ -99,8 +98,8 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
       <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
       <div
         ref={intersectionRef}
-        className={`flex justify-center items-center absolute bottom-0 left-0 w-full ${
-          isLoading ? 'h-screen' : ''
+        className={`flex justify-center items-center w-full ${
+          isLoading ? 'h-96' : ''
         }`}
       >
         {isLoading && <Spinner />}
