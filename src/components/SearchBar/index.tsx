@@ -131,6 +131,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
             onClick={() => setSearch('')}
           >
             <IoIosClose size={24} />
+            <span className="hidden">Search</span>
           </button>
         )}
       </div>

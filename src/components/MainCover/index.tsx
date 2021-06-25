@@ -20,6 +20,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
       <div className="absolute top-0 left-0 w-full h-full">
         <Image
           src={cover.urls.full}
+          alt={cover.alt_description}
           quality={80}
           layout="fill"
           objectFit="cover"
