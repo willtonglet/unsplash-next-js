@@ -11,7 +11,7 @@ interface MasonryProps {
 }
 
 const Masonry = (props: MasonryProps): React.ReactElement => {
-  const { children, onScrollIntersection, visibleOffset = 1000 } = props;
+  const { children, onScrollIntersection, visibleOffset = 200 } = props;
   const [isLoading, setIsLoading] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const intersectionRef = useRef<HTMLDivElement>(null);

@@ -7,6 +7,7 @@ export const StyledMasonry = styled.div`
   align-content: stretch;
   box-sizing: border-box;
   position: relative;
+  z-index: 10;
   width: 100%;
 
   .column {

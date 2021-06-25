@@ -88,7 +88,7 @@ const ModalPhoto = ({
               <HireLink />
             ) : (
               <Link href={`/@${photoData.user.username}`}>
-                <a className="text-xs text-gray-500">
+                <a className="text-xs text-gray-500 hover:text-gray-800">
                   @{photoData.user.username}
                 </a>
               </Link>

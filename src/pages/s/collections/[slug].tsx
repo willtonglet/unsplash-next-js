@@ -1,11 +1,16 @@
 import { GetServerSideProps } from 'next';
 import { unsplash } from '@core/middleware/api';
 import PageWrapperWithSearch from '@templates/PageWrapperWithSearch';
+import MasonrySearchTabCollection from '@templates/MasonrySearchTabCollection';
 
-const SlugTabPhotos = ({ results, photos }: PageProps): React.ReactElement => {
+const SlugTabPhotos = ({
+  collections,
+  results,
+  photos,
+}: PageProps): React.ReactElement => {
   return (
     <PageWrapperWithSearch results={results} photos={photos}>
-      oi
+      <MasonrySearchTabCollection collections={collections} />
     </PageWrapperWithSearch>
   );
 };
@@ -22,7 +27,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     params: {
       query: query.slug,
       page: 1,
-      per_page: 12,
+      per_page: 20,
+      xp: '',
     },
   });
   const { data: users } = await unsplash.get(`/napi/search/users`, {

@@ -29,7 +29,7 @@ interface UserProps {
   username: string;
 }
 
-interface ImageProps {
+interface ImageProps extends TagProps {
   id: string;
   alt_description: string;
   color: string;
@@ -41,6 +41,9 @@ interface ImageProps {
   related_collections: {
     results: { id: string }[];
   };
+}
+
+interface TagProps {
   tags: { [key: string]: { [key: string]: string }; type: string }[];
 }
 
@@ -68,7 +71,7 @@ interface PageProps {
   slug: string;
   topicInfo: TopicProps;
   results: { photos: number; collections: number; users: number };
-  collections: { [key: string]: string }[];
+  collections: CollectionProps[];
   userInfo: {
     name: string;
     bio: string;
@@ -86,6 +89,11 @@ interface PageProps {
       }[];
     };
   };
+}
+
+interface CollectionProps extends TagProps {
+  preview_photos: ImageProps[];
+  id: string;
 }
 
 type AutoCompleteParams = {
