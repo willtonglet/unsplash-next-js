@@ -9,11 +9,17 @@ const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
   const { hash, color, className, ...rest } = props;
 
   return (
-    <div className={`h-full${className ? ` ${className}` : ''}`}>
-      <div className="relative h-full">
+    <div
+      className={`${props.layout === 'fill' ? 'h-full' : 'h-max'} ${
+        className ? ` ${className}` : ''
+      }`}
+    >
+      <div
+        className={`relative${props.layout === 'fill' ? ' h-full' : ' h-max'}`}
+      >
         <Image color={color} className="z-10" {...rest} />
         <div
-          className="w-full h-full absolute top-0 left-0"
+          className="w-full absolute top-0 left-0"
           style={{ backgroundColor: color }}
         >
           {hash && <BlurHash hash={hash} width="100%" height="100%" />}
