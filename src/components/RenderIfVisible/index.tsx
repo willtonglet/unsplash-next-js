@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { isServer } from '@core/utils/isServer';
+import React, { useRef, useEffect } from 'react';
+import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
 type Props = {
   defaultHeight?: number;
@@ -14,42 +14,19 @@ const RenderIfVisible = ({
   root = null,
   children,
 }: Props): React.ReactElement => {
-  const [isVisible, setIsVisible] = useState<boolean>(isServer);
   const placeholderHeight = useRef<number>(defaultHeight);
   const intersectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (typeof window !== undefined && window.requestIdleCallback) {
-          window.requestIdleCallback(
-            () => setIsVisible(entries[0].isIntersecting),
-            {
-              timeout: 600,
-            },
-          );
-        } else {
-          setIsVisible(entries[0].isIntersecting);
-        }
-      },
-      { root, rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px` },
-    );
-
-    if (intersectionRef.current) observer.observe(intersectionRef.current);
-
-    return () => {
-      if (intersectionRef.current) observer.unobserve(intersectionRef.current);
-    };
-  }, [intersectionRef]);
+  const entry = useIntersectionObserver(intersectionRef, {
+    freezeOnceVisible: false,
+    root,
+    rootMargin: `${visibleOffset}px 0px ${visibleOffset}px 0px`,
+  });
+  const isVisible = !!entry?.isIntersecting;
 
   useEffect(() => {
     if (intersectionRef.current && isVisible)
       placeholderHeight.current = intersectionRef.current.offsetHeight;
-
-    return () => {
-      if (intersectionRef.current)
-        placeholderHeight.current = intersectionRef.current.offsetHeight;
-    };
   }, [isVisible, intersectionRef]);
 
   return (
