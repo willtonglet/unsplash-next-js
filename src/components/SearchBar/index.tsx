@@ -95,6 +95,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
       <div className={`flex rounded ${hasShadow ? 'shadow-md' : ''} relative`}>
         <button
           type="button"
+          aria-label="Search"
           onClick={() => inputRef.current?.focus()}
           className={`h-${handleHeight} ${handleBackground} text-gray-500 pl-3 ${handleRadius(
             'l',
@@ -105,7 +106,6 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
           } focus:outline-none`}
         >
           <IoIosSearch size={size === 'small' ? 21 : 24} />
-          <span className="hidden">Search</span>
         </button>
         <input
           type="text"
