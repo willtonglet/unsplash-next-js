@@ -4,7 +4,6 @@ import Popover from '@components/Popover';
 import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '@components/ImageWithPreview';
 import Avatar from '@components/Avatar';
-import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
 interface UserInfoPopoverProps {
   user: PageProps['cover']['user'];
@@ -16,9 +15,7 @@ const UserInfoPopover = ({
   children,
 }: UserInfoPopoverProps): React.ReactElement => {
   const [userPhotos, setUserPhotos] = useState<ImageProps[]>([]);
-  const intersectionRef = useRef<HTMLDivElement>(null);
-  const entry = useIntersectionObserver(intersectionRef, {});
-  const isVisible = !!entry?.isIntersecting;
+  const [callApi, setCallApi] = useState(false);
 
   const getUserPhotos = () =>
     apiRoute
@@ -31,8 +28,8 @@ const UserInfoPopover = ({
       .then(({ data }) => setUserPhotos(data));
 
   useEffect(() => {
-    isVisible && getUserPhotos();
-  }, [isVisible]);
+    if (callApi) getUserPhotos();
+  }, [callApi]);
 
   return (
     <Popover
@@ -74,7 +71,7 @@ const UserInfoPopover = ({
         </div>
       }
     >
-      <div ref={intersectionRef}>{children}</div>
+      <div onMouseEnter={() => setCallApi(true)}>{children}</div>
     </Popover>
   );
 };
