@@ -27,6 +27,7 @@ interface UserProps {
   profile_image: ImageSizes;
   for_hire: boolean;
   username: string;
+  photos: ImageProps[];
 }
 
 interface ImageProps extends TagProps {

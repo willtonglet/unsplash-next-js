@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const StyledPopover = styled.div`
   .popper-wrapper {
     .popper {
-      animation: ping 0.15s ease-in-out forwards;
+      animation: ping 0.1s ease-in-out forwards;
 
       &.remove {
-        animation: pingOut 0.1s ease-in-out forwards;
+        animation: pingOut 0.05s linear forwards;
       }
 
       @keyframes ping {
