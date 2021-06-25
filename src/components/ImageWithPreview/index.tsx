@@ -16,7 +16,7 @@ const ImageWithPreview = (props: ImageWithPreviewProps): React.ReactElement => {
           className="w-full h-full absolute top-0 left-0"
           style={{ backgroundColor: color }}
         >
-          {hash && <BlurHash hash={hash} width="100%" height="100%" />}
+          {/* {hash && <BlurHash hash={hash} width="100%" height="100%" />} */}
         </div>
       </div>
     </div>
