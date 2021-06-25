@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import UserInfoPopover from '@components/UserInfoPopover';
 import Avatar from '@components/Avatar';
-import RenderIfVisible from '@components/RenderIfVisible';
 
 interface AvatarInfoProps {
   image: ImageProps;
