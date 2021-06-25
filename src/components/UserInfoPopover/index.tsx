@@ -1,9 +1,10 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Popover from '@components/Popover';
 import { apiRoute } from '@core/middleware/api';
 import ImageWithPreview from '@components/ImageWithPreview';
+import Avatar from '@components/Avatar';
+import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
 interface UserInfoPopoverProps {
   user: PageProps['cover']['user'];
@@ -15,6 +16,9 @@ const UserInfoPopover = ({
   children,
 }: UserInfoPopoverProps): React.ReactElement => {
   const [userPhotos, setUserPhotos] = useState<ImageProps[]>([]);
+  const intersectionRef = useRef<HTMLDivElement>(null);
+  const entry = useIntersectionObserver(intersectionRef, {});
+  const isVisible = !!entry?.isIntersecting;
 
   const getUserPhotos = () =>
     apiRoute
@@ -27,26 +31,15 @@ const UserInfoPopover = ({
       .then(({ data }) => setUserPhotos(data));
 
   useEffect(() => {
-    getUserPhotos();
-  }, []);
+    isVisible && getUserPhotos();
+  }, [isVisible]);
 
   return (
     <Popover
       childrenToBeOpened={
         <div className="w-max p-4">
           <div className="flex items-center">
-            <Link href={`/@${user.username}`}>
-              <a className="mr-3">
-                <Image
-                  src={user.profile_image.large}
-                  quality={100}
-                  width={56}
-                  height={56}
-                  alt={user.name}
-                  className="rounded-full border"
-                />
-              </a>
-            </Link>
+            <Avatar user={user} width={56} height={56} className="mr-3" />
             <div className="flex flex-col justify-center">
               <Link href={`/@${user.username}`}>
                 <a className="text-lg block text-black font-bold leading-none">
@@ -81,7 +74,7 @@ const UserInfoPopover = ({
         </div>
       }
     >
-      {children}
+      <div ref={intersectionRef}>{children}</div>
     </Popover>
   );
 };

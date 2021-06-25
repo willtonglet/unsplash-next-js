@@ -6,6 +6,7 @@ type Props = {
   visibleOffset?: number;
   root?: HTMLElement | null;
   children: React.ReactNode;
+  className?: string;
 };
 
 const RenderIfVisible = ({
@@ -13,6 +14,7 @@ const RenderIfVisible = ({
   visibleOffset = 1000,
   root = null,
   children,
+  className,
 }: Props): React.ReactElement => {
   const placeholderHeight = useRef<number>(defaultHeight);
   const intersectionRef = useRef<HTMLDivElement>(null);
@@ -30,7 +32,7 @@ const RenderIfVisible = ({
   }, [isVisible, intersectionRef]);
 
   return (
-    <div ref={intersectionRef}>
+    <div className={className} ref={intersectionRef}>
       {isVisible ? (
         <>{children}</>
       ) : (

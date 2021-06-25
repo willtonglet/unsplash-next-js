@@ -32,20 +32,6 @@ const Popover = ({
     ],
   });
 
-  useEffect(() => {
-    if (startTransitionEnd && popperRef.current)
-      popperRef.current?.addEventListener('animationend', () =>
-        setIsPopperOpen(false),
-      );
-
-    return () => {
-      if (startTransitionEnd && popperRef.current)
-        popperRef.current?.removeEventListener('animationend', () =>
-          setIsPopperOpen(false),
-        );
-    };
-  }, [startTransitionEnd]);
-
   const handleMouseEnter = () => {
     setDelayHandler(
       setTimeout(() => {
@@ -60,6 +46,20 @@ const Popover = ({
     setDelayHandler(setTimeout(() => setStartTransitionEnd(true), 1000));
     clearTimeout(delayHandler as NodeJS.Timeout);
   };
+
+  useEffect(() => {
+    if (startTransitionEnd && popperRef.current)
+      popperRef.current?.addEventListener('animationend', () =>
+        setIsPopperOpen(false),
+      );
+
+    return () => {
+      if (startTransitionEnd && popperRef.current)
+        popperRef.current?.removeEventListener('animationend', () =>
+          setIsPopperOpen(false),
+        );
+    };
+  }, [startTransitionEnd]);
 
   return (
     <StyledPopover
