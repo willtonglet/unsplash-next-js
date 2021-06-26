@@ -49,7 +49,7 @@ const MasonryCustomSection = (
   }, [page]);
 
   return (
-    <ContainerWrapper className="py-12">
+    <ContainerWrapper className="py-12 md:px-3 lg:px-0">
       <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
         {photosData?.map((photo, index) =>
           index <= 2 ? (
