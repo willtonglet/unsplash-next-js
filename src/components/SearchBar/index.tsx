@@ -54,7 +54,9 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
   const renderSearchResults = searchResults?.map((result, index) => (
     <button
       key={index}
-      className="flex text-sm text-gray-800 p-3 d-block hover:bg-gray-100 focus:outline-none"
+      className={`${
+        selectedIndex === index ? 'bg-gray-100 ' : ''
+      }flex text-sm text-gray-800 p-3 d-block hover:bg-gray-100 focus:outline-none`}
       onClick={() => {
         router.push(`/s/photos/${slugify(result.query)}`);
         recentSearches
