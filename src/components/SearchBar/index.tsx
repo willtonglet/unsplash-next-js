@@ -57,6 +57,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
       className={`${
         selectedIndex === index ? 'bg-gray-100 ' : ''
       }flex text-sm text-gray-800 p-3 d-block hover:bg-gray-100 focus:outline-none`}
+      onMouseEnter={() => setSelectedIndex(-1)}
       onClick={() => {
         router.push(`/s/photos/${slugify(result.query)}`);
         recentSearches
@@ -100,12 +101,12 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
     const keyEsc = 'Escape';
     if (e.key === keyDown)
       setSelectedIndex(
-        selectedIndex < searchResults.length
-          ? selectedIndex + 1
-          : searchResults.length,
+        selectedIndex < searchResults.length ? selectedIndex + 1 : 0,
       );
     if (e.key === keyUp)
-      setSelectedIndex(selectedIndex >= 0 ? selectedIndex - 1 : -1);
+      setSelectedIndex(
+        selectedIndex >= 0 ? selectedIndex - 1 : searchResults.length - 1,
+      );
     if (e.key === keyEnter)
       setSearch(slugify(searchResults[selectedIndex].query));
     if (e.key === keyEsc) {
