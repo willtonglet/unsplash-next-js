@@ -57,9 +57,12 @@ interface Contributor {
 }
 
 interface TopicProps {
+  id: string;
+  slug: string;
   title: string;
   description: string;
   status: string;
+  cover_photo: { urls: ImageSizes };
   total_photos: number;
   owners: Contributor[];
   top_contributors: Contributor[];

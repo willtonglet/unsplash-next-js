@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
 import { slugify } from '@core/utils/slugify';
 
-interface SearchBar {
+export interface SearchBarProps {
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium';
   hasRoundedPill?: boolean;
   hasShadow?: boolean;
 }
 
-const SearchBar = (props: SearchBar): React.ReactElement => {
+const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const {
     variant = 'primary',
     size = 'small',
@@ -22,6 +23,7 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
   const [searchResults, setSearchResults] = useState<AutoCompleteParams>([]);
   const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [trendingTopics, setTrendingTopics] = useState<TopicProps[]>([]);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [search, setSearch] = useState('');
@@ -33,6 +35,18 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
     const { data } = await apiRoute.get(`/search/${word}`);
     setSearchResults(data.fuzzy || data.did_you_mean || data.autocomplete);
   };
+
+  const getTopics = async () => {
+    const { data } = await apiRoute.get(`/topics`, {
+      params: {
+        orderBy: 'featured',
+        per_page: 5,
+      },
+    });
+    setTrendingTopics(data);
+  };
+
+  console.log(trendingTopics);
 
   const handleHeight = size === 'small' ? 'h-10' : 'h-14';
   const handleBackground =
@@ -170,22 +184,57 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
             </div>
           </div>
         )}
-        <div>
-          <h4 className="text-sm mb-2 font-medium">Trending Searches</h4>
+        <div className="mb-5">
+          <h4 className="text-sm mb-2 font-medium text-black">
+            Trending Searches
+          </h4>
           <div className="flex">
-            <button className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-1 mb-1">
-              <svg
-                width="18"
-                height="18"
-                version="1.1"
-                viewBox="0 0 32 32"
-                aria-hidden="false"
-                className="fill-current text-gray-500"
+            {trendingTopics.map((topic) => (
+              <button
+                key={topic.id}
+                className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-1 mb-1"
               >
-                <path d="M21.2 8L24.177 11.0533L17.833 17.56L12.633 12.2267L3 22.12L4.833 24L12.633 16L17.833 21.3333L26.023 12.9467L29 16V8H21.2Z"></path>
-              </svg>
-              <span className="text-gray-500 text-sm ml-1.5">test</span>
-            </button>
+                <svg
+                  width="18"
+                  height="18"
+                  version="1.1"
+                  viewBox="0 0 32 32"
+                  aria-hidden="false"
+                  className="fill-current text-gray-500"
+                >
+                  <path d="M21.2 8L24.177 11.0533L17.833 17.56L12.633 12.2267L3 22.12L4.833 24L12.633 16L17.833 21.3333L26.023 12.9467L29 16V8H21.2Z"></path>
+                </svg>
+                <span className="text-gray-500 text-sm ml-1.5">
+                  {topic.title}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h4 className="text-sm mb-2 font-medium text-black">
+            Trending Topics
+          </h4>
+          <div className="flex">
+            {trendingTopics.map((topic) => (
+              <button
+                key={topic.id}
+                onClick={() => router.push(`/t/${slugify(topic.slug)}`)}
+                className="border border-gray-300 rounded bg-white flex items-center hover:bg-gray-100 mr-1 mb-1 overflow-hidden"
+              >
+                <div className="h-10 w-10 relative">
+                  <Image
+                    src={topic.cover_photo.urls.thumb}
+                    alt={topic.title}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <span className="text-gray-500 text-sm px-3 py-2 block">
+                  {topic.title}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -194,6 +243,10 @@ const SearchBar = (props: SearchBar): React.ReactElement => {
   useEffect(() => {
     if (search) getSearch(search);
   }, [search]);
+
+  useEffect(() => {
+    getTopics();
+  }, []);
 
   useEffect(() => {
     const recents = JSON.parse(
