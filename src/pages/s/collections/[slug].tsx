@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     params: {
       query: query.slug,
       page: 1,
-      per_page: 20,
+      per_page: 12,
       xp: '',
     },
   });

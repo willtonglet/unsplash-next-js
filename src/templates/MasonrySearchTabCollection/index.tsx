@@ -30,7 +30,7 @@ const MasonrySearchTabCollection = (
         params: {
           query: slug,
           page: page,
-          per_page: 20,
+          per_page: 12,
           xp: '',
         },
       })

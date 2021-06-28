@@ -72,7 +72,7 @@ const Popover = ({
         <div
           ref={setPopperElement}
           style={{ zIndex: 1000, ...styles.popper }}
-          className="popper-wrapper py-3"
+          className="popper-wrapper"
           {...attributes.popper}
         >
           <div

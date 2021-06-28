@@ -24,6 +24,9 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [trendingTopics, setTrendingTopics] = useState<TopicProps[]>([]);
+  const [trendingCollections, setTrendingCollections] = useState<
+    CollectionProps[]
+  >([]);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [search, setSearch] = useState('');
@@ -39,14 +42,22 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const getTopics = async () => {
     const { data } = await apiRoute.get(`/topics`, {
       params: {
-        orderBy: 'featured',
+        orderBy: 'popular',
         per_page: 5,
       },
     });
     setTrendingTopics(data);
   };
 
-  console.log(trendingTopics);
+  const getCollections = async () => {
+    const { data } = await apiRoute.get(`/collections`, {
+      params: {
+        orderBy: 'popular',
+        per_page: 5,
+      },
+    });
+    setTrendingCollections(data);
+  };
 
   const handleHeight = size === 'small' ? 'h-10' : 'h-14';
   const handleBackground =
@@ -98,14 +109,13 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router
-      .push(`/s/photos/${search}`)
-      .then(() =>
-        recentSearches
-          ? setRecentSearches([...recentSearches, search])
-          : setRecentSearches([search]),
-      );
     setIsSearchResultsOpen(false);
+
+    recentSearches
+      ? setRecentSearches([...recentSearches, search])
+      : setRecentSearches([search]);
+
+    router.push(`/s/photos/${search}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -137,108 +147,100 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       : ''
   } focus:outline-none`;
 
-  const renderResults =
-    searchResults.length > 0 && search ? (
-      <div
-        ref={searchRef}
-        className={`absolute w-full bg-white z-20 ${
-          hasShadow ? 'shadow-md' : ''
-        } rounded flex flex-col py-2 mt-1 ${
-          variant === 'primary' ? 'border border-gray-300' : ''
-        }`}
-      >
-        {renderSearchResults}
-      </div>
-    ) : (
-      <div
-        ref={searchRef}
-        className={`absolute px-4 py-5 w-full bg-white z-20 ${
-          hasShadow ? 'shadow-md' : ''
-        } rounded flex flex-col py-2 mt-1 ${
-          variant === 'primary' ? 'border border-gray-300' : ''
-        }`}
-      >
-        {recentSearches && recentSearches.length > 0 && (
-          <div className="mb-5">
-            <div className="flex items-baseline">
-              <h4 className="text-sm mb-2 font-medium mr-1">Recent Searches</h4>
-              ·
-              <button
-                type="button"
-                className="text-sm text-gray-500 ml-1"
-                onClick={() => setRecentSearches([])}
-              >
-                Clear
-              </button>
-            </div>
-            <div className="flex">
-              {recentSearches.map((search, i) => (
-                <button
-                  key={i}
-                  onClick={() => router.push(`/s/photos/${slugify(search)}`)}
-                  className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-1.5 mb-1.5"
-                >
-                  <span className="text-gray-500 text-sm">{search}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+  const renderResults = search ? (
+    <div
+      ref={searchRef}
+      className={`absolute w-full bg-white z-20 ${
+        hasShadow ? 'shadow-md' : ''
+      } rounded flex flex-col py-2 mt-1 ${
+        variant === 'primary' ? 'border border-gray-300' : ''
+      }`}
+    >
+      {renderSearchResults}
+    </div>
+  ) : (
+    <div
+      ref={searchRef}
+      className={`absolute px-4 py-5 w-full bg-white z-20 ${
+        hasShadow ? 'shadow-md' : ''
+      } rounded flex flex-col py-2 mt-1 ${
+        variant === 'primary' ? 'border border-gray-300' : ''
+      }`}
+    >
+      {recentSearches && recentSearches.length > 0 && (
         <div className="mb-5">
-          <h4 className="text-sm mb-2 font-medium text-black">
-            Trending Searches
-          </h4>
+          <div className="flex items-baseline">
+            <h4 className="text-sm mb-2 font-medium mr-1">Recent Searches</h4>·
+            <button
+              type="button"
+              className="text-sm text-gray-500 ml-1"
+              onClick={() => setRecentSearches([])}
+            >
+              Clear
+            </button>
+          </div>
           <div className="flex">
-            {trendingTopics.map((topic) => (
+            {recentSearches.map((search, i) => (
               <button
-                key={topic.id}
-                className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-1 mb-1"
+                key={i}
+                onClick={() => router.push(`/s/photos/${slugify(search)}`)}
+                className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mb-2"
               >
-                <svg
-                  width="18"
-                  height="18"
-                  version="1.1"
-                  viewBox="0 0 32 32"
-                  aria-hidden="false"
-                  className="fill-current text-gray-500"
-                >
-                  <path d="M21.2 8L24.177 11.0533L17.833 17.56L12.633 12.2267L3 22.12L4.833 24L12.633 16L17.833 21.3333L26.023 12.9467L29 16V8H21.2Z"></path>
-                </svg>
-                <span className="text-gray-500 text-sm ml-1.5">
-                  {topic.title}
-                </span>
+                <span className="text-gray-500 text-sm">{search}</span>
               </button>
             ))}
           </div>
         </div>
-        <div>
-          <h4 className="text-sm mb-2 font-medium text-black">
-            Trending Topics
-          </h4>
-          <div className="flex">
-            {trendingTopics.map((topic) => (
-              <button
-                key={topic.id}
-                onClick={() => router.push(`/t/${slugify(topic.slug)}`)}
-                className="border border-gray-300 rounded bg-white flex items-center hover:bg-gray-100 mr-1 mb-1 overflow-hidden"
-              >
-                <div className="h-10 w-10 relative">
-                  <Image
-                    src={topic.cover_photo.urls.thumb}
-                    alt={topic.title}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
-                <span className="text-gray-500 text-sm px-3 py-2 block">
-                  {topic.title}
-                </span>
-              </button>
-            ))}
-          </div>
+      )}
+      <div className="mb-5">
+        <h4 className="text-sm mb-2 font-medium text-black">Trending Topics</h4>
+        <div className="flex flex-wrap">
+          {trendingTopics.map((topic) => (
+            <button
+              key={topic.id}
+              onClick={() => router.push(`/t/${slugify(topic.slug)}`)}
+              className="border border-gray-300 rounded bg-white flex text-left items-center hover:bg-gray-100 mr-2 mb-2 overflow-hidden"
+            >
+              <div className="h-10 w-10 relative">
+                <Image
+                  src={topic.cover_photo.urls.thumb}
+                  alt={topic.title}
+                  height={38}
+                  width={38}
+                  layout="responsive"
+                />
+              </div>
+              <span className="text-gray-500 text-sm px-3 py-2 whitespace-nowrap">
+                {topic.title}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
-    );
+      <div>
+        <h4 className="text-sm mb-2 font-medium text-black">
+          Trending Collections
+        </h4>
+        <div className="flex flex-wrap">
+          {trendingCollections.map((collection) => (
+            <button
+              key={collection.id}
+              onClick={() =>
+                router.push(
+                  `/collections/${collection.id}/${slugify(
+                    collection.title.toLowerCase(),
+                  )}`,
+                )
+              }
+              className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mb-2"
+            >
+              <span className="text-gray-500 text-sm">{collection.title}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   useEffect(() => {
     if (search) getSearch(search);
@@ -246,6 +248,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
 
   useEffect(() => {
     getTopics();
+    getCollections();
   }, []);
 
   useEffect(() => {
@@ -285,12 +288,18 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
           </button>
           <input
             type="text"
+            autoComplete="off"
+            spellCheck={false}
+            autoCapitalize="none"
             className={`hidden md:block ${inputClasses}`}
             placeholder="Search free-high resolution photos"
             onFocus={handleFocus}
             onKeyDown={handleKeyDown}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setIsSearchResultsOpen(true);
+            }}
             ref={inputRef}
             required
           />

@@ -54,27 +54,34 @@ const CollectionContent = (
           </a>
         </Link>
       </div>
-
-      {tags && tags.length && (
-        <div className="mt-3">
-          {tags
-            ?.filter((_, i) => i < 3)
-            .map((tag, index) => (
-              <Link
-                key={index}
-                href={
-                  tag.type === 'search'
-                    ? `/s/photos/${tag.title}`
-                    : `/images/${tag.title}`
-                }
-              >
-                <a className="bg-gray-200 rounded text-sm text-gray-600 inline-block px-2 py-1 mr-2 mb-2 capitalize">
-                  {tag.type === 'search' ? tag.title : tag.source.title}
-                </a>
-              </Link>
-            ))}
+      <div className="h-40 mt-4">
+        <h3 className="text-xl font-semibold">{collection.title}</h3>
+        <div className="items-baseline text-sm text-gray-500">
+          <span>{collection.total_photos} photos</span>
+          <span className="mx-1">·</span>
+          <span>Curated by {collection.name}</span>
         </div>
-      )}
+        {tags && tags.length && (
+          <div className="mt-4">
+            {tags
+              ?.filter((_, i) => i < 3)
+              .map((tag, index) => (
+                <Link
+                  key={index}
+                  href={
+                    tag.type === 'search'
+                      ? `/s/photos/${tag.title}`
+                      : `/images/${tag.title}`
+                  }
+                >
+                  <a className="bg-gray-200 rounded text-sm text-gray-600 inline-block px-2 py-1 mr-2 mb-2 capitalize">
+                    {tag.type === 'search' ? tag.title : tag.source.title}
+                  </a>
+                </Link>
+              ))}
+          </div>
+        )}
+      </div>
     </>
   );
 };

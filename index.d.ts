@@ -98,6 +98,10 @@ interface PageProps {
 interface CollectionProps extends TagProps {
   preview_photos: ImageProps[];
   id: string;
+  title: string;
+  total_photos: number;
+  name: string;
+  slug: string;
 }
 
 type AutoCompleteParams = {
