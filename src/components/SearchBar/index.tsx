@@ -259,11 +259,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (recentSearches && recentSearches.length > 0) {
-      localStorage.setItem('recent-searches', JSON.stringify(recentSearches));
-    } else {
-      localStorage.removeItem('recent-searches');
-    }
+    localStorage.setItem('recent-searches', JSON.stringify(recentSearches));
   }, [recentSearches]);
 
   return (
