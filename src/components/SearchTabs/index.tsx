@@ -4,11 +4,7 @@ import NavigationScroller from '@components/NavigationScroller';
 import { formatNumber } from '@core/utils/formatNumber';
 
 interface SearchTabsProps {
-  results: {
-    photos: number;
-    collections: number;
-    users: number;
-  };
+  results: ResultsProps;
 }
 
 const SearchTabs = ({ results }: SearchTabsProps): React.ReactElement => {

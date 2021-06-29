@@ -5,11 +5,13 @@ import Header from '@components/Header';
 interface PageWrapperProps {
   children?: React.ReactNode;
   topics?: { title: string; slug: string; id: string }[];
+  results?: ResultsProps;
 }
 
 const PageWrapper = ({
   children,
   topics,
+  results,
 }: PageWrapperProps): React.ReactElement => {
   return (
     <>
@@ -32,7 +34,7 @@ const PageWrapper = ({
           href="https://unsplash.com/favicon-16x16.png"
         />
       </Head>
-      <Header topics={topics} />
+      <Header topics={topics} results={results} />
       <main className="min-h-screen bg-gray-50">{children}</main>
     </>
   );

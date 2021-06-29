@@ -6,7 +6,7 @@ import SearchHeader from '@templates/SearchHeader';
 interface PageWrapperWithSearchProps {
   children?: React.ReactNode;
   photos: ImageProps[];
-  results: PageProps['results'];
+  results: ResultsProps;
 }
 
 const PageWrapperWithSearch = ({
@@ -15,7 +15,7 @@ const PageWrapperWithSearch = ({
   results,
 }: PageWrapperWithSearchProps): React.ReactElement => {
   return (
-    <PageWrapper>
+    <PageWrapper results={results}>
       <SearchTabs results={results} />
       <SearchHeader photos={photos} />
       {children}

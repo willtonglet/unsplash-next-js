@@ -1,16 +1,17 @@
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
 import { slugify } from '@core/utils/slugify';
+import ImageWithPreview from '@components/ImageWithPreview';
 
 export interface SearchBarProps {
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium';
   hasRoundedPill?: boolean;
   hasShadow?: boolean;
+  results?: ResultsProps;
 }
 
 const SearchBar = (props: SearchBarProps): React.ReactElement => {
@@ -19,6 +20,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     size = 'small',
     hasRoundedPill = true,
     hasShadow = false,
+    results,
   } = props;
   const [searchResults, setSearchResults] = useState<AutoCompleteParams>([]);
   const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
@@ -33,6 +35,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { slug } = router.query;
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
@@ -85,9 +88,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       onMouseEnter={() => setSelectedIndex(-1)}
       onClick={() => {
         router.push(`/s/photos/${slugify(result.query)}`);
-        recentSearches
-          ? setRecentSearches([...recentSearches, result.query])
-          : setRecentSearches([result.query]);
         setIsSearchResultsOpen(false);
         setSearch(result.query);
       }}
@@ -102,20 +102,13 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   useOnClickOutside(searchRef, handleClickOutsideResults);
   useOnClickOutside(inputRef, handleClickOutsideInput);
 
-  const handleFocus = () => {
-    setIsSearchResultsOpen(true);
-    setIsFocused(true);
-  };
+  const handleFocus = () => setIsSearchResultsOpen(true);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSearchResultsOpen(false);
 
-    recentSearches
-      ? setRecentSearches([...recentSearches, search])
-      : setRecentSearches([search]);
-
-    router.push(`/s/photos/${search}`);
+    router.push(`/s/photos/${slugify(search)}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -131,8 +124,12 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       setSelectedIndex(
         selectedIndex >= 0 ? selectedIndex - 1 : searchResults.length - 1,
       );
-    if (e.key === keyEnter)
-      setSearch(slugify(searchResults[selectedIndex].query));
+    if (
+      e.key === keyEnter &&
+      (selectedIndex > -1 || selectedIndex < searchResults.length - 1)
+    ) {
+      setSearch(searchResults[selectedIndex].query);
+    }
     if (e.key === keyEsc) {
       setSelectedIndex(-1);
       setIsSearchResultsOpen(false);
@@ -147,17 +144,25 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       : ''
   } focus:outline-none`;
 
-  const renderResults = search ? (
-    <div
-      ref={searchRef}
-      className={`absolute w-full bg-white z-20 ${
-        hasShadow ? 'shadow-md' : ''
-      } rounded flex flex-col py-2 mt-1 ${
-        variant === 'primary' ? 'border border-gray-300' : ''
-      }`}
-    >
-      {renderSearchResults}
-    </div>
+  const renderResults = (
+    <>
+      {searchResults.length > 0 ? (
+        <div
+          ref={searchRef}
+          className={`absolute w-full bg-white z-20 ${
+            hasShadow ? 'shadow-md' : ''
+          } rounded flex flex-col py-2 mt-1 ${
+            variant === 'primary' ? 'border border-gray-300' : ''
+          }`}
+        >
+          {renderSearchResults}
+        </div>
+      ) : null}
+    </>
+  );
+
+  const renderSearchOptions = search ? (
+    renderResults
   ) : (
     <div
       ref={searchRef}
@@ -179,8 +184,8 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
               Clear
             </button>
           </div>
-          <div className="flex">
-            {recentSearches.map((search, i) => (
+          <div className="flex flex-wrap">
+            {[...new Set(recentSearches)].map((search, i) => (
               <button
                 key={i}
                 onClick={() => router.push(`/s/photos/${slugify(search)}`)}
@@ -202,8 +207,10 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
               className="border border-gray-300 rounded bg-white flex text-left items-center hover:bg-gray-100 mr-2 mb-2 overflow-hidden"
             >
               <div className="h-10 w-10 relative">
-                <Image
+                <ImageWithPreview
+                  hash={topic.cover_photo.blur_hash}
                   src={topic.cover_photo.urls.thumb}
+                  color={topic.cover_photo.color}
                   alt={topic.title}
                   height={38}
                   width={38}
@@ -243,13 +250,24 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   );
 
   useEffect(() => {
-    if (search) getSearch(search);
-  }, [search]);
-
-  useEffect(() => {
     getTopics();
     getCollections();
   }, []);
+
+  useEffect(() => {
+    recentSearches &&
+      slug &&
+      results &&
+      results?.photos > 0 &&
+      setRecentSearches([...recentSearches, slug as string]);
+  }, [slug, results]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      'recent-searches',
+      JSON.stringify([...new Set(recentSearches)]),
+    );
+  }, [recentSearches]);
 
   useEffect(() => {
     const recents = JSON.parse(
@@ -259,8 +277,8 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('recent-searches', JSON.stringify(recentSearches));
-  }, [recentSearches]);
+    if (search) getSearch(search);
+  }, [search]);
 
   return (
     <div className="relative">
@@ -320,7 +338,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
           )}
         </div>
       </form>
-      {isSearchResultsOpen && renderResults}
+      {isSearchResultsOpen && renderSearchOptions}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { formatNumber } from '@core/utils/formatNumber';
 import { StyledTopicBoxInfo } from './styles';
+import Avatar from '@components/Avatar';
 
 interface TopicBoxInfoProps {
   topicInfo: TopicProps;
@@ -47,15 +48,11 @@ const TopicBoxInfo = ({ topicInfo }: TopicBoxInfoProps): React.ReactElement => {
         <span className="text-sm ml-2">Curator</span>
       </dt>
       <dd className="flex items-center h-8 justify-self-end">
-        <Link href={`/@${topicInfo.owners[0].username}`}>
-          <a className="flex items-center h-7 w-7 rounded-full overflow-hidden relative">
-            <Image
-              src={topicInfo.owners[0].profile_image.small}
-              layout="fill"
-              alt={topicInfo.owners[0].name}
-            />
-          </a>
-        </Link>
+        <Avatar
+          user={topicInfo.owners[0] as UserProps}
+          width={28}
+          height={28}
+        />
       </dd>
       <hr className="col-start-1 col-end-3" />
 
@@ -94,11 +91,13 @@ const TopicBoxInfo = ({ topicInfo }: TopicBoxInfoProps): React.ReactElement => {
       </dt>
       <dd className="flex items-center justify-self-end h-8">
         {topicInfo.top_contributors.map((c, i) => (
-          <Link href={`/@${c.username}`} key={i}>
-            <a className="flex items-center h-4 w-4 rounded-full overflow-hidden relative ml-2">
-              <Image src={c.profile_image.small} layout="fill" alt={c.name} />
-            </a>
-          </Link>
+          <Avatar
+            key={i}
+            user={c as UserProps}
+            width={16}
+            height={16}
+            className="ml-2"
+          />
         ))}
       </dd>
     </StyledTopicBoxInfo>

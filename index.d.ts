@@ -62,7 +62,7 @@ interface TopicProps {
   title: string;
   description: string;
   status: string;
-  cover_photo: { urls: ImageSizes };
+  cover_photo: ImageProps;
   total_photos: number;
   owners: Contributor[];
   top_contributors: Contributor[];
@@ -108,3 +108,9 @@ type AutoCompleteParams = {
   query: string;
   priority: numger;
 }[];
+
+interface ResultsProps {
+  photos: number;
+  collections: number;
+  users: number;
+}

@@ -51,11 +51,7 @@ const UserInfoPopover = ({
                 <div className="flex flex-col justify-center">
                   <Link href={`/@${user.username}`}>
                     <a className="text-lg block text-black font-bold leading-none">
-                      <h3>
-                        {user.name.length > 21
-                          ? `${user.name.substring(0, 21)}...`
-                          : user.name}
-                      </h3>
+                      <h3 className="truncate">{user.name}</h3>
                     </a>
                   </Link>
                   <Link href={`/@${user.username}`}>
