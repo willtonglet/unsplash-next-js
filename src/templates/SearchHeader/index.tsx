@@ -26,7 +26,7 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
   return (
     <ContainerWrapper className="pt-14">
       <h2 className="capitalize text-5xl font-bold mb-6">
-        {String(slug).replace('-', ' ')}
+        {String(slug).split('-').join(' ')}
       </h2>
       {isMd && (
         <NavigationScroller backgroundColor="secondary" className="mb-4">

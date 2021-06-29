@@ -9,14 +9,9 @@
     "rootDir": "src",
     "baseUrl": "src",
     "paths": {
-      "@*": [
-        "*"
-      ]
+      "@*": ["*"]
     },
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2017"],
     "moduleResolution": "node",
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
@@ -28,11 +23,6 @@
     "target": "esnext",
     "module": "esnext"
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.tsx"]
 }
