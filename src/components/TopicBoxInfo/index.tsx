@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import { formatNumber } from '@core/utils/formatNumber';
 import { StyledTopicBoxInfo } from './styles';
 import Avatar from '@components/Avatar';
