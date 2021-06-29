@@ -4,6 +4,7 @@ import BlurHash from '@components/BlurHash';
 import SearchBar from '@components/SearchBar';
 import UserInfoPopover from '@components/UserInfoPopover';
 import { useContextualRouting } from '@hooks/useContextualRouting';
+import ImageWithPreview from '@components/ImageWithPreview';
 
 interface MainCoverProps {
   cover: ImageProps;
@@ -18,7 +19,8 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
       style={{ backgroundColor: cover.color }}
     >
       <div className="absolute top-0 left-0 w-full h-full">
-        <Image
+        <ImageWithPreview
+          hash={cover.blur_hash}
           src={cover.urls.full}
           alt={cover.alt_description || 'Photo of the day'}
           quality={80}
@@ -27,12 +29,6 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
           className="relative z-10"
           priority
         />
-        <div
-          className="w-full h-full absolute top-0 left-0"
-          style={{ backgroundColor: cover.color }}
-        >
-          <BlurHash hash={cover.blur_hash} height="100%" width="100%" />
-        </div>
       </div>
       <div className="relative z-20">
         <div className="bg-opacity-40 bg-black w-full h-full">
