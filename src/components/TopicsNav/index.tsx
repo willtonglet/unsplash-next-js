@@ -47,7 +47,7 @@ const TopicsNav = ({ topics }: TopicsNavProps): React.ReactElement => {
                       router.query.slug === topic.slug
                         ? 'text-dark'
                         : 'text-gray-500'
-                    } text-sm font-medium d-block py-4 hover:text-black focus:outline-none`}
+                    } text-sm font-medium d-block py-4 hover:text-black focus:outline-none truncate`}
                   >
                     {topic.title}
                   </a>
