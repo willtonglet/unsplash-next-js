@@ -36,6 +36,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { slug } = router.query;
+  const { pathname } = router;
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
@@ -179,13 +180,16 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
             <button
               type="button"
               className="text-sm text-gray-500 ml-1"
-              onClick={() => setRecentSearches([])}
+              onClick={() => {
+                localStorage.setItem('recent-searches', JSON.stringify([]));
+                setRecentSearches([]);
+              }}
             >
               Clear
             </button>
           </div>
           <div className="flex flex-wrap">
-            {[...new Set(recentSearches)].map((search, i) => (
+            {recentSearches.map((search, i) => (
               <button
                 key={i}
                 onClick={() => router.push(`/s/photos/${slugify(search)}`)}
@@ -255,26 +259,28 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    recentSearches &&
-      slug &&
-      results &&
-      results?.photos > 0 &&
-      setRecentSearches([...recentSearches, slug as string]);
-  }, [slug, results]);
-
-  useEffect(() => {
-    localStorage.setItem(
-      'recent-searches',
-      JSON.stringify([...new Set(recentSearches)]),
-    );
-  }, [recentSearches]);
-
-  useEffect(() => {
     const recents = JSON.parse(
       localStorage.getItem('recent-searches') as string,
     ) as string[];
+
+    !recents && localStorage.setItem('recent-searches', JSON.stringify([]));
+
+    if (
+      slug &&
+      recents &&
+      results &&
+      results.photos > 0 &&
+      !recents.includes(slug as string)
+    ) {
+      setRecentSearches([...recents, slug as string]);
+      localStorage.setItem(
+        'recent-searches',
+        JSON.stringify([...recents, slug as string]),
+      );
+    }
+
     setRecentSearches(recents);
-  }, []);
+  }, [slug, results]);
 
   useEffect(() => {
     if (search) getSearch(search);
