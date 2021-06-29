@@ -179,7 +179,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       {recentSearches && recentSearches.length > 0 && (
         <div className="mb-5">
           <div className="flex items-baseline text-black">
-            <h4 className="text-sm mb-2 font-medium mr-1">Recent Searches</h4>·
+            <h4 className="text-sm font-medium mr-1">Recent Searches</h4>·
             <button
               type="button"
               className="text-sm text-gray-500 ml-1"
@@ -196,7 +196,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
               <button
                 key={i}
                 onClick={() => router.push(`/s/photos/${slugify(search)}`)}
-                className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mb-2"
+                className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"
               >
                 <span className="text-gray-500 text-sm">{search}</span>
               </button>
@@ -205,13 +205,13 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
         </div>
       )}
       <div className="mb-5">
-        <h4 className="text-sm mb-2 font-medium text-black">Trending Topics</h4>
+        <h4 className="text-sm font-medium text-black">Trending Topics</h4>
         <div className="flex flex-wrap">
           {trendingTopics.map((topic) => (
             <button
               key={topic.id}
               onClick={() => router.push(`/t/${slugify(topic.slug)}`)}
-              className="border border-gray-300 rounded bg-white flex text-left items-center hover:bg-gray-100 mr-2 mb-2 overflow-hidden"
+              className="border border-gray-300 rounded bg-white flex text-left items-center hover:bg-gray-100 mr-2 mt-2 overflow-hidden"
             >
               <div className="h-10 w-10 relative">
                 <ImageWithPreview
@@ -232,9 +232,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
         </div>
       </div>
       <div>
-        <h4 className="text-sm mb-2 font-medium text-black">
-          Trending Collections
-        </h4>
+        <h4 className="text-sm font-medium text-black">Trending Collections</h4>
         <div className="flex flex-wrap">
           {trendingCollections.map((collection) => (
             <button
@@ -246,7 +244,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
                   )}`,
                 )
               }
-              className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mb-2"
+              className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"
             >
               <span className="text-gray-500 text-sm">{collection.title}</span>
             </button>
