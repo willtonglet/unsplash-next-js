@@ -36,7 +36,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { slug } = router.query;
-  const { pathname } = router;
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
@@ -263,14 +262,16 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       localStorage.getItem('recent-searches') as string,
     ) as string[];
 
-    !recents && localStorage.setItem('recent-searches', JSON.stringify([]));
+    setRecentSearches(recents);
+
+    if (!recents) localStorage.setItem('recent-searches', JSON.stringify([]));
 
     if (
       slug &&
       recents &&
       results &&
       results.photos > 0 &&
-      !recents.includes(slug as string)
+      Boolean(!recents.includes(slug as string))
     ) {
       setRecentSearches([...recents, slug as string]);
       localStorage.setItem(
@@ -278,9 +279,23 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
         JSON.stringify([...recents, slug as string]),
       );
     }
-
-    setRecentSearches(recents);
   }, [slug, results]);
+
+  useEffect(() => {
+    function checkUserData() {
+      const recents = JSON.parse(
+        localStorage.getItem('recent-searches') as string,
+      ) as string[];
+
+      console.log(recents);
+    }
+
+    window.addEventListener('storage', checkUserData);
+
+    return () => {
+      window.removeEventListener('storage', checkUserData);
+    };
+  }, []);
 
   useEffect(() => {
     if (search) getSearch(search);
