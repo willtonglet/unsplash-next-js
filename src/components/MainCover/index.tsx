@@ -1,6 +1,4 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import BlurHash from '@components/BlurHash';
 import SearchBar from '@components/SearchBar';
 import UserInfoPopover from '@components/UserInfoPopover';
 import { useContextualRouting } from '@hooks/useContextualRouting';
