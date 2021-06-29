@@ -179,7 +179,10 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       {recentSearches && recentSearches.length > 0 && (
         <div className="mb-5">
           <div className="flex items-baseline">
-            <h4 className="text-sm mb-2 font-medium mr-1">Recent Searches</h4>·
+            <h4 className="text-sm mb-2 font-medium mr-1 text-black">
+              Recent Searches
+            </h4>
+            ·
             <button
               type="button"
               className="text-sm text-gray-500 ml-1"
