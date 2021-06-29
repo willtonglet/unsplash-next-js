@@ -284,22 +284,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   }, [slug, results]);
 
   useEffect(() => {
-    function checkUserData() {
-      const recents = JSON.parse(
-        localStorage.getItem('recent-searches') as string,
-      ) as string[];
-
-      console.log(recents);
-    }
-
-    window.addEventListener('storage', checkUserData);
-
-    return () => {
-      window.removeEventListener('storage', checkUserData);
-    };
-  }, []);
-
-  useEffect(() => {
     if (search) getSearch(search);
   }, [search]);
 
