@@ -116,20 +116,24 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     const keyUp = 'ArrowUp';
     const keyEnter = 'Enter';
     const keyEsc = 'Escape';
+
     if (e.key === keyDown)
       setSelectedIndex(
         selectedIndex < searchResults.length ? selectedIndex + 1 : 0,
       );
+
     if (e.key === keyUp)
       setSelectedIndex(
         selectedIndex >= 0 ? selectedIndex - 1 : searchResults.length - 1,
       );
+
     if (
       e.key === keyEnter &&
-      (selectedIndex > -1 || selectedIndex < searchResults.length - 1)
-    ) {
+      selectedIndex > -1 &&
+      selectedIndex < searchResults.length - 1
+    )
       setSearch(searchResults[selectedIndex].query);
-    }
+
     if (e.key === keyEsc) {
       setSelectedIndex(-1);
       setIsSearchResultsOpen(false);
@@ -323,9 +327,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
           </button>
           <input
             type="text"
-            autoComplete="off"
-            spellCheck={false}
-            autoCapitalize="none"
             className={`hidden md:block ${inputClasses}`}
             placeholder="Search free-high resolution photos"
             onFocus={handleFocus}
