@@ -45,7 +45,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const getTopics = async () => {
     const { data } = await apiRoute.get(`/topics`, {
       params: {
-        orderBy: 'popular',
+        order_by: 'featured',
         per_page: 5,
       },
     });
@@ -55,7 +55,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const getCollections = async () => {
     const { data } = await apiRoute.get(`/collections`, {
       params: {
-        orderBy: 'popular',
         per_page: 5,
       },
     });
