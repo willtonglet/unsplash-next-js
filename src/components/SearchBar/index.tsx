@@ -165,6 +165,27 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     </>
   );
 
+  const renderInput = (mq: 'sm' | 'md') => (
+    <input
+      type="text"
+      className={`${
+        mq === 'md' ? 'hidden md:block' : 'md:hidden'
+      } ${inputClasses}`}
+      placeholder={
+        mq === 'sm' ? 'Search photos' : 'Search free-high resolution photos'
+      }
+      onFocus={handleFocus}
+      onKeyDown={handleKeyDown}
+      value={search}
+      onChange={(e) => {
+        setSearch(e.target.value.trimStart());
+        setIsSearchResultsOpen(true);
+      }}
+      ref={inputRef}
+      required
+    />
+  );
+
   const renderSearchOptions = search ? (
     renderResults
   ) : (
@@ -307,34 +328,8 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
           >
             <IoIosSearch size={size === 'small' ? 21 : 24} />
           </button>
-          <input
-            type="text"
-            className={`hidden md:block ${inputClasses}`}
-            placeholder="Search free-high resolution photos"
-            onFocus={handleFocus}
-            onKeyDown={handleKeyDown}
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value.trimStart());
-              setIsSearchResultsOpen(true);
-            }}
-            ref={inputRef}
-            required
-          />
-
-          <input
-            type="text"
-            className={`md:hidden ${inputClasses}`}
-            placeholder="Search photos"
-            onFocus={handleFocus}
-            onKeyDown={handleKeyDown}
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value.trimStart());
-              setIsSearchResultsOpen(true);
-            }}
-            ref={inputRef}
-          />
+          {renderInput('md')}
+          {renderInput('sm')}
           {search && (
             <button
               className="text-gray-500 absolute top-1/2 transform -translate-y-1/2 right-2 focus:outline-none"
