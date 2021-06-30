@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
 import { slugify } from '@core/utils/slugify';
 import ImageWithPreview from '@components/ImageWithPreview';
+import { unslugify } from '@core/utils/unslugify';
+import { SearchStorageContext } from './SearchStorageContext';
 
 export interface SearchBarProps {
   variant?: 'primary' | 'secondary';
@@ -24,7 +26,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   } = props;
   const [searchResults, setSearchResults] = useState<AutoCompleteParams>([]);
   const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
-  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [trendingTopics, setTrendingTopics] = useState<TopicProps[]>([]);
   const [trendingSearches, setTrendingSearches] = useState<string[]>([]);
   const [trendingCollections, setTrendingCollections] = useState<
@@ -35,8 +36,9 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const [search, setSearch] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const { setRecentSearches, recentSearches } =
+    useContext(SearchStorageContext);
   const router = useRouter();
-  const { slug } = router.query;
 
   const getSearch = async (word: string) => {
     const { data } = await apiRoute.get(`/search/${word}`);
@@ -271,7 +273,9 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
                 >
                   <path d="M21.2 8L24.177 11.0533L17.833 17.56L12.633 12.2267L3 22.12L4.833 24L12.633 16L17.833 21.3333L26.023 12.9467L29 16V8H21.2Z"></path>
                 </svg>
-                <span className="text-gray-500 text-sm">{trend}</span>
+                <span className="text-gray-500 text-sm">
+                  {unslugify(trend)}
+                </span>
               </button>
             ))}
           </div>
@@ -298,7 +302,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
                     layout="responsive"
                   />
                 </div>
-                <span className="text-gray-500 text-sm px-3 py-2 whitespace-nowrap">
+                <span className="text-gray-500 text-sm px-3 py-2 whitespace-nowrap capitalize">
                   {topic.title}
                 </span>
               </button>
@@ -324,7 +328,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
                 }
                 className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"
               >
-                <span className="text-gray-500 text-sm">
+                <span className="text-gray-500 text-sm capitalize">
                   {collection.title}
                 </span>
               </button>
@@ -334,30 +338,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       )}
     </div>
   );
-
-  useEffect(() => {
-    const recents = JSON.parse(
-      localStorage.getItem('recent-searches') as string,
-    ) as string[];
-
-    setRecentSearches(recents);
-
-    if (!recents) localStorage.setItem('recent-searches', JSON.stringify([]));
-
-    if (
-      slug &&
-      recents &&
-      results &&
-      results.photos > 0 &&
-      Boolean(!recents.includes(slug as string))
-    ) {
-      setRecentSearches([...recents, slug as string]);
-      localStorage.setItem(
-        'recent-searches',
-        JSON.stringify([...recents, slug as string]),
-      );
-    }
-  }, [slug, results]);
 
   useEffect(() => {
     if (search) getSearch(search);

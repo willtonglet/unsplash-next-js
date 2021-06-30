@@ -4,6 +4,7 @@ import ContainerWrapper from '@components/ContainerWrapper';
 import NavigationScroller from '@components/NavigationScroller';
 import useMediaQuery from '@hooks/useMediaQuery';
 import { slugify } from '@core/utils/slugify';
+import { unslugify } from '@core/utils/unslugify';
 
 interface SearchHeaderProps {
   photos: ImageProps[];
@@ -26,7 +27,7 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
   return (
     <ContainerWrapper className="pt-14">
       <h2 className="capitalize text-5xl font-bold mb-6">
-        {String(slug).split('-').join(' ')}
+        {unslugify(slug as string)}
       </h2>
       {isMd && (
         <NavigationScroller backgroundColor="secondary" className="mb-4">

@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Header from '@components/Header';
+import { SearchStorageProvider } from '@components/SearchBar/SearchStorageContext';
 
 interface PageWrapperProps {
   children?: React.ReactNode;
@@ -14,7 +15,7 @@ const PageWrapper = ({
   results,
 }: PageWrapperProps): React.ReactElement => {
   return (
-    <>
+    <SearchStorageProvider results={results}>
       <Head>
         <title>Beautiful Free Images &amp; Pictures | Unsplash</title>
         <meta charSet="utf-8" />
@@ -36,7 +37,7 @@ const PageWrapper = ({
       </Head>
       <Header topics={topics} results={results} />
       <main className="min-h-screen bg-gray-50">{children}</main>
-    </>
+    </SearchStorageProvider>
   );
 };
 
