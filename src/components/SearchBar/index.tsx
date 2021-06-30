@@ -315,7 +315,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
             onKeyDown={handleKeyDown}
             value={search}
             onChange={(e) => {
-              setSearch(e.target.value);
+              setSearch(e.target.value.trimStart());
               setIsSearchResultsOpen(true);
             }}
             ref={inputRef}
@@ -327,8 +327,12 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
             className={`md:hidden ${inputClasses}`}
             placeholder="Search photos"
             onFocus={handleFocus}
+            onKeyDown={handleKeyDown}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value.trimStart());
+              setIsSearchResultsOpen(true);
+            }}
             ref={inputRef}
           />
           {search && (
