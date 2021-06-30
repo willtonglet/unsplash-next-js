@@ -26,6 +26,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [trendingTopics, setTrendingTopics] = useState<TopicProps[]>([]);
+  const [trendingSearches, setTrendingSearches] = useState<string[]>([]);
   const [trendingCollections, setTrendingCollections] = useState<
     CollectionProps[]
   >([]);
@@ -60,6 +61,32 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     });
     setTrendingCollections(data);
   };
+
+  const getPopularWords = async () => {
+    const { data } = await apiRoute.get(`/search/popular-words`);
+    setTrendingSearches(data.map((word: { word: string }) => word.word));
+  };
+
+  useEffect(() => {
+    getTopics();
+    getCollections();
+    getPopularWords();
+  }, []);
+
+  const sendSearchTerm = () =>
+    apiRoute.post(
+      '/search/popular-words',
+      {
+        word: router.query.slug,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
+
+  useEffect(() => {
+    if (results && results.photos > 0) sendSearchTerm();
+  }, [results]);
 
   const handleHeight = size === 'small' ? 'h-10' : 'h-14';
   const handleBackground =
@@ -224,60 +251,89 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
           </div>
         </div>
       )}
-      <div className="mb-5">
-        <h4 className="text-sm font-medium text-black">Trending Topics</h4>
-        <div className="flex flex-wrap">
-          {trendingTopics.map((topic) => (
-            <button
-              key={topic.id}
-              onClick={() => router.push(`/t/${slugify(topic.slug)}`)}
-              className="border border-gray-300 rounded bg-white flex text-left items-center hover:bg-gray-100 mr-2 mt-2 overflow-hidden"
-            >
-              <div className="h-10 w-10 relative">
-                <ImageWithPreview
-                  hash={topic.cover_photo.blur_hash}
-                  src={topic.cover_photo.urls.thumb}
-                  color={topic.cover_photo.color}
-                  alt={topic.title}
-                  height={38}
-                  width={38}
-                  layout="responsive"
-                />
-              </div>
-              <span className="text-gray-500 text-sm px-3 py-2 whitespace-nowrap">
-                {topic.title}
-              </span>
-            </button>
-          ))}
+      {trendingSearches.length > 0 && (
+        <div className="mb-5">
+          <h4 className="text-sm font-medium text-black">Trending Searches</h4>
+          <div className="flex flex-wrap">
+            {trendingSearches.map((trend, index) => (
+              <button
+                key={index}
+                onClick={() => router.push(`/s/photos/${slugify(trend)}`)}
+                className="border border-gray-300 rounded bg-white py-2 px-3 flex text-left items-center hover:bg-gray-100 mr-2 mt-2 overflow-hidden"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  version="1.1"
+                  viewBox="0 0 32 32"
+                  aria-hidden="false"
+                  className="mr-2 fill-current text-gray-400"
+                >
+                  <path d="M21.2 8L24.177 11.0533L17.833 17.56L12.633 12.2267L3 22.12L4.833 24L12.633 16L17.833 21.3333L26.023 12.9467L29 16V8H21.2Z"></path>
+                </svg>
+                <span className="text-gray-500 text-sm">{trend}</span>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      <div>
-        <h4 className="text-sm font-medium text-black">Trending Collections</h4>
-        <div className="flex flex-wrap">
-          {trendingCollections.map((collection) => (
-            <button
-              key={collection.id}
-              onClick={() =>
-                router.push(
-                  `/collections/${collection.id}/${slugify(
-                    collection.title.toLowerCase(),
-                  )}`,
-                )
-              }
-              className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"
-            >
-              <span className="text-gray-500 text-sm">{collection.title}</span>
-            </button>
-          ))}
+      )}
+      {trendingTopics.length > 0 && (
+        <div className="mb-5">
+          <h4 className="text-sm font-medium text-black">Trending Topics</h4>
+          <div className="flex flex-wrap">
+            {trendingTopics.map((topic) => (
+              <button
+                key={topic.id}
+                onClick={() => router.push(`/t/${slugify(topic.slug)}`)}
+                className="border border-gray-300 rounded bg-white flex text-left items-center hover:bg-gray-100 mr-2 mt-2 overflow-hidden"
+              >
+                <div className="h-10 w-10 relative">
+                  <ImageWithPreview
+                    hash={topic.cover_photo.blur_hash}
+                    src={topic.cover_photo.urls.thumb}
+                    color={topic.cover_photo.color}
+                    alt={topic.title}
+                    height={38}
+                    width={38}
+                    layout="responsive"
+                  />
+                </div>
+                <span className="text-gray-500 text-sm px-3 py-2 whitespace-nowrap">
+                  {topic.title}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+      {trendingCollections.length > 0 && (
+        <div>
+          <h4 className="text-sm font-medium text-black">
+            Trending Collections
+          </h4>
+          <div className="flex flex-wrap">
+            {trendingCollections.map((collection) => (
+              <button
+                key={collection.id}
+                onClick={() =>
+                  router.push(
+                    `/collections/${collection.id}/${slugify(
+                      collection.title.toLowerCase(),
+                    )}`,
+                  )
+                }
+                className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"
+              >
+                <span className="text-gray-500 text-sm">
+                  {collection.title}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
-
-  useEffect(() => {
-    getTopics();
-    getCollections();
-  }, []);
 
   useEffect(() => {
     const recents = JSON.parse(

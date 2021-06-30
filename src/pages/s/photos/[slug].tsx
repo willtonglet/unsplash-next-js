@@ -11,6 +11,7 @@ const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
 
 const SlugTabPhotos = ({ results, photos }: PageProps): React.ReactElement => {
   const router = useRouter();
+
   return (
     <PageWrapperWithSearch results={results} photos={photos}>
       <MasonrySearchTabPhotos photos={photos} />
