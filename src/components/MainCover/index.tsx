@@ -23,6 +23,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
           alt={cover.alt_description || 'Photo of the day'}
           quality={80}
           layout="fill"
+          loading="eager"
           objectFit="cover"
           className="relative z-10"
           priority
