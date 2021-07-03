@@ -5,6 +5,7 @@ import MainCover from '@components/MainCover';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
+import { getSearchParams } from '@core/middleware/apiSearchCalls';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
@@ -15,12 +16,17 @@ const HomePage = ({
   cover,
   trends,
   topics,
+  searchListData,
 }: PageProps): React.ReactElement => {
   const router = useRouter();
 
   return (
-    <PageWrapper topics={topics}>
-      <MainCover cover={cover} trends={trends} />
+    <PageWrapper topics={topics} searchListData={searchListData}>
+      <MainCover
+        cover={cover}
+        trends={trends}
+        searchListData={searchListData}
+      />
       <MasonryCustomSection url="/photos" photos={photos} />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
     </PageWrapper>
@@ -46,9 +52,10 @@ export const getStaticProps: GetStaticProps = async () => {
       per_page: 15,
     },
   });
+  const { data: searchListData } = await getSearchParams();
 
   return {
-    props: { photos, cover, trends, topics },
+    props: { photos, cover, trends, topics, searchListData },
   };
 };
 

@@ -4,8 +4,7 @@ import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
 import { slugify } from '@core/utils/slugify';
-import { getSearchParams } from './helpers/apiSearchCalls';
-import SearchData, { SearchDataProps } from './SearchData';
+import SearchData from './SearchData';
 
 export interface SearchBarProps {
   variant?: 'primary' | 'secondary';
@@ -13,6 +12,7 @@ export interface SearchBarProps {
   hasRoundedPill?: boolean;
   hasShadow?: boolean;
   results?: ResultsProps;
+  searchListData?: SearchListDataParams;
 }
 
 const SearchBar = (props: SearchBarProps): React.ReactElement => {
@@ -22,11 +22,10 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     hasRoundedPill = true,
     hasShadow = false,
     results,
+    searchListData,
   } = props;
   const [searchResults, setSearchResults] = useState<AutoCompleteParams>([]);
   const [isSearchResultsOpen, setIsSearchResultsOpen] = useState(false);
-  const [searchListData, setSearchListData] =
-    useState<SearchDataProps['searchListData']>();
   const [isFocused, setIsFocused] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [search, setSearch] = useState('');
@@ -38,15 +37,6 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     const { data } = await apiRoute.get(`/search/${word}`);
     setSearchResults(data.fuzzy || data.did_you_mean || data.autocomplete);
   };
-
-  const getSearchListData = async () => {
-    const { data } = await getSearchParams();
-    setSearchListData(data);
-  };
-
-  useEffect(() => {
-    if (isSearchResultsOpen && !searchListData) getSearchListData();
-  }, [isSearchResultsOpen, searchListData]);
 
   const sendSearchTerm = () =>
     apiRoute.post(

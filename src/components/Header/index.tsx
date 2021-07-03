@@ -5,9 +5,14 @@ import Link from 'next/link';
 interface HeaderProps {
   topics?: { title: string; slug: string; id: string }[];
   results?: ResultsProps;
+  searchListData?: SearchListDataParams;
 }
 
-const Header = ({ topics, results }: HeaderProps): React.ReactElement => {
+const Header = ({
+  topics,
+  results,
+  searchListData,
+}: HeaderProps): React.ReactElement => {
   return (
     <header className="sticky z-30 bg-white top-0 w-screen">
       <nav className="flex items-center py-3 px-3 md:px-5 w-full border-box">
@@ -31,7 +36,7 @@ const Header = ({ topics, results }: HeaderProps): React.ReactElement => {
             </a>
           </Link>
           <div className="pl-4 w-full">
-            <SearchBar results={results} />
+            <SearchBar results={results} searchListData={searchListData} />
           </div>
         </div>
       </nav>

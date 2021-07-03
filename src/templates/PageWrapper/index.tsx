@@ -7,12 +7,14 @@ interface PageWrapperProps {
   children?: React.ReactNode;
   topics?: { title: string; slug: string; id: string }[];
   results?: ResultsProps;
+  searchListData?: SearchListDataParams;
 }
 
 const PageWrapper = ({
   children,
   topics,
   results,
+  searchListData,
 }: PageWrapperProps): React.ReactElement => {
   return (
     <SearchStorageProvider results={results}>
@@ -35,7 +37,11 @@ const PageWrapper = ({
           href="https://unsplash.com/favicon-16x16.png"
         />
       </Head>
-      <Header topics={topics} results={results} />
+      <Header
+        topics={topics}
+        results={results}
+        searchListData={searchListData}
+      />
       <main className="min-h-screen bg-gray-50">{children}</main>
     </SearchStorageProvider>
   );

@@ -2,14 +2,20 @@ import { GetServerSideProps } from 'next';
 import { unsplash } from '@core/middleware/api';
 import PageWrapperWithSearch from '@templates/PageWrapperWithSearch';
 import MasonrySearchTabCollection from '@templates/MasonrySearchTabCollection';
+import { getSearchParams } from '@core/middleware/apiSearchCalls';
 
 const SlugTabPhotos = ({
   collections,
   results,
   photos,
+  searchListData,
 }: PageProps): React.ReactElement => {
   return (
-    <PageWrapperWithSearch results={results} photos={photos}>
+    <PageWrapperWithSearch
+      results={results}
+      photos={photos}
+      searchListData={searchListData}
+    >
       <MasonrySearchTabCollection collections={collections} />
     </PageWrapperWithSearch>
   );
@@ -38,6 +44,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       per_page: 12,
     },
   });
+  const { data: searchListData } = await getSearchParams();
 
   return {
     props: {
@@ -48,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         collections: collections.total,
         users: users.total,
       },
+      searchListData,
     },
   };
 };

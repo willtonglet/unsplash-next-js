@@ -5,6 +5,7 @@ import MasonryCustomSection from '@templates/MasonryCustomSection';
 import { unsplash } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import UserInfoHeader from '@templates/UserInfoHeader';
+import { getSearchParams } from '@core/middleware/apiSearchCalls';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
@@ -12,10 +13,14 @@ const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
 
 const getUser = (user?: string | string[]) => String(user)?.replace('@', '');
 
-const UserPhotos = ({ userInfo, photos }: PageProps): React.ReactElement => {
+const UserPhotos = ({
+  userInfo,
+  photos,
+  searchListData,
+}: PageProps): React.ReactElement => {
   const router = useRouter();
   return (
-    <PageWrapper>
+    <PageWrapper searchListData={searchListData}>
       <UserInfoHeader userInfo={userInfo} />
       <MasonryCustomSection
         photos={photos}
@@ -39,8 +44,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
     },
   );
+  const { data: searchListData } = await getSearchParams();
 
-  return { props: { userInfo, photos } };
+  return { props: { userInfo, photos, searchListData } };
 };
 
 export default UserPhotos;

@@ -9,11 +9,7 @@ import ImageWithPreview from '@components/ImageWithPreview';
 
 export interface SearchDataProps {
   searchRef: React.RefObject<HTMLDivElement>;
-  searchListData?: {
-    topics: TopicProps[];
-    collections: CollectionProps[];
-    popular: string[];
-  };
+  searchListData?: SearchListDataParams;
   hasShadow: SearchBarProps['hasShadow'];
   variant: SearchBarProps['variant'];
 }

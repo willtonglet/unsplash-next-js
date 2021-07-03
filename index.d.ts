@@ -93,6 +93,13 @@ interface PageProps {
       }[];
     };
   };
+  searchListData: SearchListDataParams;
+}
+
+interface SearchListDataParams {
+  topics: TopicProps[];
+  collections: CollectionProps[];
+  popular: string[];
 }
 
 interface CollectionProps extends TagProps {

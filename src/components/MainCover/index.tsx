@@ -7,9 +7,14 @@ import ImageWithPreview from '@components/ImageWithPreview';
 interface MainCoverProps {
   cover: ImageProps;
   trends: { title: string; id: string }[];
+  searchListData?: SearchListDataParams;
 }
 
-const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
+const MainCover = ({
+  cover,
+  trends,
+  searchListData,
+}: MainCoverProps): React.ReactElement => {
   const { makeContextualHref } = useContextualRouting();
   return (
     <section
@@ -45,6 +50,7 @@ const MainCover = ({ cover, trends }: MainCoverProps): React.ReactElement => {
                   hasRoundedPill={false}
                   variant="secondary"
                   size="medium"
+                  searchListData={searchListData}
                 />
                 <p className="text-sm mt-4">
                   Trending:{' '}

@@ -7,15 +7,17 @@ interface PageWrapperWithSearchProps {
   children?: React.ReactNode;
   photos: ImageProps[];
   results: ResultsProps;
+  searchListData?: SearchListDataParams;
 }
 
 const PageWrapperWithSearch = ({
   children,
   photos,
   results,
+  searchListData,
 }: PageWrapperWithSearchProps): React.ReactElement => {
   return (
-    <PageWrapper results={results}>
+    <PageWrapper results={results} searchListData={searchListData}>
       <SearchTabs results={results} />
       <SearchHeader photos={photos} />
       {children}

@@ -3,10 +3,12 @@ const SearchDataSkeleton = (): React.ReactElement => (
     {Array.from({ length: 5 }).map((_, i) => (
       <div
         key={i}
-        className="border rounded border-gray-300 p-3 animate-pulse mr-2 mt-2 flex"
+        className="border rounded border-gray-300 p-3.5 animate-pulse mr-2 mt-2 flex"
       >
-        <span className="bg-gray-300 h-3 w-8 rounded-full animate-pulse block mr-2" />
-        <span className="bg-gray-300 h-3 w-16 rounded-full animate-pulse block" />
+        {i % 2 ? (
+          <span className="bg-gray-300 h-2 w-8 rounded-full animate-pulse block mr-2" />
+        ) : null}
+        <span className="bg-gray-300 h-2 w-16 rounded-full animate-pulse block" />
       </div>
     ))}
   </div>

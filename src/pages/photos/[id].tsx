@@ -5,15 +5,20 @@ import { useRouter } from 'next/router';
 import PhotoContent from '@templates/PhotoContent';
 import SimpleMasonry from '@templates/SimpleMasonry';
 import PageWrapper from '@templates/PageWrapper';
+import { getSearchParams } from '@core/middleware/apiSearchCalls';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
 });
 
-const Photos = ({ cover, photos }: PageProps): React.ReactElement => {
+const Photos = ({
+  cover,
+  photos,
+  searchListData,
+}: PageProps): React.ReactElement => {
   const router = useRouter();
   return (
-    <PageWrapper>
+    <PageWrapper searchListData={searchListData}>
       <PhotoContent image={cover} />
       <SimpleMasonry photos={photos} />
       <ModalPhoto isOpen={router.query.id !== cover.id} />
@@ -26,7 +31,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { data: photos } = await unsplash.get(
     `/napi/photos/${query.id}/related`,
   );
-  return { props: { cover, photos: photos.results } };
+  const { data: searchListData } = await getSearchParams();
+
+  return { props: { cover, photos: photos.results, searchListData } };
 };
 
 export default Photos;

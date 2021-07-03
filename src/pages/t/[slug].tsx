@@ -5,6 +5,7 @@ import { apiRoute } from '@core/middleware/api';
 import PageWrapper from '@templates/PageWrapper';
 import TopicHeader from '@templates/TopicHeader';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
+import { getSearchParams } from '@core/middleware/apiSearchCalls';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
@@ -14,11 +15,12 @@ const TopicTabPhotos = ({
   photos,
   topics,
   topicInfo,
+  searchListData,
 }: PageProps): React.ReactElement => {
   const router = useRouter();
 
   return (
-    <PageWrapper topics={topics}>
+    <PageWrapper topics={topics} searchListData={searchListData}>
       <TopicHeader topicInfo={topicInfo} />
       <MasonryCustomSection
         url={`/topics/${String(router.query.slug)}/photos`}
@@ -48,8 +50,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       per_page: 15,
     },
   });
+  const { data: searchListData } = await getSearchParams();
 
-  return { props: { photos, topics, topicInfo } };
+  return { props: { photos, topics, topicInfo, searchListData } };
 };
 
 export default TopicTabPhotos;

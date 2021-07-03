@@ -1,7 +1,7 @@
-import { apiRoute } from '@core/middleware/api';
+import { apiRoute, unsplash } from '@core/middleware/api';
 
 const getTopics = async () => {
-  const { data } = await apiRoute.get(`/topics`, {
+  const { data } = await unsplash.get(`/napi/topics`, {
     params: {
       order_by: 'featured',
       per_page: 5,
@@ -11,7 +11,7 @@ const getTopics = async () => {
 };
 
 const getCollections = async () => {
-  const { data } = await apiRoute.get(`/collections`, {
+  const { data } = await unsplash.get(`/napi/collections`, {
     params: {
       per_page: 5,
     },
