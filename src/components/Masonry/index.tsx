@@ -6,7 +6,7 @@ import { StyledMasonry } from './styles';
 
 interface MasonryProps {
   children: React.ReactNode;
-  onScrollIntersection?: () => void;
+  onScrollIntersection?: () => void | null;
   visibleOffset?: number;
 }
 
@@ -60,7 +60,11 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
         if (typeof window !== undefined && window.requestIdleCallback) {
           window.requestIdleCallback(
             () => {
-              if (entries[0].isIntersecting && onScrollIntersection)
+              if (
+                entries[0].isIntersecting &&
+                onScrollIntersection &&
+                typeof onScrollIntersection === 'function'
+              )
                 onScrollIntersection();
             },
             {
@@ -68,7 +72,11 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
             },
           );
         } else {
-          if (entries[0].isIntersecting && onScrollIntersection)
+          if (
+            entries[0].isIntersecting &&
+            onScrollIntersection &&
+            typeof onScrollIntersection === 'function'
+          )
             onScrollIntersection();
         }
       },
@@ -96,7 +104,7 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
   return (
     <div className="relative">
       <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
-      {onScrollIntersection && (
+      {onScrollIntersection && typeof onScrollIntersection === 'function' && (
         <div
           ref={intersectionRef}
           className={`flex justify-center items-center w-full ${

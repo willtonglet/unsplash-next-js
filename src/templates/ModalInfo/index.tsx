@@ -6,6 +6,7 @@ import { ModalPhotosNavigationContext } from '@components/ModalPhotosNavigation/
 import { numberWithCommas } from '@core/utils/numberWithCommas';
 import { apiRoute } from '@core/middleware/api';
 import { StyledBackground } from './styles';
+import Skeleton from '@components/Skeleton';
 
 interface ModalInfoProps {
   infoData: ImageProps;
@@ -18,6 +19,13 @@ const ModalInfo = ({ infoData }: ModalInfoProps): React.ReactElement => {
   const { isModalOpen } = useContext(ModalPhotosNavigationContext);
   const published = new Date(infoData.created_at);
   const isUrlToOpen = router.asPath.includes(`/photos/${infoData.id}/info`);
+
+  const countSkeleton = (
+    <>
+      <Skeleton.String size={2} height={1.4} className="mt-2.5 mb-2" />
+      <Skeleton.String size={3} height={0.5} minWidth={30} />
+    </>
+  );
 
   const getStatistics = () =>
     apiRoute
@@ -69,16 +77,19 @@ const ModalInfo = ({ infoData }: ModalInfoProps): React.ReactElement => {
               <span className="text-xs font-medium ml-1.5">Views</span>
             </dt>
             <dd>
-              <span className="text-2xl">
-                {statistics?.views.total &&
-                  numberWithCommas(statistics.views.total)}
-              </span>
-              <span className="text-xs text-gray-500 block">
-                +
-                {statistics?.views.historical.change &&
-                  numberWithCommas(statistics.views.historical.change)}{' '}
-                since last month
-              </span>
+              {statistics?.views.total ? (
+                <>
+                  <span className="text-2xl">
+                    {numberWithCommas(statistics.views.total)}
+                  </span>
+                  <span className="text-xs text-gray-500 block">
+                    +{numberWithCommas(statistics?.views.historical.change)}{' '}
+                    since last month
+                  </span>
+                </>
+              ) : (
+                countSkeleton
+              )}
             </dd>
           </div>
           <div className="flex-1 p-2">
@@ -95,16 +106,19 @@ const ModalInfo = ({ infoData }: ModalInfoProps): React.ReactElement => {
               <span className="text-xs font-medium ml-1.5">Downloads</span>
             </dt>
             <dd>
-              <span className="text-2xl">
-                {statistics?.downloads.total &&
-                  numberWithCommas(statistics.downloads.total)}
-              </span>
-              <span className="text-xs text-gray-500 block">
-                +
-                {statistics?.downloads.historical.change &&
-                  numberWithCommas(statistics.downloads.historical.change)}{' '}
-                since last month
-              </span>
+              {statistics?.downloads.total ? (
+                <>
+                  <span className="text-2xl">
+                    {numberWithCommas(statistics.downloads.total)}
+                  </span>
+                  <span className="text-xs text-gray-500 block">
+                    +{numberWithCommas(statistics.downloads.historical.change)}{' '}
+                    since last month
+                  </span>
+                </>
+              ) : (
+                countSkeleton
+              )}
             </dd>
           </div>
           <div className="flex-1 p-2" />

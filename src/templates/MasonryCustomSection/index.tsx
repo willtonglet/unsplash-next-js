@@ -10,7 +10,7 @@ import ImageContent from '@components/ImageContent';
 interface MasonryCustomSectionProps {
   onPhotoClick?: React.MouseEventHandler<HTMLDivElement>;
   photos: ImageProps[];
-  url: string;
+  url?: string;
   queryToBeListened?: string | string[];
 }
 
@@ -27,7 +27,7 @@ const MasonryCustomSection = (
     setPage(1);
   }, [queryToBeListened, url]);
 
-  const getPhotos = () =>
+  const getPhotos = (url: string) =>
     apiRoute
       .get(url, {
         params: {
@@ -45,12 +45,16 @@ const MasonryCustomSection = (
   }, [photos]);
 
   useEffect(() => {
-    page > 1 && getPhotos();
-  }, [page]);
+    if (page > 1 && url) getPhotos(url);
+  }, [page, url]);
 
   return (
     <ContainerWrapper className="py-12 md:px-3 lg:px-0">
-      <Masonry onScrollIntersection={() => setPage((prev) => prev + 1)}>
+      <Masonry
+        onScrollIntersection={
+          (url ? () => setPage((prev) => prev + 1) : null) as () => void | null
+        }
+      >
         {photosData?.map((photo, index) =>
           index <= 2 ? (
             <ImageContent

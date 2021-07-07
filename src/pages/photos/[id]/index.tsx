@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic';
 import { unsplash } from '@core/middleware/api';
 import { useRouter } from 'next/router';
 import PhotoContent from '@templates/PhotoContent';
-import SimpleMasonry from '@templates/SimpleMasonry';
 import PageWrapper from '@templates/PageWrapper';
 import { getSearchParams } from '@core/middleware/apiSearchCalls';
 import ModalInfo from '@templates/ModalInfo';
+import MasonryCustomSection from '@templates/MasonryCustomSection';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
@@ -21,7 +21,7 @@ const Photo = ({
   return (
     <PageWrapper searchListData={searchListData}>
       <PhotoContent image={cover} />
-      <SimpleMasonry photos={photos} />
+      <MasonryCustomSection photos={photos} />
       <ModalPhoto isOpen={router.query.id !== cover.id} />
       <ModalInfo infoData={cover} />
     </PageWrapper>
