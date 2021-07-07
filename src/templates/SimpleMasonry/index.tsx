@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import Masonry from '@components/Masonry';
-import { ModalContext } from '@components/Modal/ModalContext';
+import { ModalPhotosNavigationContext } from '@components/ModalPhotosNavigation/ModalPhotosNavigationContext';
 import RenderIfVisible from '@components/RenderIfVisible';
 
 const ImageContent = dynamic(() => import('@components/ImageContent'), {
@@ -15,7 +15,7 @@ interface SimpleMasonryProps {
 
 const SimpleMasonry = (props: SimpleMasonryProps): React.ReactElement => {
   const { photos, onPhotoClick } = props;
-  const { setIsModalOpen } = useContext(ModalContext);
+  const { setIsModalOpen } = useContext(ModalPhotosNavigationContext);
 
   return (
     <Masonry>

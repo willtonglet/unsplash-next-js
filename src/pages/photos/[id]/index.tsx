@@ -6,12 +6,13 @@ import PhotoContent from '@templates/PhotoContent';
 import SimpleMasonry from '@templates/SimpleMasonry';
 import PageWrapper from '@templates/PageWrapper';
 import { getSearchParams } from '@core/middleware/apiSearchCalls';
+import ModalInfo from '@templates/ModalInfo';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
 });
 
-const Photos = ({
+const Photo = ({
   cover,
   photos,
   searchListData,
@@ -22,6 +23,7 @@ const Photos = ({
       <PhotoContent image={cover} />
       <SimpleMasonry photos={photos} />
       <ModalPhoto isOpen={router.query.id !== cover.id} />
+      <ModalInfo infoData={cover} />
     </PageWrapper>
   );
 };
@@ -36,4 +38,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return { props: { cover, photos: photos.results, searchListData } };
 };
 
-export default Photos;
+export default Photo;

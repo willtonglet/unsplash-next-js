@@ -5,3 +5,6 @@
 .zoom-in {
   cursor: zoom-in !important;
 }
+.zoom-out {
+  cursor: zoom-out !important;
+}

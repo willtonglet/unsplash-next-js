@@ -96,14 +96,16 @@ const Masonry = (props: MasonryProps): React.ReactElement => {
   return (
     <div className="relative">
       <StyledMasonry ref={mainRef}>{renderColumns}</StyledMasonry>
-      <div
-        ref={intersectionRef}
-        className={`flex justify-center items-center w-full ${
-          isLoading ? 'h-96' : ''
-        }`}
-      >
-        {isLoading && <Spinner />}
-      </div>
+      {onScrollIntersection && (
+        <div
+          ref={intersectionRef}
+          className={`flex justify-center items-center w-full ${
+            isLoading ? 'h-96' : ''
+          }`}
+        >
+          {isLoading && <Spinner />}
+        </div>
+      )}
     </div>
   );
 };

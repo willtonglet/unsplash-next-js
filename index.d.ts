@@ -42,6 +42,29 @@ interface ImageProps extends TagProps {
   related_collections: {
     results: { id: string }[];
   };
+  views: number;
+  downloads: number;
+  created_at: string;
+  exif: {
+    aperture: string;
+    exposure_time: string;
+    focal_length: string;
+    iso: number;
+    make: string;
+    model: string;
+  };
+}
+
+interface StatisticsParams {
+  downloads: StatisticsCounterParams;
+  views: StatisticsCounterParams;
+}
+
+interface StatisticsCounterParams {
+  total: number;
+  historical: {
+    change: number;
+  };
 }
 
 interface TagProps {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { AppProps } from 'next/app';
-import { ModalContextProvider } from '@components/Modal/ModalContext';
+import { ModalPhotosNavigationContextProvider } from '@components/ModalPhotosNavigation/ModalPhotosNavigationContext';
 import { PhotosContextProvider } from '@contexts/PhotosContext';
 import '../core/styles/global.css';
 
@@ -15,9 +15,9 @@ export default function MyApp({
 
   return (
     <PhotosContextProvider>
-      <ModalContextProvider>
+      <ModalPhotosNavigationContextProvider>
         <Component {...pageProps} />
-      </ModalContextProvider>
+      </ModalPhotosNavigationContextProvider>
     </PhotosContextProvider>
   );
 }

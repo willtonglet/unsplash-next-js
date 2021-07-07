@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Modal from '../../components/Modal';
+import ModalPhotosNavigation from '../../components/ModalPhotosNavigation';
 
-export const StyledModalPhoto = styled(Modal)`
+export const StyledModalPhoto = styled(ModalPhotosNavigation)`
   .photo {
     height: 400px;
     width: 100%;

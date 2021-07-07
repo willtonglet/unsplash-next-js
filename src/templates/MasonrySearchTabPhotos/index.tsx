@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Masonry from '@components/Masonry';
 import { apiRoute } from '@core/middleware/api';
-import { ModalContext } from '@components/Modal/ModalContext';
+import { ModalPhotosNavigationContext } from '@components/ModalPhotosNavigation/ModalPhotosNavigationContext';
 import { PhotosContext } from '@contexts/PhotosContext';
 import ContainerWrapper from '@components/ContainerWrapper';
 import RenderIfVisible from '@components/RenderIfVisible';
@@ -19,7 +19,7 @@ const MasonrySearchTabPhotos = (
   const { onPhotoClick, photos } = props;
   const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(PhotosContext);
-  const { setIsModalOpen } = useContext(ModalContext);
+  const { setIsModalOpen } = useContext(ModalPhotosNavigationContext);
   const router = useRouter();
   const { slug } = router.query;
 
