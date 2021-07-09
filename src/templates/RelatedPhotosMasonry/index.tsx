@@ -8,12 +8,14 @@ const ImageContent = dynamic(() => import('@components/ImageContent'), {
   ssr: false,
 });
 
-interface RelatedMasonryProps {
+interface RelatedPhotosMasonryProps {
   onPhotoClick?: React.MouseEventHandler<HTMLDivElement>;
   photos: ImageProps[];
 }
 
-const RelatedMasonry = (props: RelatedMasonryProps): React.ReactElement => {
+const RelatedPhotosMasonry = (
+  props: RelatedPhotosMasonryProps,
+): React.ReactElement => {
   const { photos, onPhotoClick } = props;
   const { setIsModalOpen } = useContext(ModalPhotosNavigationContext);
 
@@ -47,4 +49,4 @@ const RelatedMasonry = (props: RelatedMasonryProps): React.ReactElement => {
   );
 };
 
-export default RelatedMasonry;
+export default RelatedPhotosMasonry;

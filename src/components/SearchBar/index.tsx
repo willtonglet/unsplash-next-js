@@ -121,7 +121,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     if (
       e.key === keyEnter &&
       selectedIndex > -1 &&
-      selectedIndex < searchResults.length - 1
+      selectedIndex < searchResults.length
     )
       setSearch(searchResults[selectedIndex].query);
 

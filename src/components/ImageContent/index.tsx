@@ -5,6 +5,7 @@ import { useContextualRouting } from '@hooks/useContextualRouting';
 import AvatarInfo from '../AvatarInfo';
 import ImageWithPreview from '../ImageWithPreview';
 import HireLink from '../HireLink';
+import Tags from '@components/Tags';
 import { StyledImageContent } from './styles';
 
 interface ImageContentProps {
@@ -88,20 +89,7 @@ const ImageContent = (props: ImageContentProps): React.ReactElement => {
       </div>
       {image.tags && image.tags.length && (
         <div className="mt-3">
-          {image.tags?.map((tag, index) => (
-            <Link
-              key={index}
-              href={
-                tag.type === 'search'
-                  ? `/s/photos/${tag.title}`
-                  : `/images/${tag.title}`
-              }
-            >
-              <a className="bg-gray-200 rounded text-sm text-gray-600 inline-block px-2 py-1 mr-2 mb-2 capitalize">
-                {tag.type === 'search' ? tag.title : tag.source.title}
-              </a>
-            </Link>
-          ))}
+          <Tags tags={image.tags} />
         </div>
       )}
     </>

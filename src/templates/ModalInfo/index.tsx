@@ -52,7 +52,7 @@ const ModalInfo = ({ infoData }: ModalInfoProps): React.ReactElement => {
         )
       }
     >
-      <StyledBackground backgroundImage={infoData.urls.regular}>
+      <StyledBackground backgroundImage={infoData.urls.raw}>
         <div className="px-6 pt-6 pb-4">
           <h3 className="text-2xl">Info</h3>
           <span className="text-xs">

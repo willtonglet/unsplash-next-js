@@ -24,7 +24,7 @@ const Modal = ({
           onClick={onClose}
           onKeyPress={onClose as () => void}
         />
-        <div className="w-2/5 bg-white rounded fixed overflow-hidden z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="w-full sm:w-10/12 md:w-8/12 lg:w-2/5 bg-white rounded fixed overflow-hidden z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           {children}
         </div>
       </Portal>

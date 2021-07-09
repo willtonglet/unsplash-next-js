@@ -40,7 +40,8 @@ interface ImageProps extends TagProps {
   user: UserProps;
   blur_hash: string;
   related_collections: {
-    results: { id: string }[];
+    results: CollectionProps[];
+    total: number;
   };
   views: number;
   downloads: number;

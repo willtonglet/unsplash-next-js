@@ -5,7 +5,7 @@ import { useContextualRouting } from '@hooks/useContextualRouting';
 import AvatarInfo from '@components/AvatarInfo';
 import ModalPhotosNavigation from '@components/ModalPhotosNavigation';
 import PhotoContent from '@templates/PhotoContent';
-import RelatedMasonry from '@templates/RelatedMasonry';
+import RelatedPhotosMasonry from '@templates/RelatedPhotosMasonry';
 import { apiRoute } from '@core/middleware/api';
 import { ModalPhotosNavigationContext } from '@components/ModalPhotosNavigation/ModalPhotosNavigationContext';
 import { PhotosContext } from '@contexts/PhotosContext';
@@ -15,6 +15,8 @@ import HireLink from '@components/HireLink';
 import { numberWithCommas } from '@core/utils/numberWithCommas';
 import ModalInfo from '@templates/ModalInfo';
 import Spinner from '@components/Spinner';
+import Tags from '@components/Tags';
+import RelatedCollectionsMasonry from '@templates/RelatedCollectionsMasonry';
 
 interface ModalPhotoProps {
   isOpen?: boolean;
@@ -73,6 +75,8 @@ const ModalPhoto = ({
     setIsModalOpen(isOpen);
   }, [isOpen]);
 
+  console.log(photoData?.related_collections.results);
+
   return (
     <ModalPhotosNavigation
       ref={modalRef}
@@ -113,7 +117,7 @@ const ModalPhoto = ({
       }
     >
       {photoData ? (
-        <>
+        <div className="pb-16">
           <div className="sticky rounded-t px-4 top-0 bg-white z-20 py-3 flex justify-between items-center">
             <AvatarInfo image={photoData} withHoverEffect={false}>
               {photoData.user.for_hire ? (
@@ -193,8 +197,15 @@ const ModalPhoto = ({
 
             <ModalInfo infoData={photoData} />
           </div>
-          <div className="px-3">
-            <RelatedMasonry
+          {photoData.tags && photoData.tags.length && (
+            <div className="p-4 mb-6">
+              <h3 className="text-lg mb-6">Related tags</h3>
+              <Tags tags={photoData.tags} />
+            </div>
+          )}
+          <div className="p-4 mb-6">
+            <h3 className="text-lg mb-6">Related photos</h3>
+            <RelatedPhotosMasonry
               photos={modalPhotosData}
               onPhotoClick={() => {
                 setIsRelatedPhoto(true);
@@ -203,7 +214,15 @@ const ModalPhoto = ({
               }}
             />
           </div>
-        </>
+          {photoData?.related_collections.total > 0 && (
+            <div className="p-4">
+              <h3 className="text-lg mb-6">Related collections</h3>
+              <RelatedCollectionsMasonry
+                collections={photoData?.related_collections.results}
+              />
+            </div>
+          )}
+        </div>
       ) : (
         <div className="w-full h-screen flex justify-center items-center">
           <Spinner />
