@@ -18,7 +18,7 @@ const CollectionContent = (
     <>
       <div className="relative" style={{ paddingBottom: '70%' }}>
         <Link href={`/collections/${collection.id}/${query.slug}`}>
-          <a className="absolute h-full w-full rounded overflow-hidden flex hover:opacity-80">
+          <a className="absolute h-full w-full rounded-md overflow-hidden flex hover:opacity-80">
             <div className="w-3/4 bg-grey-100">
               <ImageWithPreview
                 key={preview_photos[0].id}
