@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import slugify from 'slugify';
 import Image from 'next/image';
 import ContainerWrapper from '@components/ContainerWrapper';
 import Tags from '@components/Tags';
@@ -28,12 +27,7 @@ const UserInfoHeader = ({
           <h2 className="text-4xl	font-bold mb-4">{userInfo.name}</h2>
           <p className="w-9/12 mb-5">{userInfo.bio}</p>
           {userInfo.location && (
-            <Link
-              href={`/s/photos/${slugify(userInfo.location, {
-                strict: false,
-                lower: true,
-              })}`}
-            >
+            <Link href={`/s/photos/${userInfo.location.toLowerCase()}`}>
               <a className="flex items-center group text-gray-500 text-sm mb-1 hover:text-black">
                 <svg
                   width="14"
