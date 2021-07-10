@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
+import slugify from 'slugify';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
-import { slugify } from '@core/utils/slugify';
 import SearchData from './SearchData';
 
 export interface SearchBarProps {
@@ -78,7 +78,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       }flex text-sm text-gray-800 p-3 d-block hover:bg-gray-100 focus:outline-none`}
       onMouseEnter={() => setSelectedIndex(-1)}
       onClick={() => {
-        router.push(`/s/photos/${slugify(result.query)}`);
+        router.push(`/s/photos/${result.query}`);
         setIsSearchResultsOpen(false);
         setSearch(result.query);
       }}
@@ -98,8 +98,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSearchResultsOpen(false);
-
-    router.push(`/s/photos/${slugify(search)}`);
+    router.push(`/s/photos/${search}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -131,7 +130,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
     }
   };
 
-  const inputClasses = `text-gray-800 w-full px-2 text-sm ${handleHeight} ${handleBackground} ${handleRadius(
+  const inputClasses = `text-gray-500 w-full px-2 text-sm ${handleHeight} ${handleBackground} ${handleRadius(
     'r',
   )} ${
     variant === 'primary' && isFocused

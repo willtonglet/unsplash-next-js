@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import slugify from 'slugify';
 import Tags from '@components/Tags';
 import ImageWithPreview from '../ImageWithPreview';
 
@@ -12,12 +12,15 @@ const CollectionContent = (
 ): React.ReactElement => {
   const { collection } = props;
   const { tags, preview_photos } = collection;
-  const { query } = useRouter();
 
   return (
     <>
       <div className="relative" style={{ paddingBottom: '70%' }}>
-        <Link href={`/collections/${collection.id}/${query.slug}`}>
+        <Link
+          href={`/collections/${collection.id}/${slugify(collection.title, {
+            lower: true,
+          })}`}
+        >
           <a className="absolute h-full w-full rounded-md overflow-hidden flex hover:opacity-80">
             <div className="w-3/4 bg-grey-100">
               <ImageWithPreview

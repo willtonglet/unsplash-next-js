@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
-import { slugify } from '@core/utils/slugify';
 import { unslugify } from '@core/utils/unslugify';
 import { SearchBarProps } from '.';
 import { SearchStorageContext } from './SearchStorageContext';
 import SearchDataSkeleton from './SearchDataSkeleton';
 import ImageWithPreview from '@components/ImageWithPreview';
+import slugify from 'slugify';
 
 export interface SearchDataProps {
   searchRef: React.RefObject<HTMLDivElement>;
@@ -52,7 +52,9 @@ const SearchData = ({
             {recentSearches.map((search, i) => (
               <button
                 key={i}
-                onClick={() => router.push(`/s/photos/${slugify(search)}`)}
+                onClick={() =>
+                  router.push(`/s/photos/${slugify(search, { strict: false })}`)
+                }
                 className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"
               >
                 <span className="text-gray-500 text-sm">{search}</span>
@@ -68,7 +70,9 @@ const SearchData = ({
             searchListData.popular.map((trend, index) => (
               <button
                 key={index}
-                onClick={() => router.push(`/s/photos/${slugify(trend)}`)}
+                onClick={() =>
+                  router.push(`/s/photos/${slugify(trend, { strict: false })}`)
+                }
                 className="border border-gray-300 rounded bg-white py-2 px-3 flex text-left items-center hover:bg-gray-100 mr-2 mt-2 overflow-hidden"
               >
                 <svg
