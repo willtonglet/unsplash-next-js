@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import slugify from 'slugify';
 import Image from 'next/image';
 import ContainerWrapper from '@components/ContainerWrapper';
-import { slugify } from '@core/utils/slugify';
+import Tags from '@components/Tags';
 
 interface UserInfoHeaderProps {
   userInfo: PageProps['userInfo'];
@@ -27,7 +28,12 @@ const UserInfoHeader = ({
           <h2 className="text-4xl	font-bold mb-4">{userInfo.name}</h2>
           <p className="w-9/12 mb-5">{userInfo.bio}</p>
           {userInfo.location && (
-            <Link href={`/s/photos/${slugify(userInfo.location)}`}>
+            <Link
+              href={`/s/photos/${slugify(userInfo.location, {
+                strict: false,
+                lower: true,
+              })}`}
+            >
               <a className="flex items-center group text-gray-500 text-sm mb-1 hover:text-black">
                 <svg
                   width="14"
@@ -66,23 +72,7 @@ const UserInfoHeader = ({
           {userInfo.tags.custom.length > 0 && (
             <>
               <h4 className="mt-5 mb-3">Interests</h4>
-              <div className="flex">
-                {userInfo.tags.custom.map((tag, i) =>
-                  tag.source ? (
-                    <Link href={`/images/${tag.title}`} key={i}>
-                      <a className="bg-gray-200 rounded py-1 px-2 text-gray-500 mr-2 text-sm capitalize block hover:bg-gray-300 hover:text-gray-900">
-                        {tag.source.title}
-                      </a>
-                    </Link>
-                  ) : (
-                    <Link href={`/s/photos/${tag.title}`} key={i}>
-                      <a className="bg-gray-200 rounded py-1 px-2 text-gray-500 mr-2 text-sm capitalize block hover:bg-gray-300 hover:text-gray-900">
-                        {tag.title}
-                      </a>
-                    </Link>
-                  ),
-                )}
-              </div>
+              <Tags tags={userInfo.tags.custom} />
             </>
           )}
         </div>

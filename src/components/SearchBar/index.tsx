@@ -4,6 +4,7 @@ import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
 import { apiRoute } from '@core/middleware/api';
 import SearchData from './SearchData';
+import { unslugify } from '@core/utils/unslugify';
 
 export interface SearchBarProps {
   variant?: 'primary' | 'secondary';
@@ -156,7 +157,7 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
 
   useEffect(() => {
     if (router.query.slug && router.pathname === '/s/photos/[slug]') {
-      setSearch(router.query.slug as string);
+      setSearch(unslugify(router.query.slug as string));
       setIsSearchResultsOpen(false);
     }
   }, [router.query.slug, router.pathname]);

@@ -69,7 +69,7 @@ interface StatisticsCounterParams {
 }
 
 interface TagProps {
-  tags: { [key: string]: { [key: string]: string }; type: string }[];
+  tags: { type: string; title: string; source: { title: string } }[];
 }
 
 interface Contributor {
@@ -108,14 +108,7 @@ interface PageProps {
     profile_image: {
       large: string;
     };
-    tags: {
-      custom: {
-        source: {
-          title: string;
-        };
-        title: string;
-      }[];
-    };
+    tags: { custom: TagProps['tags'] };
   };
   searchListData: SearchListDataParams;
 }
