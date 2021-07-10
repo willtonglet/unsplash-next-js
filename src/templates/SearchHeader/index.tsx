@@ -25,9 +25,8 @@ const SearchHeader = ({ photos }: SearchHeaderProps): React.ReactElement => {
   ];
 
   const handleTitle = (slug: string) =>
-    unslugify(slug as string)
-      .slice(0, 1)[0]
-      .toUpperCase() + unslugify(slug as string).slice(1);
+    unslugify(slug as string)[0].toUpperCase() +
+    unslugify(slug as string).slice(1);
 
   return (
     <ContainerWrapper className="pt-14">

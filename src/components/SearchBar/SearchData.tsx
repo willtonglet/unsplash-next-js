@@ -52,12 +52,12 @@ const SearchData = ({
             {recentSearches.map((search, i) => (
               <button
                 key={i}
-                onClick={() =>
-                  router.push(`/s/photos/${slugify(search, { strict: false })}`)
-                }
+                onClick={() => router.push(`/s/photos/${search}`)}
                 className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"
               >
-                <span className="text-gray-500 text-sm">{search}</span>
+                <span className="text-gray-500 text-sm">
+                  {unslugify(search)}
+                </span>
               </button>
             ))}
           </div>
@@ -70,9 +70,7 @@ const SearchData = ({
             searchListData.popular.map((trend, index) => (
               <button
                 key={index}
-                onClick={() =>
-                  router.push(`/s/photos/${slugify(trend, { strict: false })}`)
-                }
+                onClick={() => router.push(`/s/photos/${trend}`)}
                 className="border border-gray-300 rounded bg-white py-2 px-3 flex text-left items-center hover:bg-gray-100 mr-2 mt-2 overflow-hidden"
               >
                 <svg
@@ -136,9 +134,9 @@ const SearchData = ({
                 key={collection.id}
                 onClick={() =>
                   router.push(
-                    `/collections/${collection.id}/${slugify(
-                      collection.title.toLowerCase(),
-                    )}`,
+                    `/collections/${collection.id}/${slugify(collection.title, {
+                      lower: true,
+                    })}`,
                   )
                 }
                 className="border border-gray-300 rounded py-2 px-4 bg-white flex items-center hover:bg-gray-100 mr-2 mt-2"

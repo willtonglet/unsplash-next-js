@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import slugify from 'slugify';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoIosClose, IoIosSearch } from 'react-icons/io';
 import useOnClickOutside from '@hooks/useOnClickOutside';
@@ -154,6 +153,13 @@ const SearchBar = (props: SearchBarProps): React.ReactElement => {
       ) : null}
     </>
   );
+
+  useEffect(() => {
+    if (router.query.slug && router.pathname === '/s/photos/[slug]') {
+      setSearch(router.query.slug as string);
+      setIsSearchResultsOpen(false);
+    }
+  }, [router.query.slug, router.pathname]);
 
   const renderInput = (mq: 'sm' | 'md') => (
     <input
