@@ -56,6 +56,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { photos, cover, trends, topics, searchListData },
+    revalidate: 30,
   };
 };
 

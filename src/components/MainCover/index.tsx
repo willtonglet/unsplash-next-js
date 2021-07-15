@@ -16,6 +16,7 @@ const MainCover = ({
   searchListData,
 }: MainCoverProps): React.ReactElement => {
   const { makeContextualHref } = useContextualRouting();
+
   return (
     <section
       className="text-white relative"
