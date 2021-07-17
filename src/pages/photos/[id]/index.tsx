@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import PhotoContent from '@templates/PhotoContent';
 import PageWrapper from '@templates/PageWrapper';
 import { getSearchParams } from '@core/middleware/apiSearchCalls';
-import ModalInfo from '@templates/ModalInfo';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
 import PhotoHeader from '@templates/PhotoHeader';
 import PhotoInfo from '@templates/PhotoInfo';
