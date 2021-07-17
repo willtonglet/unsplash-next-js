@@ -7,6 +7,13 @@ import PageWrapper from '@templates/PageWrapper';
 import { getSearchParams } from '@core/middleware/apiSearchCalls';
 import ModalInfo from '@templates/ModalInfo';
 import MasonryCustomSection from '@templates/MasonryCustomSection';
+import PhotoHeader from '@templates/PhotoHeader';
+import PhotoInfo from '@templates/PhotoInfo';
+import Tags from '@components/Tags';
+import PhotoRelatedTitleWithChildren from '@templates/PhotoRelatedTitleWithChildren';
+import React from 'react';
+import RelatedCollectionsMasonry from '@templates/RelatedCollectionsMasonry';
+import ContainerWrapper from '@components/ContainerWrapper';
 
 const ModalPhoto = dynamic(() => import('@templates/ModalPhoto'), {
   ssr: false,
@@ -19,9 +26,38 @@ const Photo = ({
 }: PageProps): React.ReactElement => {
   const router = useRouter();
   return (
-    <PageWrapper searchListData={searchListData}>
-      <PhotoContent image={cover} />
-      <MasonryCustomSection photos={photos} />
+    <PageWrapper searchListData={searchListData} backgroundColor="bg-white">
+      <div className="relative">
+        <PhotoHeader
+          photoData={cover}
+          className="sticky rounded-t px-4 bg-white z-20"
+          style={{ top: 64 }}
+        />
+        <div className="w-full flex justify-center">
+          <PhotoContent image={cover} />
+        </div>
+        <PhotoInfo photoInfo={cover} />
+      </div>
+      <ContainerWrapper className="mt-16">
+        {cover.tags && cover.tags.length && (
+          <PhotoRelatedTitleWithChildren title="Related tags">
+            <Tags tags={cover.tags} />
+          </PhotoRelatedTitleWithChildren>
+        )}
+        <PhotoRelatedTitleWithChildren className="mt-16" title="Related photos">
+          <MasonryCustomSection photos={photos} />
+        </PhotoRelatedTitleWithChildren>
+        {cover?.related_collections.total > 0 && (
+          <PhotoRelatedTitleWithChildren
+            className="my-16"
+            title="Related collections"
+          >
+            <RelatedCollectionsMasonry
+              collections={cover?.related_collections.results}
+            />
+          </PhotoRelatedTitleWithChildren>
+        )}
+      </ContainerWrapper>
       <ModalPhoto isOpen={router.query.id !== cover.id} />
       <ModalInfo infoData={cover} />
     </PageWrapper>

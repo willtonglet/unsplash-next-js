@@ -8,6 +8,7 @@ interface PageWrapperProps {
   topics?: { title: string; slug: string; id: string }[];
   results?: ResultsProps;
   searchListData?: SearchListDataParams;
+  backgroundColor?: 'bg-gray-50' | 'bg-white';
 }
 
 const PageWrapper = ({
@@ -15,6 +16,7 @@ const PageWrapper = ({
   topics,
   results,
   searchListData,
+  backgroundColor = 'bg-gray-50',
 }: PageWrapperProps): React.ReactElement => {
   return (
     <SearchStorageProvider results={results}>
@@ -42,7 +44,7 @@ const PageWrapper = ({
         results={results}
         searchListData={searchListData}
       />
-      <main className="min-h-screen bg-gray-50">{children}</main>
+      <main className={`min-h-screen ${backgroundColor}`}>{children}</main>
     </SearchStorageProvider>
   );
 };

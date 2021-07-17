@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useContextualRouting } from '@hooks/useContextualRouting';
-import AvatarInfo from '@components/AvatarInfo';
 import ModalPhotosNavigation from '@components/ModalPhotosNavigation';
 import PhotoContent from '@templates/PhotoContent';
 import RelatedPhotosMasonry from '@templates/RelatedPhotosMasonry';
@@ -11,12 +9,12 @@ import { ModalPhotosNavigationContext } from '@components/ModalPhotosNavigation/
 import { PhotosContext } from '@contexts/PhotosContext';
 import { usePreviousState } from '@hooks/usePreviousState';
 import { handlePreviousAndNext } from '@core/utils/handlePreviousAndNext';
-import HireLink from '@components/HireLink';
-import { numberWithCommas } from '@core/utils/numberWithCommas';
-import ModalInfo from '@templates/ModalInfo';
 import Spinner from '@components/Spinner';
 import Tags from '@components/Tags';
 import RelatedCollectionsMasonry from '@templates/RelatedCollectionsMasonry';
+import PhotoHeader from '@templates/PhotoHeader';
+import PhotoRelatedTitleWithChildren from '@templates/PhotoRelatedTitleWithChildren';
+import PhotoInfo from '@templates/PhotoInfo';
 
 interface ModalPhotoProps {
   isOpen?: boolean;
@@ -118,93 +116,20 @@ const ModalPhoto = ({
     >
       {photoData ? (
         <div className="pb-16">
-          <div className="sticky rounded-t px-4 top-0 bg-white z-20 py-3 flex justify-between items-center">
-            <AvatarInfo image={photoData} withHoverEffect={false}>
-              {photoData.user.for_hire ? (
-                <HireLink />
-              ) : (
-                <Link href={`/@${photoData.user.username}`}>
-                  <a className="text-xs text-gray-500 hover:text-gray-800">
-                    @{photoData.user.username}
-                  </a>
-                </Link>
-              )}
-            </AvatarInfo>
-            <a
-              href={`https://unsplash.com/photos/${photoData.id}/download?force=true`}
-              rel="noreferrer"
-              download
-              target="_blank"
-              className="text-white rounded flex"
-            >
-              <span className="bg-green-500 rounded-l h-8 text-sm font-medium flex items-center px-3 hover:bg-green-600">
-                Download free
-              </span>
-              <button
-                aria-label="Download"
-                className="bg-green-500 h-8 flex items-center px-1 border-l rounded-r hover:bg-green-600"
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  version="1.1"
-                  viewBox="0 0 32 32"
-                  aria-hidden="false"
-                  className="fill-current text-white"
-                >
-                  <path d="M9.9 11.5l6.1 6.1 6.1-6.1 1.9 1.9-8 8-8-8 1.9-1.9z"></path>
-                </svg>
-              </button>
-            </a>
-          </div>
+          <PhotoHeader
+            photoData={photoData}
+            className="sticky rounded-t px-4 top-0 z-20"
+          />
           <div className="w-full flex justify-center">
             <PhotoContent image={photoData} />
           </div>
-          <div className="flex justify-between px-4 my-6">
-            <div className="flex">
-              <div className="w-48">
-                <h3 className="text-sm text-gray-500">Views</h3>
-                <span>{numberWithCommas(photoData.views)}</span>
-              </div>
-              <div className="w-48">
-                <h3 className="text-sm text-gray-500">Downloads</h3>
-                <span>{numberWithCommas(photoData.downloads)}</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() =>
-                router.push(
-                  makeContextualHref({ id: router.query.id }),
-                  `/photos/${router.query.id}/info`,
-                  { shallow: true, scroll: false },
-                )
-              }
-              className="border border-gray-300 rounded h-8 px-3 flex items-center group text-gray-500 hover:border-gray-500 hover:text-black"
-            >
-              <svg
-                width="14"
-                height="14"
-                version="1.1"
-                viewBox="0 0 32 32"
-                aria-hidden="false"
-                className="fill-current group-hover:text-black"
-              >
-                <path d="M16 0c-8.8 0-16 7.2-16 16s7.2 16 16 16 16-7.2 16-16-7.2-16-16-16zm2 25c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1v-12c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v12zm0-16c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1v-2c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v2z"></path>
-              </svg>
-              <span className="text-sm font-medium ml-2">Info</span>
-            </button>
-
-            <ModalInfo infoData={photoData} />
-          </div>
+          <PhotoInfo photoInfo={photoData} />
           {photoData.tags && photoData.tags.length && (
-            <div className="p-4 mb-6">
-              <h3 className="text-lg mb-6">Related tags</h3>
+            <PhotoRelatedTitleWithChildren className="p-4" title="Related tags">
               <Tags tags={photoData.tags} />
-            </div>
+            </PhotoRelatedTitleWithChildren>
           )}
-          <div className="p-4 mb-6">
-            <h3 className="text-lg mb-6">Related photos</h3>
+          <PhotoRelatedTitleWithChildren className="p-4" title="Related photos">
             <RelatedPhotosMasonry
               photos={modalPhotosData}
               onPhotoClick={() => {
@@ -213,14 +138,16 @@ const ModalPhoto = ({
                 if (modalRef.current) modalRef.current.scrollTo(0, 0);
               }}
             />
-          </div>
+          </PhotoRelatedTitleWithChildren>
           {photoData?.related_collections.total > 0 && (
-            <div className="p-4">
-              <h3 className="text-lg mb-6">Related collections</h3>
+            <PhotoRelatedTitleWithChildren
+              className="p-4"
+              title="Related collections"
+            >
               <RelatedCollectionsMasonry
                 collections={photoData?.related_collections.results}
               />
-            </div>
+            </PhotoRelatedTitleWithChildren>
           )}
         </div>
       ) : (

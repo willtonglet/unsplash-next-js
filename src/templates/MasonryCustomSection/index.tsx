@@ -12,12 +12,13 @@ interface MasonryCustomSectionProps {
   photos: ImageProps[];
   url?: string;
   queryToBeListened?: string | string[];
+  className?: string;
 }
 
 const MasonryCustomSection = (
   props: MasonryCustomSectionProps,
 ): React.ReactElement => {
-  const { onPhotoClick, photos, url, queryToBeListened } = props;
+  const { onPhotoClick, photos, url, queryToBeListened, className } = props;
   const [page, setPage] = useState(1);
   const { photosData, setPhotosData } = useContext(PhotosContext);
   const { setIsModalOpen } = useContext(ModalPhotosNavigationContext);
@@ -49,7 +50,7 @@ const MasonryCustomSection = (
   }, [page, url]);
 
   return (
-    <ContainerWrapper className="py-12 md:px-3 lg:px-0">
+    <ContainerWrapper className={className}>
       <Masonry
         onScrollIntersection={
           (url ? () => setPage((prev) => prev + 1) : null) as () => void | null

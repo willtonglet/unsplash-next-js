@@ -27,7 +27,11 @@ const HomePage = ({
         trends={trends}
         searchListData={searchListData}
       />
-      <MasonryCustomSection url="/photos" photos={photos} />
+      <MasonryCustomSection
+        className="py-12 md:px-3 lg:px-0"
+        url="/photos"
+        photos={photos}
+      />
       <ModalPhoto isOpen={Boolean(router.query.id)} />
     </PageWrapper>
   );
