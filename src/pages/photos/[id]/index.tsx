@@ -38,7 +38,7 @@ const Photo = ({
         </div>
         <PhotoInfo photoInfo={cover} />
       </div>
-      <ContainerWrapper className="mt-16">
+      <ContainerWrapper className="mt-16 pb-24">
         {cover.tags && cover.tags.length && (
           <PhotoRelatedTitleWithChildren title="Related tags">
             <Tags tags={cover.tags} />
@@ -49,7 +49,7 @@ const Photo = ({
         </PhotoRelatedTitleWithChildren>
         {cover?.related_collections.total > 0 && (
           <PhotoRelatedTitleWithChildren
-            className="my-16"
+            className="mt-16"
             title="Related collections"
           >
             <RelatedCollectionsMasonry
