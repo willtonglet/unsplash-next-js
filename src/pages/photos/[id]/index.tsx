@@ -59,7 +59,6 @@ const Photo = ({
         )}
       </ContainerWrapper>
       <ModalPhoto isOpen={router.query.id !== cover.id} />
-      <ModalInfo infoData={cover} />
     </PageWrapper>
   );
 };
